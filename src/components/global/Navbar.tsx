@@ -20,7 +20,7 @@ export default function Navbar({ links }: { links: Link[] }) {
 							<Image src="/sabako-light.svg" alt="" height={256} width={256} className="h-8 w-8" />
 							<h1 className="text-2xl font-bold font-mono">SABAKO</h1>
 						</Link>
-						<Disclosure.Button className="border border-neutral-800 rounded-md bg-zinc-800/30 hover:bg-zinc-800 p-2 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+						<Disclosure.Button className="relative border border-neutral-800 rounded-md bg-zinc-800/30 hover:bg-zinc-800 p-2 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
 							<span className="absolute -inset-0.5" />
 							<span className="sr-only">Open main menu</span>
 							{open ? (
