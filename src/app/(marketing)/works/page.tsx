@@ -30,7 +30,7 @@ export default function Home() {
 	return (
 		<main className="relative place-items-center lg:max-w-5xl w-full mb-16">
 			<div className="relative place-items-center lg:max-w-5xl w-full mb-16">
-				<Image
+				{/* <Image
 					src="/sky.jpg"
 					alt="SABAKO"
 					className="w-full h-72 object-cover object-bottom"
@@ -41,31 +41,34 @@ export default function Home() {
 				<div className="mt-2 text-sm text-gray-500">
 					Photos by&nbsp;
 					<a className="text-gray-300 hover:text-gray-400" href="https://unsplash.com/photos/3YrppYQPoCI">Guillaume Galtier via Unsplash</a>
-				</div>
+				</div> */}
 				<div className="mt-16 text-gray-300 text-4xl font-bold">
-					Partner with the experienced.<br />
+					Partner with the <span className="bg-gray-300 text-neutral-900">experienced</span>.<br />
 					Unleash the digital to expand your business.
 				</div>
 				<div className="mx-auto max-w-2xl py-16 sm:py-24 lg:max-w-none">
-					<div className="mt-6 space-y-12 lg:grid lg:grid-cols-3 lg:gap-x-6 lg:space-y-0">
+					<div className="mt-6 space-y-12 lg:grid lg:grid-cols-3 lg:gap-x-3 lg:space-y-0">
 						{callouts.map((callout) => (
 							<div key={callout.name} className="group relative">
-								<div className="relative h-80 w-full overflow-hidden rounded-lg bg-white sm:aspect-h-1 sm:aspect-w-2 lg:aspect-h-1 lg:aspect-w-1 group-hover:opacity-75 sm:h-64">
+								<div className="relative h-80 w-full overflow-hidden bg-white sm:aspect-h-1 sm:aspect-w-2 lg:aspect-h-1 lg:aspect-w-1 group-hover:opacity-75 sm:h-64 z-0">
+									<div className="absolute top z-10 h-full w-full bg-neutral-900/50"></div>
 									<Image
 										src={callout.imageSrc}
 										alt={callout.imageAlt}
 										width={400}
 										height={200}
-										className="h-full w-full object-cover object-center"
+										className="z-0 h-full w-full object-cover object-center"
 									/>
 								</div>
-								<h3 className="mt-6 text-sm text-gray-500">
-									<a href={callout.href}>
-										<span className="absolute inset-0" />
-										{callout.name}
-									</a>
-								</h3>
-								<p className="text-base font-semibold text-gray-900 dark:text-gray-100">{callout.description}</p>
+								<div className="absolute z-10 bottom-0 p-4">
+									<h3 className="mt-6 text-sm text-neutral-200">
+										<a href={callout.href}>
+											<span className="absolute inset-0" />
+											{callout.name}
+										</a>
+									</h3>
+									<p className="text-base font-semibold text-neutral-100">{callout.description}</p>
+								</div>
 							</div>
 						))}
 					</div>
