@@ -50,9 +50,11 @@ export default function RootLayout({
 
 	return (
 		<html lang="en">
-			<body className={`flex min-h-screen flex-col items-center justify-between p-8 lg:pb-24 ${inter.className}`}>
+			<body className={`flex min-h-screen flex-col items-center justify-between lg:pb-24 ${inter.className}`}>
 				<NavbarComponent links={navbar} />
-				{children}
+				<div className="mt-36">
+					{children}
+				</div>
 				<CardComponent cards={cards} />
 				<FooterComponent />
 			</body>
