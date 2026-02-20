@@ -1,19 +1,21 @@
 import type { Metadata } from 'next'
 import { Mail, Phone, MapPin, Clock, ArrowRight } from 'lucide-react'
-import dynamic from 'next/dynamic'
+// import dynamic from 'next/dynamic'
+import OfficeMap from '@/components/contact/OfficeMap'
+import { Suspense } from 'react'
 
 // Dynamically import the map to avoid SSR
-const OfficeMap = dynamic(
-	() => import('@/components/contact/OfficeMap').then((m) => m.OfficeMap),
-	{
-		ssr: false,
-		loading: () => (
-			<div className="w-full h-[400px] border border-[var(--border)] bg-[var(--bg-subtle)] flex items-center justify-center">
-				<p className="text-xs font-mono text-[var(--text-subtle)]">Loading map…</p>
-			</div>
-		),
-	},
-)
+// const OfficeMap = dynamic(
+// 	() => import('@/components/contact/OfficeMap').then((m) => m.OfficeMap),
+// 	{
+// 		ssr: false,
+// 		loading: () => (
+// 			<div className="w-full h-[400px] border border-[var(--border)] bg-[var(--bg-subtle)] flex items-center justify-center">
+// 				<p className="text-xs font-mono text-[var(--text-subtle)]">Loading map…</p>
+// 			</div>
+// 		),
+// 	},
+// )
 
 export const metadata: Metadata = {
 	title: 'Contact',
@@ -230,14 +232,18 @@ export default function ContactPage() {
 			<section aria-label="Office location map" className="border-t border-[var(--border)]">
 				<div className="mx-auto max-w-7xl px-6 lg:px-8 pt-12 pb-4">
 					<p className="text-xs font-mono uppercase tracking-widest text-[var(--brand)] mb-2">Find Us</p>
-					<h2 className="text-xl font-bold text-[var(--text)] mb-6">Our Office</h2>
-				</div>
-				<OfficeMap />
-				<div className="mx-auto max-w-7xl px-6 lg:px-8 py-4">
+					<h2 className="text-xl font-bold text-[var(--text)] mb-4">Our Office</h2>
 					<p className="text-xs text-[var(--text-subtle)] font-mono">
-						Jl. Bangka Raya No. 48, Mampang Prapatan 12720, Jakarta Selatan, Indonesia — map data © OpenStreetMap contributors
+						Map data &copy; OpenStreetMap contributors
 					</p>
 				</div>
+				<Suspense fallback={
+					<div className="w-full h-[400px] border border-[var(--border)] bg-[var(--bg-subtle)] flex items-center justify-center">
+						<p className="text-xs font-mono text-[var(--text-subtle)]">Loading map…</p>
+					</div>
+				}>
+					<OfficeMap />
+				</Suspense>
 			</section>
 		</article>
 	)
