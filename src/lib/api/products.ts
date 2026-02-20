@@ -15,9 +15,9 @@ export type FeaturedProduct = {
 
 const mockProduct: FeaturedProduct = {
 	label: 'New',
-	name: 'SABAKO Monitor',
-	description: 'Real-time IoT dashboard for industrial deployments — now in early access.',
-	href: '/work/smart-building',
+	name: 'OtaByte Project',
+	description: 'Independent virtual entertainment artist — peek the project.',
+	href: 'https://project.otabyte.net/?utm_source=sabako.id&utm_medium=banner&utm_campaign=landing_page&utm_content=otabyte-project',
 	active: true,
 }
 
