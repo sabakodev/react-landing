@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { ArrowRight } from 'lucide-react'
 import Link from 'next/link'
+import { getWorks } from '@/lib/api/works'
 
 export const metadata: Metadata = {
 	title: 'Work',
@@ -10,76 +11,15 @@ export const metadata: Metadata = {
 	openGraph: { title: 'Work & Portfolio — SABAKO', description: 'Selected projects from SABAKO.' },
 }
 
-const projects = [
-	{
-		id: 'enterprise-erp',
-		category: 'Web Application',
-		title: 'Enterprise Resource Planning System',
-		client: 'Government Agency',
-		year: '2024',
-		description: 'A comprehensive ERP system built for a government agency, enabling integrated management of procurement, HR, finance, and reporting across multiple departments.',
-		tags: ['React', 'Node.js', 'PostgreSQL', 'Docker'],
-		type: 'web',
-	},
-	{
-		id: 'logistics-mobile',
-		category: 'Mobile Product',
-		title: 'Real-time Logistics Tracking App',
-		client: 'Logistics Company, Surabaya',
-		year: '2024',
-		description: 'A cross-platform mobile application enabling real-time GPS tracking, proof-of-delivery, and driver–dispatcher communication for a major logistics group.',
-		tags: ['React Native', 'Firebase', 'Google Maps API'],
-		type: 'mobile',
-	},
-	{
-		id: 'smart-building',
-		category: 'Connected System',
-		title: 'Smart Building Management Platform',
-		client: 'Commercial Developer, BSD City',
-		year: '2023',
-		description: 'End-to-end IoT platform including embedded firmware for sensors, MQTT messaging, and a Next.js management dashboard for a commercial property developer.',
-		tags: ['IoT', 'MQTT', 'Next.js', 'TimescaleDB'],
-		type: 'iot',
-	},
-	{
-		id: 'saas-hrm',
-		category: 'SaaS Platform',
-		title: 'HR Management SaaS',
-		client: 'Mid-size Enterprise',
-		year: '2023',
-		description: 'A full-featured human resource management platform with payroll, leave management, performance reviews, and subscription billing via Stripe.',
-		tags: ['Next.js', 'Prisma', 'Stripe', 'AWS'],
-		type: 'web',
-	},
-	{
-		id: 'ecommerce-marketplace',
-		category: 'E-commerce',
-		title: 'Multi-vendor Marketplace',
-		client: 'Retail Group, Jakarta',
-		year: '2022',
-		description: 'A high-traffic multi-vendor marketplace handling thousands of daily transactions with real-time inventory, seller dashboards, and a mobile buyer app.',
-		tags: ['Next.js', 'Elasticsearch', 'Redis', 'Flutter'],
-		type: 'web',
-	},
-	{
-		id: 'water-monitoring',
-		category: 'Connected System',
-		title: 'Industrial Water Quality Monitor',
-		client: 'Manufacturing Facility',
-		year: '2022',
-		description: 'IoT-based water quality monitoring system with embedded sensors, alerting, compliance reporting, and a web dashboard for facility management.',
-		tags: ['Embedded C', 'MQTT', 'Node.js', 'React'],
-		type: 'iot',
-	},
-]
-
 const categoryColors: Record<string, string> = {
 	web: 'text-blue-500',
 	mobile: 'text-purple-500',
 	iot: 'text-green-500',
 }
 
-export default function WorkPage() {
+export default async function WorkPage() {
+	const projects = await getWorks()
+
 	return (
 		<article>
 			<header className="border-b border-[var(--border)] pt-32 pb-16">
@@ -100,8 +40,9 @@ export default function WorkPage() {
 				<div className="mx-auto max-w-7xl px-6 lg:px-8">
 					<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-[var(--border)]">
 						{projects.map((project) => (
-							<article
+							<Link
 								key={project.id}
+								href={`/work/${project.slug}`}
 								id={project.id}
 								className="bg-[var(--bg)] p-8 flex flex-col group hover:bg-[var(--bg-subtle)] transition-colors"
 							>
@@ -135,7 +76,7 @@ export default function WorkPage() {
 									View case study
 									<ArrowRight size={12} className="transition-transform group-hover:translate-x-1" />
 								</div>
-							</article>
+							</Link>
 						))}
 					</div>
 				</div>

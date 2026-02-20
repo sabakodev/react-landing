@@ -100,11 +100,12 @@ function formatDate(iso: string) {
 	})
 }
 
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-	const post = posts[params.slug]
-	if (!post) return { title: 'Post Not Found' }
+export async function generateMetadata(props: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+    const params = await props.params;
+    const post = posts[params.slug]
+    if (!post) return { title: 'Post Not Found' }
 
-	return {
+    return {
 		title: post.title,
 		description: post.excerpt,
 		alternates: { canonical: `https://sabako.id/blog/${params.slug}` },
@@ -121,11 +122,12 @@ export async function generateStaticParams() {
 	return Object.keys(posts).map((slug) => ({ slug }))
 }
 
-export default function BlogPostPage({ params }: { params: { slug: string } }) {
-	const post = posts[params.slug]
-	if (!post) notFound()
+export default async function BlogPostPage(props: { params: Promise<{ slug: string }> }) {
+    const params = await props.params;
+    const post = posts[params.slug]
+    if (!post) notFound()
 
-	return (
+    return (
 		<article>
 			{/* Header */}
 			<header className="border-b border-[var(--border)] pt-32 pb-16">
