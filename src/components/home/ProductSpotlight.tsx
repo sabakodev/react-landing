@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, Sparkles } from 'lucide-react'
 import { useState, useEffect } from 'react'
 import type { FeaturedProduct } from '@/lib/api/products'
 
@@ -72,8 +72,8 @@ export function ProductSpotlightBanner({ product }: { product: FeaturedProduct }
 			/>
 			<div className="relative mx-auto max-w-7xl px-6 lg:px-8 py-8 flex flex-col sm:flex-row items-start sm:items-center gap-6">
 				<div className="flex items-start gap-4 flex-1 min-w-0">
-					<div className="flex-shrink-0 w-10 h-10 bg-[var(--brand)] flex items-center justify-center text-white font-bold text-lg font-mono">
-						✦
+					<div className="flex-shrink-0 w-10 h-10 text-[var(--brand)] flex items-center justify-center font-bold text-lg font-mono">
+						<Sparkles size={20} className="text-[var(--brand)]" />
 					</div>
 					<div>
 						<div className="flex items-center gap-2 mb-1">
