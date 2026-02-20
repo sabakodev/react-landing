@@ -10,6 +10,8 @@ export default function ErrorPage({
 	error: Error & { digest?: string }
 	reset: () => void
 }) {
+	const dev = process.env.NODE_ENV === 'development'
+
 	return (
 		<div className="flex flex-col items-center justify-center min-h-[100svh] px-6 text-center">
 			<p className="text-xs font-mono uppercase tracking-widest text-red-500 mb-4">
@@ -19,17 +21,16 @@ export default function ErrorPage({
 				This is unexpected.
 			</h1>
 			<p className="text-[var(--text-muted)] mb-2 max-w-sm">
-				{process.env.NODE_ENV === 'development' ? `${error.cause}` : 'Something unexpected happened. Please try again.'}
+				Something unexpected happened. Please try again.
 			</p>
 			{error?.digest && (
 				<p className="text-xs font-mono text-[var(--text-subtle)] mb-10">
 					Error ID: {error.digest}
 				</p>
 			)}
-			{process.env.NODE_ENV === 'development' && (
-				<pre className="text-xs font-mono text-[var(--text-subtle)] mb-10">
+			{dev && (
+				<pre className="text-xs font-mono text-[var(--text-subtle)] mb-10 max-w-sm overflow-scroll bg-gray-50 p-2">
 					{error.message}
-					{error.stack}
 				</pre>
 			)}
 			<div className="flex items-center gap-4">
