@@ -15,9 +15,9 @@ const typeColor: Record<string, string> = {
 	iot: 'text-green-500',
 }
 const typeColorHover: Record<string, string> = {
-	web: 'group-hover:bg-blue-500 group-hover:text-blue-50 transition-colors',
-	mobile: 'group-hover:bg-purple-500 group-hover:text-purple-50 transition-colors',
-	iot: 'group-hover:bg-green-500 group-hover:text-green-50 transition-colors',
+	web: 'group-hover:bg-blue-50 transition-colors',
+	mobile: 'group-hover:bg-purple-50 transition-colors',
+	iot: 'group-hover:bg-green-50 transition-colors',
 }
 
 export async function WorkSection() {

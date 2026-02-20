@@ -38,7 +38,7 @@ export function HeroSection() {
 
 	return (
 		<section
-			className="relative min-h-[100svh] flex flex-col justify-center overflow-hidden"
+			className="relative min-h-[100svh] flex flex-col justify-center overflow-hidden cursor-crosshair"
 			aria-label="Hero section"
 		>
 			{/* Grid background */}
