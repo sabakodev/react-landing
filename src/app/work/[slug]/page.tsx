@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { ArrowRight, ArrowLeft, Globe, Smartphone, Cpu } from 'lucide-react'
 import { getWork, getWorks } from '@/lib/api/works'
 import { notFound } from 'next/navigation'
+import { OtherWorks } from '@/components/work/OtherWorks'
 
 type Props = { params: Promise<{ slug: string }> }
 
@@ -12,10 +13,10 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata(props: Props): Promise<Metadata> {
-    const params = await props.params;
-    const work = await getWork(params.slug)
-    if (!work) return { title: 'Project Not Found' }
-    return {
+	const params = await props.params
+	const work = await getWork(params.slug)
+	if (!work) return { title: 'Project Not Found' }
+	return {
 		title: `${work.title} — Case Study`,
 		description: work.description,
 		alternates: { canonical: `https://sabako.id/work/${work.slug}` },
@@ -39,13 +40,13 @@ const typeColor: Record<string, string> = {
 }
 
 export default async function WorkCaseStudyPage(props: Props) {
-    const params = await props.params;
-    const work = await getWork(params.slug)
-    if (!work) notFound()
+	const params = await props.params
+	const work = await getWork(params.slug)
+	if (!work) notFound()
 
-    const Icon = typeIcon[work.type] ?? Globe
+	const Icon = typeIcon[work.type] ?? Globe
 
-    return (
+	return (
 		<article>
 			{/* Header */}
 			<header className="border-b border-[var(--border)] pt-32 pb-16">
@@ -170,6 +171,8 @@ export default async function WorkCaseStudyPage(props: Props) {
 					</div>
 				</div>
 			</section>
+
+			<OtherWorks current={work.id} />
 		</article>
 	)
 }
