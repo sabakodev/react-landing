@@ -9,9 +9,9 @@ import { ProductSpotlightBanner } from '@/components/home/ProductSpotlight'
 import { getFeaturedProduct } from '@/lib/api/products'
 
 export const metadata: Metadata = {
-	title: 'SABAKO — Digital Experiences. Mobile Products. Connected Systems.',
+	title: 'SABAKO — Rewrite your business.',
 	description:
-		'SABAKO is a premium IT agency & consulting firm that builds transformative web, mobile, and IoT solutions for ambitious businesses.',
+		'We are an agency that expertise on digital transformation solutions. We build web, mobile, and IoT solutions for ambitious businesses.',
 	alternates: {
 		canonical: 'https://sabako.id',
 	},
