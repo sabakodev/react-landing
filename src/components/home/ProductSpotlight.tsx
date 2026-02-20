@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { ArrowRight, Sparkles } from 'lucide-react'
 import { useState, useEffect } from 'react'
 import type { FeaturedProduct } from '@/lib/api/products'
+import { Reveal } from '../ui/Reveal'
 
 /**
  * VARIANT A — Slim announcement bar above the navbar.
@@ -64,37 +65,39 @@ export function ProductSpotlightBanner({ product }: { product: FeaturedProduct }
 			aria-label={`Product spotlight: ${product.name}`}
 			className="border-y border-[var(--border)] bg-[var(--bg-subtle)] relative overflow-hidden"
 		>
-			{/* Decorative gradient */}
-			<div
-				className="pointer-events-none absolute inset-0"
-				style={{ background: 'radial-gradient(ellipse 60% 100% at 0% 50%, rgba(58,92,232,0.05) 0%, transparent 60%)' }}
-				aria-hidden="true"
-			/>
-			<div className="relative mx-auto max-w-7xl px-6 lg:px-8 py-8 flex flex-col sm:flex-row items-start sm:items-center gap-6">
-				<div className="flex items-start gap-4 flex-1 min-w-0">
-					<div className="flex-shrink-0 w-10 h-10 text-[var(--brand)] flex items-center justify-center font-bold text-lg font-mono">
-						<Sparkles size={20} className="text-[var(--brand)]" />
-					</div>
-					<div>
-						<div className="flex items-center gap-2 mb-1">
-							<span className="text-[10px] font-mono uppercase tracking-widest px-1.5 py-0.5 bg-[var(--brand)] text-white">
-								{product.label}
-							</span>
-							<span className="text-base font-bold text-[var(--text)]">{product.name}</span>
+			<Reveal>
+				{/* Decorative gradient */}
+				<div
+					className="pointer-events-none absolute inset-0"
+					style={{ background: 'radial-gradient(ellipse 60% 100% at 0% 50%, rgba(58,92,232,0.05) 0%, transparent 60%)' }}
+					aria-hidden="true"
+				/>
+				<div className="relative mx-auto max-w-7xl px-6 lg:px-8 py-8 flex flex-col sm:flex-row items-start sm:items-center gap-6">
+					<div className="flex items-start gap-4 flex-1 min-w-0">
+						<div className="flex-shrink-0 w-10 h-10 text-[var(--brand)] flex items-center justify-center font-bold text-lg font-mono">
+							<Sparkles size={20} className="text-[var(--brand)] hover:animate-pulse" />
 						</div>
-						<p className="text-sm text-[var(--text-muted)] leading-relaxed">{product.description}</p>
+						<div>
+							<div className="flex items-center gap-2 mb-1">
+								<span className="text-[10px] font-mono uppercase tracking-widest px-1.5 py-0.5 bg-[var(--brand)] text-white">
+									{product.label}
+								</span>
+								<span className="text-base font-bold text-[var(--text)]">{product.name}</span>
+							</div>
+							<p className="text-sm text-[var(--text-muted)] leading-relaxed">{product.description}</p>
+						</div>
+					</div>
+					<div className="flex items-center gap-3 flex-shrink-0">
+						<Link
+							href={product.href}
+							id="spotlight-banner-cta"
+							className="inline-flex items-center gap-2 px-5 py-2.5 bg-[var(--text)] text-[var(--bg)] text-xs font-medium hover:opacity-80 transition-opacity group"
+						>
+							Learn More <ArrowRight size={12} className="transition-transform group-hover:translate-x-1" />
+						</Link>
 					</div>
 				</div>
-				<div className="flex items-center gap-3 flex-shrink-0">
-					<Link
-						href={product.href}
-						id="spotlight-banner-cta"
-						className="inline-flex items-center gap-2 px-5 py-2.5 bg-[var(--text)] text-[var(--bg)] text-xs font-medium hover:opacity-80 transition-opacity group"
-					>
-						Learn More <ArrowRight size={12} className="transition-transform group-hover:translate-x-1" />
-					</Link>
-				</div>
-			</div>
+			</Reveal>
 		</section>
 	)
 }

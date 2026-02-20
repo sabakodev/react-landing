@@ -1,10 +1,20 @@
-'use client'
-
 import Link from 'next/link'
 import { ArrowRight, Mail } from 'lucide-react'
 import { Reveal } from '@/components/ui/Reveal'
 
 export function CtaSection() {
+	const jargonTemplate = [
+		"Let's turn your idea into reality.",
+		"Let's rewrite your business.",
+		"Let's scale your business.",
+		"Imagine it. We build it.",
+		"Let's make it happen.",
+		"Live your idea.",
+		"Your idea, as you imagine.",
+	]
+
+	const jargon = jargonTemplate[Math.floor(Math.random() * jargonTemplate.length)]
+
 	return (
 		<section
 			className="py-28 border-t border-[var(--border)] bg-[var(--bg-subtle)] relative overflow-hidden"
@@ -21,7 +31,7 @@ export function CtaSection() {
 			/>
 
 			<Reveal>
-				<div className="relative mx-auto max-w-7xl px-6 lg:px-8 text-center">
+				<div className="relative mx-auto max-w-2xl px-6 lg:px-8">
 					<p className="text-xs font-mono uppercase tracking-widest text-[var(--brand)] mb-4">
 						Ready to Build?
 					</p>
@@ -29,13 +39,13 @@ export function CtaSection() {
 						id="cta-heading"
 						className="text-5xl font-bold text-[var(--text)] max-w-2xl mx-auto leading-tight mb-6"
 					>
-						Let&apos;s turn your idea into reality.
+						{jargon}
 					</h2>
-					<p className="text-lg text-[var(--text-muted)] max-w-xl mx-auto mb-12">
+					<p className="text-lg text-[var(--text-muted)] mb-12">
 						Whether you need a web app, mobile product, or IoT solution — our team is ready to consult, architect, and deliver.
 					</p>
 
-					<div className="flex flex-wrap justify-center gap-4">
+					<div className="flex flex-wrap gap-4">
 						<Link
 							href="/contact"
 							id="cta-start-project"
