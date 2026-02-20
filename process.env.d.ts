@@ -1,18 +1,23 @@
-// Source - https://stackoverflow.com/a/53981706
-// Posted by Karol Majewski, modified by community. See post 'Timeline' for change history
-// Retrieved 2026-02-21, License - CC BY-SA 4.0
+/**
+ * Environment variable type declarations.
+ * Add new env vars here to get full TypeScript IntelliSense.
+ */
+declare namespace NodeJS {
+	interface ProcessEnv {
+		/** WordPress GraphQL endpoint (WPGraphQL plugin required).
+		 *  Example: https://your-wordpress-site.com/graphql
+		 *  When empty, the app falls back to mock data automatically.
+		 */
+		NEXT_PUBLIC_WP_GRAPHQL_URL?: string
 
-declare global {
-	namespace NodeJS {
-		interface ProcessEnv {
-			NODE_ENV: 'development' | 'production'
-			PORT?: string
-			NEXT_PUBLIC_CF_BEACON_TOKEN: string
-			NEXT_PUBLIC_GA_ID: string
-		}
+		/** Cloudflare Web Analytics beacon token.
+		 *  Find at: Cloudflare Dashboard → Web Analytics → your site → JS Snippet.
+		 */
+		NEXT_PUBLIC_CF_BEACON_TOKEN?: string
+
+		/** Google Analytics 4 Measurement ID (G-XXXXXXXXXX). */
+		NEXT_PUBLIC_GA_ID?: string
+
+		NODE_ENV: 'development' | 'production' | 'test'
 	}
 }
-
-// If this file has no import/export statements (i.e. is a script)
-// convert it into a module by adding an empty export statement.
-export {}
