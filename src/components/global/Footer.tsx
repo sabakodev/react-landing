@@ -1,3 +1,5 @@
+'use client'
+
 import Link from 'next/link'
 import Image from 'next/image'
 import { Mail, MapPin, Phone } from 'lucide-react'
@@ -34,7 +36,7 @@ export function Footer() {
 								alt="SABAKO logo"
 								width={28}
 								height={28}
-								className="h-7 w-7 dark:block"
+								className="h-7 w-7 hidden dark:block"
 							/>
 							<Image
 								src="/sabako-dark.svg"
@@ -49,6 +51,9 @@ export function Footer() {
 						</Link>
 						<p className="text-sm text-[var(--text-muted)] leading-relaxed max-w-xs">
 							IT Agency & Consulting — building Digital Experiences, Mobile Products, and Connected Systems for businesses worldwide.
+						</p>
+						<p className="text-sm font-mono font-semibold text-[var(--brand)]">
+							&ldquo;Beyond the Horizon&rdquo;
 						</p>
 						<div className="space-y-2 text-sm text-[var(--text-muted)]">
 							<a
@@ -91,6 +96,17 @@ export function Footer() {
 										</Link>
 									</li>
 								))}
+								{/* Cookie Settings — only in the Legal column */}
+								{title === 'Legal' && (
+									<li>
+										<button
+											onClick={() => window.dispatchEvent(new CustomEvent('cookie-settings-open'))}
+											className="text-sm text-[var(--text-muted)] hover:text-[var(--text)] transition-colors hover-underline text-left"
+										>
+											Cookie Settings
+										</button>
+									</li>
+								)}
 							</ul>
 						</div>
 					))}

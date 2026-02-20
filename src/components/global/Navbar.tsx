@@ -93,7 +93,7 @@ export function Navbar() {
 		<>
 			<header
 				className={clsx(
-					'fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b',
+					'w-full transition-all duration-300 border-b',
 					scrolled
 						? 'border-[var(--border)] bg-[var(--bg)]/90 backdrop-blur-xl'
 						: 'border-transparent bg-transparent',
@@ -114,14 +114,14 @@ export function Navbar() {
 							alt="SABAKO logo"
 							width={32}
 							height={32}
-							className="h-7 w-7 dark:block"
+							className="h-7 w-7 hidden dark:block"
 						/>
 						<Image
 							src="/sabako-dark.svg"
 							alt="SABAKO logo"
 							width={32}
 							height={32}
-							className="h-7 w-7 dark:hidden"
+							className="h-7 w-7 block dark:hidden"
 						/>
 						<span className="text-lg font-bold tracking-tight font-mono text-[var(--text)] group-hover:text-[var(--brand)] transition-colors">
 							SABAKO
