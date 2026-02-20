@@ -212,6 +212,28 @@ export default function ContactPage() {
 
 							<div>
 								<label
+									htmlFor="contact-industry-size"
+									className="block text-xs font-mono uppercase tracking-widest text-[var(--text-subtle)] mb-2"
+								>
+									Industry Size
+								</label>
+								<select
+									id="contact-industry-size"
+									name="industry-size"
+									className="w-full border border-[var(--border)] bg-[var(--bg)] text-[var(--text)] px-4 py-3 text-sm focus:outline-none focus:border-[var(--brand)] transition-colors appearance-none cursor-pointer"
+								>
+									<option value="">Select an industry size…</option>
+									<option value="personal">Myself / 1 employees</option>
+									<option value="team">Small Team / 2-10 employees</option>
+									<option value="startup">Startup / 11-99 employees</option>
+									<option value="small">Small Enterprise / 100-499 employees</option>
+									<option value="mid-size">Mid-size Enterprise / 500-999 employees</option>
+									<option value="large">Large Enterprise / 1,000+ employees</option>
+								</select>
+							</div>
+
+							<div>
+								<label
 									htmlFor="contact-message"
 									className="block text-xs font-mono uppercase tracking-widest text-[var(--text-subtle)] mb-2"
 								>
@@ -222,7 +244,7 @@ export default function ContactPage() {
 									name="body"
 									rows={5}
 									required
-									placeholder="Tell us about your project…"
+									placeholder="Tell us about your idea…"
 									className="w-full border border-[var(--border)] bg-[var(--bg)] text-[var(--text)] px-4 py-3 text-sm placeholder:text-[var(--text-subtle)] focus:outline-none focus:border-[var(--brand)] transition-colors resize-none"
 								/>
 							</div>
