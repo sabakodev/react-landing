@@ -74,7 +74,10 @@ export function Footer() {
 							</a>
 							<span className="flex items-start gap-2">
 								<MapPin size={14} className="mt-0.5 flex-shrink-0" />
-								Jl. Bangka Raya No. 48, Mampang Prapatan 12720, Jakarta, Indonesia
+								<span>
+									<span className="block">Jl. Bangka Raya No. 48, Mampang Prapatan 12720</span>
+									<span className="block">Jakarta Selatan, Indonesia</span>
+								</span>
 							</span>
 						</div>
 					</div>

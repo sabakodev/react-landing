@@ -48,6 +48,14 @@ const contacts = [
 ]
 
 export default function ContactPage() {
+	const jargonSet = [
+		"Let's talk about your next project.",
+		"Let's talk about your idea.",
+		"Ready to start your next project?",
+	]
+
+	const jargon = jargonSet[Math.floor(Math.random() * jargonSet.length)]
+
 	return (
 		<article>
 			{/* Page header */}
@@ -57,7 +65,7 @@ export default function ContactPage() {
 						Contact
 					</p>
 					<h1 className="text-5xl font-bold text-[var(--text)] max-w-2xl leading-tight">
-						Let&apos;s talk about your next project.
+						{jargon}
 					</h1>
 				</div>
 			</header>
@@ -117,7 +125,11 @@ export default function ContactPage() {
 							<div className="space-y-4">
 								<div className="flex items-start gap-3 text-sm text-[var(--text-muted)]">
 									<MapPin size={16} className="mt-0.5 text-[var(--brand)] flex-shrink-0" />
-									<span>Jl. Bangka Raya No. 48, Mampang Prapatan 12720, Jakarta, Indonesia</span>
+									<div className="space-y-1">
+										<p>Unit 1C, Jl. Bangka Raya No. 48</p>
+										<p>Mampang Prapatan 12720</p>
+										<p>Jakarta Selatan, Indonesia</p>
+									</div>
 								</div>
 								<div className="flex items-start gap-3 text-sm text-[var(--text-muted)]">
 									<Clock size={16} className="mt-0.5 text-[var(--brand)] flex-shrink-0" />
