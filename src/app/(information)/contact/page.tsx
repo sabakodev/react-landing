@@ -1,83 +1,215 @@
-import Image from 'next/image'
-import Link from 'next/link'
+import type { Metadata } from 'next'
+import { Mail, Phone, MapPin, Clock, ArrowRight } from 'lucide-react'
 
-export default function Home() {
-	const directories = [
-		{
-			label: 'WhatsApp',
-			contacts: [
-				{
-					name: 'Reyhan Fabiano',
-					value: '+62 859-1066-81052',
-					href: 'https://wa.me/62859106681052',
-				},
-				{
-					name: 'Armiko Sandi MD',
-					value: '+62 838-5475-2571',
-					href: 'https://wa.me/6283854752571',
-				},
-				{
-					name: 'Lian Roma',
-					value: '+62 821-1200-8949',
-					href: 'https://wa.me/6282112008949',
-				},
-			]
-		},
-		{
-			label: 'Email',
-			contacts: [
-				{
-					name: 'Reyhan Fabiano',
-					value: 'sales@sabako.id',
-					href: 'mailto:sales@sabako.id',
-				},
-			]
-		},
-	]
+export const metadata: Metadata = {
+	title: 'Contact',
+	description:
+		'Get in touch with SABAKO for business inquiries, project consultations, or partnerships. Reach us via WhatsApp, email, or visit our Jakarta office.',
+	alternates: { canonical: 'https://sabako.id/contact' },
+	openGraph: {
+		title: 'Contact SABAKO',
+		description: 'Start a project or inquiry — reach our team directly.',
+	},
+}
+
+const contacts = [
+	{
+		label: 'WhatsApp',
+		items: [
+			{ name: 'Reyhan Fabiano', value: '+62 857-6061-6555', href: 'https://wa.me/6285760616555' },
+			{ name: 'Armiko Sandi MD', value: '+62 838-5475-2571', href: 'https://wa.me/6283854752571' },
+			{ name: 'Lian Roma', value: '+62 821-1200-8949', href: 'https://wa.me/6282112008949' },
+		],
+		icon: Phone,
+	},
+	{
+		label: 'Email',
+		items: [
+			{ name: 'Sales & Inquiries', value: 'sales@sabako.id', href: 'mailto:sales@sabako.id' },
+		],
+		icon: Mail,
+	},
+]
+
+export default function ContactPage() {
 	return (
-		<main className="relative place-items-center lg:max-w-5xl w-full mb-16">
-			<div className="relative place-items-center lg:max-w-5xl w-full mb-16">
-				<Image
-					src="/sky.jpg"
-					alt="SABAKO"
-					className="w-full h-72 object-cover object-bottom"
-					width={1000}
-					height={1000}
-					priority
-				/>
-				<div className="mt-2 text-sm text-gray-500">
-					Photos by&nbsp;
-					<a className="text-gray-300 hover:text-gray-400" href="https://unsplash.com/photos/3YrppYQPoCI">Guillaume Galtier via Unsplash</a>
+		<article>
+			{/* Page header */}
+			<header className="border-b border-[var(--border)] pt-32 pb-16">
+				<div className="mx-auto max-w-7xl px-6 lg:px-8">
+					<p className="text-xs font-mono uppercase tracking-widest text-[var(--brand)] mb-4">
+						Contact
+					</p>
+					<h1 className="text-5xl font-bold text-[var(--text)] max-w-2xl leading-tight">
+						Let&apos;s talk about your next project.
+					</h1>
 				</div>
-				<div className="mt-16 text-gray-300 leading-6">
-					<div className="grid lg:grid-cols-2 w-full mb-32">
-						<div className="lg:w-1/2">Jl. Agung Indah 10, Tanjung Priok 14350, Jakarta, Indonesia</div>
-						<div className="grid grid-cols-2 gap-y-2">
-							<span className="text-gray-500">Monday - Friday&nbsp;</span>
-							<span>08.30 - 18.00</span>
-							<span className="text-gray-500">Saturday&nbsp;</span>
-							<span>10.00 - 14.00</span>
-						</div>
-					</div>
-					{
-						directories.map((directory, index) => (
-							<div key={index} className="grid lg:grid-cols-2 w-full mt-8">
-								<div className="font-bold">{directory.label}</div>
-								<div className="space-y-2">
-									{
-										directory.contacts.map((contact, index) => (
-											<div key={index} className="grid grid-cols-2">
-												<span className="text-gray-500">{contact.name}&nbsp;</span>
-												<Link href={contact.href}>{contact.value}</Link>
+			</header>
+
+			<div className="mx-auto max-w-7xl px-6 lg:px-8 py-20">
+				<div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+
+					{/* Contact details */}
+					<section aria-labelledby="contact-details-heading">
+						<h2 id="contact-details-heading" className="text-xl font-bold text-[var(--text)] mb-8">
+							Reach Us Directly
+						</h2>
+
+						<div className="space-y-10">
+							{contacts.map((group) => {
+								const Icon = group.icon
+								return (
+									<div key={group.label}>
+										<div className="flex items-center gap-2 mb-4">
+											<div className="p-1.5 border border-[var(--border)] text-[var(--brand)]">
+												<Icon size={14} />
 											</div>
-										))
-									}
+											<h3 className="text-xs font-mono uppercase tracking-widest text-[var(--text-subtle)]">
+												{group.label}
+											</h3>
+										</div>
+										<div className="divide-y divide-[var(--border)] border-y border-[var(--border)]">
+											{group.items.map((item) => (
+												<a
+													key={item.href}
+													href={item.href}
+													target={group.label === 'WhatsApp' ? '_blank' : undefined}
+													rel={group.label === 'WhatsApp' ? 'noopener noreferrer' : undefined}
+													className="flex items-center justify-between py-4 group hover:bg-[var(--bg-subtle)] px-2 -mx-2 transition-colors"
+												>
+													<span>
+														<span className="block text-xs text-[var(--text-subtle)]">{item.name}</span>
+														<span className="block text-sm font-medium text-[var(--text)] group-hover:text-[var(--brand)] transition-colors mt-0.5">
+															{item.value}
+														</span>
+													</span>
+													<ArrowRight
+														size={14}
+														className="text-[var(--text-subtle)] group-hover:text-[var(--brand)] group-hover:translate-x-1 transition-all"
+													/>
+												</a>
+											))}
+										</div>
+									</div>
+								)
+							})}
+						</div>
+
+						{/* Office info */}
+						<div className="mt-10 pt-10 border-t border-[var(--border)]">
+							<div className="space-y-4">
+								<div className="flex items-start gap-3 text-sm text-[var(--text-muted)]">
+									<MapPin size={16} className="mt-0.5 text-[var(--brand)] flex-shrink-0" />
+									<span>Jl. Bangka Raya No. 48, Mampang Prapatan 12720, Jakarta, Indonesia</span>
+								</div>
+								<div className="flex items-start gap-3 text-sm text-[var(--text-muted)]">
+									<Clock size={16} className="mt-0.5 text-[var(--brand)] flex-shrink-0" />
+									<div className="space-y-1">
+										<p><span className="text-[var(--text-subtle)]">Mon – Fri&nbsp;&nbsp;</span>08:30 – 19:00 WIB</p>
+										<p><span className="text-[var(--text-subtle)]">Saturday&nbsp;&nbsp;&nbsp;</span>10:00 – 14:00 WIB</p>
+									</div>
 								</div>
 							</div>
-						))
-					}
+						</div>
+					</section>
+
+					{/* Inquiry form */}
+					<section aria-labelledby="inquiry-form-heading">
+						<h2 id="inquiry-form-heading" className="text-xl font-bold text-[var(--text)] mb-8">
+							Send an Inquiry
+						</h2>
+						<form
+							action="mailto:sales@sabako.id"
+							method="get"
+							encType="text/plain"
+							className="space-y-5"
+							aria-label="Contact inquiry form"
+						>
+							<div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+								<div>
+									<label
+										htmlFor="contact-name"
+										className="block text-xs font-mono uppercase tracking-widest text-[var(--text-subtle)] mb-2"
+									>
+										Full Name
+									</label>
+									<input
+										id="contact-name"
+										name="name"
+										type="text"
+										required
+										placeholder="Your name"
+										className="w-full border border-[var(--border)] bg-[var(--bg)] text-[var(--text)] px-4 py-3 text-sm placeholder:text-[var(--text-subtle)] focus:outline-none focus:border-[var(--brand)] transition-colors"
+									/>
+								</div>
+								<div>
+									<label
+										htmlFor="contact-email"
+										className="block text-xs font-mono uppercase tracking-widest text-[var(--text-subtle)] mb-2"
+									>
+										Email
+									</label>
+									<input
+										id="contact-email"
+										name="email"
+										type="email"
+										required
+										placeholder="you@company.com"
+										className="w-full border border-[var(--border)] bg-[var(--bg)] text-[var(--text)] px-4 py-3 text-sm placeholder:text-[var(--text-subtle)] focus:outline-none focus:border-[var(--brand)] transition-colors"
+									/>
+								</div>
+							</div>
+
+							<div>
+								<label
+									htmlFor="contact-service"
+									className="block text-xs font-mono uppercase tracking-widest text-[var(--text-subtle)] mb-2"
+								>
+									Service Interested In
+								</label>
+								<select
+									id="contact-service"
+									name="service"
+									className="w-full border border-[var(--border)] bg-[var(--bg)] text-[var(--text)] px-4 py-3 text-sm focus:outline-none focus:border-[var(--brand)] transition-colors appearance-none cursor-pointer"
+								>
+									<option value="">Select a service…</option>
+									<option value="web">Digital Experiences (Web)</option>
+									<option value="mobile">Mobile Products (App)</option>
+									<option value="iot">Connected Systems (IoT)</option>
+									<option value="consulting">Consulting</option>
+									<option value="other">Other</option>
+								</select>
+							</div>
+
+							<div>
+								<label
+									htmlFor="contact-message"
+									className="block text-xs font-mono uppercase tracking-widest text-[var(--text-subtle)] mb-2"
+								>
+									Message
+								</label>
+								<textarea
+									id="contact-message"
+									name="body"
+									rows={5}
+									required
+									placeholder="Tell us about your project…"
+									className="w-full border border-[var(--border)] bg-[var(--bg)] text-[var(--text)] px-4 py-3 text-sm placeholder:text-[var(--text-subtle)] focus:outline-none focus:border-[var(--brand)] transition-colors resize-none"
+								/>
+							</div>
+
+							<button
+								id="contact-submit-btn"
+								type="submit"
+								className="w-full py-3 bg-[var(--text)] text-[var(--bg)] text-sm font-medium hover:opacity-80 transition-opacity flex items-center justify-center gap-2 group"
+							>
+								Send Message
+								<ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
+							</button>
+						</form>
+					</section>
 				</div>
 			</div>
-		</main>
+		</article>
 	)
 }

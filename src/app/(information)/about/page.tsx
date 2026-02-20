@@ -1,31 +1,164 @@
-import Image from 'next/image'
+import type { Metadata } from 'next'
+import { MapPin, Clock, Shield, Users } from 'lucide-react'
+import Link from 'next/link'
+import { ArrowRight } from 'lucide-react'
 
-export default function Home() {
+export const metadata: Metadata = {
+	title: 'About',
+	description:
+		'Learn about SABAKO — our story, mission, values, and the team behind our digital products. Established in 2018, based in Jakarta.',
+	alternates: { canonical: 'https://sabako.id/about' },
+	openGraph: {
+		title: 'About SABAKO — IT Agency & Consulting',
+		description: 'Our story, mission, and team. Based in Jakarta since 2018.',
+	},
+}
+
+const values = [
+	{
+		icon: Users,
+		title: 'People First',
+		description: 'Every decision we make starts with the user. Great experiences are never an afterthought.',
+	},
+	{
+		icon: Shield,
+		title: 'Privacy & Security',
+		description: 'Having worked with government agencies, we apply rigorous data protection standards across every project.',
+	},
+	{
+		icon: Clock,
+		title: 'Quality Over Speed',
+		description: 'We invest in lean, maintainable architecture that compounds in value over time.',
+	},
+	{
+		icon: MapPin,
+		title: 'Rooted in Jakarta',
+		description: 'Proudly built and operated from Jakarta — serving clients across Indonesia and beyond.',
+	},
+]
+
+const team = [
+	{ name: 'Reyhan Fabiano', role: 'Business Director', contact: 'https://wa.me/62859106681052' },
+	{ name: 'Api Rahman', role: 'Technical Director', contact: 'https://wa.me/6283854752571' },
+	{ name: 'Lian Roma', role: 'Marketing Director', contact: 'https://wa.me/6282112008949' },
+]
+
+export default function AboutPage() {
 	return (
-		<main className="relative place-items-center lg:max-w-5xl w-full mb-16">
-			<div className="relative place-items-center lg:max-w-5xl w-full mb-16">
-				<Image
-					src="/sky.jpg"
-					alt="SABAKO"
-					className="w-full h-72 object-cover object-bottom"
-					width={1000}
-					height={1000}
-					priority
-				/>
-				<div className="mt-2 text-sm text-gray-500">
-					Photos by&nbsp;
-					<a className="text-gray-300 hover:text-gray-400" href="https://unsplash.com/photos/3YrppYQPoCI">Guillaume Galtier via Unsplash</a>
+		<article>
+			{/* Page header */}
+			<header className="border-b border-[var(--border)] pt-32 pb-16">
+				<div className="mx-auto max-w-7xl px-6 lg:px-8">
+					<p className="text-xs font-mono uppercase tracking-widest text-[var(--brand)] mb-4">
+						About
+					</p>
+					<h1 className="text-5xl font-bold text-[var(--text)] max-w-2xl leading-tight">
+						Built on experience. Driven by craft.
+					</h1>
 				</div>
-				<div className="mt-16 text-gray-300 leading-6">
-					Our team&#39;s vision prioritizes user experience, enabling limitless creativity to come to fruition and expand horizons, opening the business limitless.
+			</header>
+
+			{/* Story */}
+			<section className="py-20 border-b border-[var(--border)]" aria-label="Our story">
+				<div className="mx-auto max-w-7xl px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+					<div>
+						<h2 className="text-2xl font-bold text-[var(--text)] mb-6">Our Story</h2>
+						<div className="space-y-4 text-[var(--text-muted)] leading-relaxed">
+							<p>
+								Founded in early 2018, SABAKO began with a simple conviction: that truly great software requires more than technical ability — it demands deep empathy for the people who use it and the businesses that depend on it.
+							</p>
+							<p>
+								Even as a young company, our team brought more than a decade of collective experience from day one. Our focus has always been on software design and architecture rather than surface aesthetics — investing time in quality setup, lean development practices, and maintainable codebases.
+							</p>
+							<p>
+								Today we serve clients across government, logistics, commercial real estate, and technology sectors — building web applications, mobile products, and IoT-connected systems that scale.
+							</p>
+						</div>
+					</div>
+					<div className="space-y-4 text-[var(--text-muted)] leading-relaxed">
+						<h2 className="text-2xl font-bold text-[var(--text)] mb-6">Our Mission</h2>
+						<p>
+							To deliver technology that transforms. We partner with ambitious businesses to design and build digital products that are fast, secure, accessible, and built to last.
+						</p>
+						<p className="border-l-2 border-[var(--brand)] pl-4 text-[var(--text)] font-medium">
+							&ldquo;We maintained our security practices and prepared to mitigate the disclosure of information that could harm either business.&rdquo;
+						</p>
+						<p>
+							Our extensive experience with government agencies means we treat data privacy as a baseline expectation — not an optional feature. Every project we ship is held to that standard.
+						</p>
+					</div>
 				</div>
-				<div className="mt-4 text-gray-300 leading-6">
-					While established in early 2018, we already had many professionals with more than a decade of experience. Our focus is on software design rather than frontend design, which pushes us to invest our time to make quality setup and lean development.
+			</section>
+
+			{/* Values */}
+			<section className="py-20 border-b border-[var(--border)] bg-[var(--bg-subtle)]" aria-labelledby="values-heading">
+				<div className="mx-auto max-w-7xl px-6 lg:px-8">
+					<h2 id="values-heading" className="text-2xl font-bold text-[var(--text)] mb-12">
+						What we stand for
+					</h2>
+					<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-[var(--border)]">
+						{values.map((value) => {
+							const Icon = value.icon
+							return (
+								<div key={value.title} className="bg-[var(--bg-subtle)] p-8">
+									<div className="p-2 border border-[var(--border)] text-[var(--brand)] bg-[var(--bg)] w-fit mb-5">
+										<Icon size={18} />
+									</div>
+									<h3 className="text-base font-bold text-[var(--text)] mb-2">{value.title}</h3>
+									<p className="text-sm text-[var(--text-muted)] leading-relaxed">{value.description}</p>
+								</div>
+							)
+						})}
+					</div>
 				</div>
-				<div className="mt-4 text-gray-300 leading-6">
-					We have extensive experience working with government agencies, and as a result, we prioritize user privacy. We take great care to ensure all user data remains confidential. We kept our security in best practice and prepared the document to mitigate disclosed information that harms one business or another. Our team&#39;s expertise in data engineering is also another merit.
+			</section>
+
+			{/* Team */}
+			<section className="py-20 border-b border-[var(--border)]" aria-labelledby="team-heading">
+				<div className="mx-auto max-w-7xl px-6 lg:px-8">
+					<h2 id="team-heading" className="text-2xl font-bold text-[var(--text)] mb-12">
+						The team
+					</h2>
+					<div className="grid grid-cols-1 sm:grid-cols-3 gap-px bg-[var(--border)]">
+						{team.map((member) => (
+							<a
+								key={member.name}
+								href={member.contact}
+								target="_blank"
+								rel="noopener noreferrer"
+								className="bg-[var(--bg)] p-8 flex flex-col gap-3 group hover:bg-[var(--bg-subtle)] transition-colors"
+							>
+								{/* Avatar placeholder */}
+								<div className="w-12 h-12 border border-[var(--border)] bg-[var(--bg-subtle)] flex items-center justify-center text-lg font-bold text-[var(--brand)] font-mono">
+									{member.name.split(' ').map((n) => n[0]).join('').slice(0, 2)}
+								</div>
+								<div>
+									<p className="text-base font-medium text-[var(--text)] group-hover:text-[var(--brand)] transition-colors">
+										{member.name}
+									</p>
+									<p className="text-sm text-[var(--text-muted)] mt-0.5">{member.role}</p>
+								</div>
+							</a>
+						))}
+					</div>
 				</div>
-			</div>
-		</main>
+			</section>
+
+			{/* CTA */}
+			<section className="py-20" aria-label="Contact call to action">
+				<div className="mx-auto max-w-7xl px-6 lg:px-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+					<p className="text-2xl font-bold text-[var(--text)] max-w-sm">
+						Interested in working with us?
+					</p>
+					<Link
+						href="/contact"
+						className="inline-flex items-center gap-2 px-6 py-3 bg-[var(--text)] text-[var(--bg)] text-sm font-medium hover:opacity-80 transition-opacity group"
+					>
+						Get in Touch
+						<ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
+					</Link>
+				</div>
+			</section>
+		</article>
 	)
 }
