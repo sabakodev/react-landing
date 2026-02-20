@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
 import { ArrowRight, MouseIcon, Sparkles } from 'lucide-react'
+import { HeroSphere } from './HeroSphere'
 
 const words = ['Digital Experiences', 'Mobile Products', 'Connected Systems']
 
@@ -59,6 +60,9 @@ export function HeroSection() {
 				className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[var(--brand)] to-transparent opacity-40"
 				aria-hidden="true"
 			/>
+
+			{/* 3D sphere — desktop only, mouse-reactive */}
+			<HeroSphere />
 
 			<div className="relative max-w-7xl px-6 lg:px-24 pt-32 pb-24">
 				{/* Badge */}
@@ -121,13 +125,7 @@ export function HeroSection() {
 					</Link>
 				</div>
 
-				{/* Motto */}
-				<p
-					className="mt-8 text-xs font-mono italic text-[var(--text-subtle)] animate-fade-up"
-					style={{ animationDelay: '0.65s', opacity: 0 }}
-				>
-					&ldquo;Beyond the Horizon&rdquo;
-				</p>
+
 
 				{/* Service pills */}
 				{/* <ServicePills data={[
