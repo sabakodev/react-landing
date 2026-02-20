@@ -1,120 +1,330 @@
-"use client"
+'use client'
 
-import Link from "next/link"
-import Image from "next/image"
-import { Disclosure } from "@headlessui/react"
-import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline"
-import useScroll from "@/lib/hooks/useScroll"
+import { useState, useEffect, useRef } from 'react'
+import Link from 'next/link'
+import Image from 'next/image'
+import { usePathname } from 'next/navigation'
+import { Menu, X, ChevronDown, Globe, Smartphone, Cpu } from 'lucide-react'
+import clsx from 'clsx'
 
-export type Link = {
-	href: string
+type ServiceItem = {
 	label: string
+	href: string
+	description: string
+	icon: React.ReactNode
 }
 
-export default function Navbar({ links }: { links: Link[] }) {
-	const scrolled = useScroll(50)
+type NavItem = {
+	label: string
+	href?: string
+	children?: ServiceItem[]
+}
+
+const services: ServiceItem[] = [
+	{
+		label: 'Digital Experiences',
+		href: '/services/web',
+		description: 'Websites, Web Apps & SaaS Platforms',
+		icon: <Globe size={16} />,
+	},
+	{
+		label: 'Mobile Products',
+		href: '/services/mobile',
+		description: 'iOS, Android & Cross-platform Apps',
+		icon: <Smartphone size={16} />,
+	},
+	{
+		label: 'Connected Systems',
+		href: '/services/iot',
+		description: 'Smart Devices & Embedded Systems',
+		icon: <Cpu size={16} />,
+	},
+]
+
+const navItems: NavItem[] = [
+	{ label: 'Home', href: '/' },
+	{ label: 'About', href: '/about' },
+	{ label: 'Services', children: services },
+	{ label: 'Work', href: '/work' },
+	{ label: 'Blog', href: '/blog' },
+	{ label: 'Contact', href: '/contact' },
+]
+
+export function Navbar() {
+	const [scrolled, setScrolled] = useState(false)
+	const [menuOpen, setMenuOpen] = useState(false)
+	const [dropdownOpen, setDropdownOpen] = useState(false)
+	const pathname = usePathname()
+	const dropdownRef = useRef<HTMLLIElement>(null)
+
+	useEffect(() => {
+		const handleScroll = () => setScrolled(window.scrollY > 40)
+		window.addEventListener('scroll', handleScroll, { passive: true })
+		return () => window.removeEventListener('scroll', handleScroll)
+	}, [])
+
+	// Close menu on route change
+	useEffect(() => {
+		setMenuOpen(false)
+		setDropdownOpen(false)
+	}, [pathname])
+
+	// Close dropdown on outside click
+	useEffect(() => {
+		const handleClick = (e: MouseEvent) => {
+			if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+				setDropdownOpen(false)
+			}
+		}
+		document.addEventListener('mousedown', handleClick)
+		return () => document.removeEventListener('mousedown', handleClick)
+	}, [])
+
+	// Lock scroll when mobile menu is open
+	useEffect(() => {
+		document.body.style.overflow = menuOpen ? 'hidden' : ''
+		return () => { document.body.style.overflow = '' }
+	}, [menuOpen])
+
+	const isActive = (href: string) =>
+		href === '/' ? pathname === '/' : pathname.startsWith(href)
 
 	return (
-		<div className={`fixed top-0 w-full pt-6 pb-4 z-50 ${scrolled ? 'backdrop-blur-xl bg-neutral-800/50' : 'bg-neutral-800/0'} transition-all`}>
-			<Disclosure as="nav" className="relative grid grid-cols-7 lg:max-w-7xl mx-auto">
-				{({ open }) => (
-					<>
-						<div className="flex items-center justify-between sm:hidden col-span-7 px-4">
-							<Link href="/" className="flex justify-center items-center space-x-2">
-								<Image src="/sabako-light.svg" alt="" height={256} width={256} className="h-8 w-8" />
-								<h1 className="text-2xl font-bold font-mono">SABAKO</h1>
-							</Link>
-							<Disclosure.Button className="relative border border-neutral-800 rounded-md bg-zinc-800/30 hover:bg-zinc-800 p-2 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
-								<span className="absolute -inset-0.5" />
-								<span className="sr-only">Open main menu</span>
-								{open ? (
-									<XMarkIcon className="block h-6 w-6" aria-hidden="true" />
-								) : (
-									<Bars3Icon className="block h-6 w-6" aria-hidden="true" />
-								)}
-							</Disclosure.Button>
-						</div>
-						<Link href="/" className="hidden sm:flex justify-start items-center space-x-2 mb-4 col-span-2">
-							<Image src="/sabako-light.svg" alt="" height={128} width={128} className="h-10 w-10" />
-							<h1 className="text-2xl font-bold font-mono">SABAKO</h1>
-						</Link>
-						<div className="hidden sm:flex w-full items-center justify-end space-x-8 lg:static lg:w-auto font-mono col-span-5">
-							{
-								links.map((link, index) => (
-									<Link key={index} href={link.href} className="hover:text-neutral-50 hover:underline underline-offset-8">{link.label}</Link>
-								))
-							}
-						</div>
-
-						<Disclosure.Panel className="sm:hidden col-span-7 transition">
-							<div className={`space-y-1 px-2 pb-3 pt-2 mt-4 h-full w-full ${(scrolled || open) ? 'backdrop-blur-xl bg-neutral-800/50' : 'bg-neutral-800/0'} font-mono`}>
-								{links.map((link) => (
-									<Disclosure.Button
-										key={link.label}
-										as="a"
-										href={link.href}
-										className="text-neutral-300 hover:bg-neutral-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
-									>
-										{link.label}
-									</Disclosure.Button>
-								))}
-							</div>
-						</Disclosure.Panel>
-					</>
+		<>
+			<header
+				className={clsx(
+					'fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b',
+					scrolled
+						? 'border-[var(--border)] bg-[var(--bg)]/90 backdrop-blur-xl'
+						: 'border-transparent bg-transparent',
 				)}
-			</Disclosure>
-		</div>
-	)
-}
-
-export function OldNavbar({ links }: { links: Link[] }) {
-	return (
-		<Disclosure as="nav" className="relative lg:max-w-5xl w-full mb-8">
-			{({ open }) => (
-				<>
-					<div className="flex items-center justify-between sm:hidden">
-						<Link href="/" className="flex justify-center items-center space-x-2">
-							<Image src="/sabako-light.svg" alt="" height={256} width={256} className="h-8 w-8" />
-							<h1 className="text-2xl font-bold font-mono">SABAKO</h1>
-						</Link>
-						<Disclosure.Button className="relative border border-neutral-800 rounded-md bg-zinc-800/30 hover:bg-zinc-800 p-2 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
-							<span className="absolute -inset-0.5" />
-							<span className="sr-only">Open main menu</span>
-							{open ? (
-								<XMarkIcon className="block h-6 w-6" aria-hidden="true" />
-							) : (
-								<Bars3Icon className="block h-6 w-6" aria-hidden="true" />
-							)}
-						</Disclosure.Button>
-					</div>
-					<Link href="/" className="hidden sm:flex justify-center items-center space-x-2 mb-4">
-						<Image src="/sabako-light.svg" alt="" height={256} width={256} className="h-14 w-14" />
-						<h1 className="text-3xl font-bold font-mono">SABAKO</h1>
+			>
+				<nav
+					className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6 lg:px-8"
+					aria-label="Main navigation"
+				>
+					{/* Logo */}
+					<Link
+						href="/"
+						className="flex items-center gap-2.5 group"
+						aria-label="SABAKO home"
+					>
+						<Image
+							src="/sabako-light.svg"
+							alt="SABAKO logo"
+							width={32}
+							height={32}
+							className="h-7 w-7 dark:block"
+						/>
+						<Image
+							src="/sabako-dark.svg"
+							alt="SABAKO logo"
+							width={32}
+							height={32}
+							className="h-7 w-7 dark:hidden"
+						/>
+						<span className="text-lg font-bold tracking-tight font-mono text-[var(--text)] group-hover:text-[var(--brand)] transition-colors">
+							SABAKO
+						</span>
 					</Link>
-					<div className="hidden sm:flex w-full justify-around border-b pb-6 pt-8 backdrop-blur-2xl border-neutral-800 bg-zinc-800/30 from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:p-4 font-mono">
-						{
-							links.map((link, index) => (
-								<Link key={index} href={link.href} className="hover:text-neutral-300 hover:underline underline-offset-8">{link.label}</Link>
-							))
-						}
+
+					{/* Desktop Nav */}
+					<ul className="hidden lg:flex items-center gap-1" role="list">
+						{navItems.map((item) =>
+							item.children ? (
+								<li key={item.label} className="relative" ref={dropdownRef}>
+									<button
+										id="services-menu-button"
+										aria-haspopup="true"
+										aria-expanded={dropdownOpen}
+										onClick={() => setDropdownOpen((v) => !v)}
+										className={clsx(
+											'flex items-center gap-1 px-3 py-2 text-sm font-medium transition-colors',
+											'text-[var(--text-muted)] hover:text-[var(--text)]',
+										)}
+									>
+										{item.label}
+										<ChevronDown
+											size={14}
+											className={clsx('transition-transform duration-200', dropdownOpen && 'rotate-180')}
+										/>
+									</button>
+
+									{/* Dropdown */}
+									{dropdownOpen && (
+										<div
+											role="menu"
+											aria-labelledby="services-menu-button"
+											className={clsx(
+												'absolute top-full left-1/2 -translate-x-1/2 mt-2 w-72',
+												'border border-[var(--border)] bg-[var(--bg)]',
+												'shadow-lg shadow-black/5',
+												'animate-fade-up',
+											)}
+										>
+											{services.map((service) => (
+												<Link
+													key={service.href}
+													href={service.href}
+													role="menuitem"
+													className={clsx(
+														'flex items-start gap-3 px-4 py-3',
+														'text-[var(--text-muted)] hover:text-[var(--text)] hover:bg-[var(--bg-subtle)]',
+														'border-b border-[var(--border)] last:border-b-0',
+														'transition-colors group',
+													)}
+												>
+													<span className="mt-0.5 text-[var(--brand)] flex-shrink-0">
+														{service.icon}
+													</span>
+													<span>
+														<span className="block text-sm font-medium text-[var(--text)] group-hover:text-[var(--brand)] transition-colors">
+															{service.label}
+														</span>
+														<span className="block text-xs text-[var(--text-subtle)] mt-0.5">
+															{service.description}
+														</span>
+													</span>
+												</Link>
+											))}
+										</div>
+									)}
+								</li>
+							) : (
+								<li key={item.label}>
+									<Link
+										href={item.href!}
+										className={clsx(
+											'px-3 py-2 text-sm font-medium transition-colors block',
+											isActive(item.href!)
+												? 'text-[var(--text)]'
+												: 'text-[var(--text-muted)] hover:text-[var(--text)]',
+										)}
+									>
+										{item.label}
+									</Link>
+								</li>
+							),
+						)}
+					</ul>
+
+					{/* Desktop CTA */}
+					<div className="hidden lg:flex items-center gap-4">
+						<Link
+							href="/contact"
+							id="nav-cta-button"
+							className={clsx(
+								'px-4 py-2 text-sm font-medium',
+								'bg-[var(--text)] text-[var(--bg)]',
+								'hover:opacity-80 transition-opacity',
+							)}
+						>
+							Start a Project
+						</Link>
 					</div>
 
-					<Disclosure.Panel className="sm:hidden">
-						<div className="space-y-1 px-2 pb-3 pt-2 mt-4 h-full w-full bg-neutral-900 font-mono">
-							{links.map((link) => (
-								<Disclosure.Button
-									key={link.label}
-									as="a"
-									href={link.href}
-									className="text-neutral-300 hover:bg-neutral-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
-								>
-									{link.label}
-								</Disclosure.Button>
-							))}
-						</div>
-					</Disclosure.Panel>
-				</>
-			)}
-		</Disclosure>
+					{/* Mobile Hamburger */}
+					<button
+						id="mobile-menu-toggle"
+						onClick={() => setMenuOpen((v) => !v)}
+						className="lg:hidden p-2 text-[var(--text-muted)] hover:text-[var(--text)] transition-colors"
+						aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+						aria-expanded={menuOpen}
+					>
+						{menuOpen ? <X size={22} /> : <Menu size={22} />}
+					</button>
+				</nav>
+			</header>
+
+			{/* Mobile Menu */}
+			<div
+				className={clsx(
+					'fixed inset-0 z-40 lg:hidden transition-all duration-300',
+					menuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none',
+				)}
+			>
+				{/* Backdrop */}
+				<div
+					className="absolute inset-0 bg-black/40 backdrop-blur-sm"
+					onClick={() => setMenuOpen(false)}
+				/>
+				{/* Panel */}
+				<div
+					className={clsx(
+						'absolute top-0 right-0 h-full w-full max-w-sm border-l border-[var(--border)]',
+						'bg-[var(--bg)] flex flex-col',
+						'transition-transform duration-300',
+						menuOpen ? 'translate-x-0' : 'translate-x-full',
+					)}
+				>
+					<div className="flex items-center justify-between px-6 h-16 border-b border-[var(--border)]">
+						<span className="text-sm font-mono font-bold text-[var(--text)]">Navigation</span>
+						<button
+							onClick={() => setMenuOpen(false)}
+							className="p-2 text-[var(--text-muted)] hover:text-[var(--text)]"
+							aria-label="Close menu"
+						>
+							<X size={20} />
+						</button>
+					</div>
+					<nav className="flex-1 overflow-y-auto py-6 px-6" aria-label="Mobile navigation">
+						<ul className="space-y-1" role="list">
+							{navItems.map((item) =>
+								item.children ? (
+									<li key={item.label}>
+										<p className="text-xs font-mono uppercase tracking-widest text-[var(--text-subtle)] mt-6 mb-2 first:mt-0">
+											{item.label}
+										</p>
+										{item.children.map((child) => (
+											<Link
+												key={child.href}
+												href={child.href}
+												className={clsx(
+													'flex items-start gap-3 py-3 border-b border-[var(--border)]',
+													'text-[var(--text-muted)] hover:text-[var(--text)] transition-colors',
+												)}
+											>
+												<span className="mt-0.5 text-[var(--brand)]">{child.icon}</span>
+												<span>
+													<span className="block text-sm font-medium text-[var(--text)]">
+														{child.label}
+													</span>
+													<span className="block text-xs text-[var(--text-subtle)]">
+														{child.description}
+													</span>
+												</span>
+											</Link>
+										))}
+									</li>
+								) : (
+									<li key={item.label}>
+										<Link
+											href={item.href!}
+											className={clsx(
+												'flex items-center justify-between py-3 border-b border-[var(--border)]',
+												'text-sm font-medium transition-colors',
+												isActive(item.href!)
+													? 'text-[var(--text)]'
+													: 'text-[var(--text-muted)] hover:text-[var(--text)]',
+											)}
+										>
+											{item.label}
+										</Link>
+									</li>
+								),
+							)}
+						</ul>
+					</nav>
+					<div className="px-6 py-6 border-t border-[var(--border)]">
+						<Link
+							href="/contact"
+							className="block w-full text-center py-3 text-sm font-medium bg-[var(--text)] text-[var(--bg)] hover:opacity-80 transition-opacity"
+						>
+							Start a Project
+						</Link>
+					</div>
+				</div>
+			</div>
+		</>
 	)
 }

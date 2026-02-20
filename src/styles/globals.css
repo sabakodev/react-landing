@@ -2,6 +2,115 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-	@apply bg-black text-white
+@layer base {
+  :root {
+    --bg:          #ffffff;
+    --bg-subtle:   #f9fafb;
+    --border:      #e5e7eb;
+    --border-strong: #d1d5db;
+    --text:        #0a0a0a;
+    --text-muted:  #6b7280;
+    --text-subtle: #9ca3af;
+    --brand:       #3a5ce8;
+    --brand-hover: #2a43c9;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg:           #0a0a0a;
+      --bg-subtle:    #111111;
+      --border:       #1f1f1f;
+      --border-strong:#2a2a2a;
+      --text:         #fafafa;
+      --text-muted:   #a1a1a1;
+      --text-subtle:  #6b6b6b;
+      --brand:        #5c84ff;
+      --brand-hover:  #8aaaff;
+    }
+  }
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: var(--font-inter), system-ui, -apple-system, sans-serif;
+    line-height: 1.6;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  /* Remove default margins */
+  h1, h2, h3, h4, h5, h6, p {
+    margin: 0;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--bg);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--border-strong);
+    border-radius: 0;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--text-muted);
+  }
+
+  /* Focus ring */
+  :focus-visible {
+    outline: 2px solid var(--brand);
+    outline-offset: 2px;
+  }
+
+  /* Selection */
+  ::selection {
+    background: var(--brand);
+    color: #fff;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Animated underline */
+  .hover-underline {
+    position: relative;
+  }
+  .hover-underline::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 0;
+    height: 1px;
+    background: currentColor;
+    transition: width 0.3s ease;
+  }
+  .hover-underline:hover::after {
+    width: 100%;
+  }
+
+  /* Grid background */
+  .bg-grid {
+    background-image: linear-gradient(var(--border) 1px, transparent 1px),
+                      linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
 }
