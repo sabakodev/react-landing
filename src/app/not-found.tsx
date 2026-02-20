@@ -1,27 +1,25 @@
-import Image from 'next/image'
 import Link from 'next/link'
+import { ArrowRight } from 'lucide-react'
 
-export default function Error404() {
+export default function NotFound() {
 	return (
-		<div className="relative lg:max-w-5xl w-full mb-16">
-			<Image
-				src="/sky.jpg"
-				alt="SABAKO"
-				className="w-full h-72 object-cover"
-				width={500}
-				height={200}
-				priority
-			/>
-			<div className="mt-2 text-sm text-gray-500">
-				Photos by&nbsp;
-				<a className="text-gray-300 hover:text-gray-400" href="https://unsplash.com/photos/3YrppYQPoCI">Guillaume Galtier via Unsplash</a>
-			</div>
-			<div className="mt-16">
-				<h1 className="font-bold text-2xl">
-					This page is not exists, it might long lost in memories.
-				</h1>
-				<p className="text-lg mt-2 text-gray-300">In most case, you might wanted to go <Link href="/" className="font-medium text-gray-400 hover:text-gray-300">home</Link> again.</p>
-			</div>
+		<div className="flex flex-col items-center justify-center min-h-[100svh] px-6 text-center">
+			<p className="text-xs font-mono uppercase tracking-widest text-[var(--brand)] mb-4">
+				404 — Not Found
+			</p>
+			<h1 className="text-6xl font-bold text-[var(--text)] mb-4">
+				This page is not exists.
+			</h1>
+			<p className="text-[var(--text-muted)] mb-10 max-w-sm">
+				It might long lost in memories.
+			</p>
+			<Link
+				href="/"
+				className="inline-flex items-center gap-2 px-6 py-3 bg-[var(--text)] text-[var(--bg)] text-sm font-medium hover:opacity-80 transition-opacity group"
+			>
+				Return Home
+				<ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
+			</Link>
 		</div>
 	)
 }

@@ -1,36 +1,46 @@
 'use client'
 
-import Image from 'next/image'
 import Link from 'next/link'
-import { useEffect } from 'react'
+import { ArrowRight, RefreshCw } from 'lucide-react'
 
-export default function Error({ error, reset }: {
+export default function ErrorPage({
+	error,
+	reset,
+}: {
 	error: Error & { digest?: string }
 	reset: () => void
 }) {
-	useEffect(() => {
-		console.error(error)
-	}, [error])
-
 	return (
-		<div className="relative lg:max-w-5xl w-full mb-16">
-			<Image
-				src="/sky.jpg"
-				alt="SABAKO"
-				className="w-full h-72 object-cover"
-				width={500}
-				height={200}
-				priority
-			/>
-			<div className="mt-2 text-sm text-gray-500">
-				Photos by&nbsp;
-				<a className="text-gray-300 hover:text-gray-400" href="https://unsplash.com/photos/3YrppYQPoCI">Guillaume Galtier via Unsplash</a>
-			</div>
-			<div className="mt-16">
-				<h1 className="font-bold text-2xl">
-					Something went wrong, it&#39;s still probably okay.
-				</h1>
-				<p className="text-lg mt-2 text-gray-300">In most case, you might wanted to <span onClick={() => reset()} className="font-medium text-gray-400 hover:text-gray-300">try again</span>.</p>
+		<div className="flex flex-col items-center justify-center min-h-[100svh] px-6 text-center">
+			<p className="text-xs font-mono uppercase tracking-widest text-red-500 mb-4">
+				Error — Something went wrong
+			</p>
+			<h1 className="text-6xl font-bold text-[var(--text)] mb-4">
+				Unexpected error.
+			</h1>
+			<p className="text-[var(--text-muted)] mb-2 max-w-sm">
+				An unexpected error occurred. Please try again.
+			</p>
+			{error?.digest && (
+				<p className="text-xs font-mono text-[var(--text-subtle)] mb-10">
+					Error ID: {error.digest}
+				</p>
+			)}
+			<div className="flex items-center gap-4">
+				<button
+					onClick={reset}
+					className="inline-flex items-center gap-2 px-6 py-3 border border-[var(--border)] text-[var(--text)] text-sm font-medium hover:bg-[var(--bg-subtle)] transition-colors"
+				>
+					<RefreshCw size={16} />
+					Try Again
+				</button>
+				<Link
+					href="/"
+					className="inline-flex items-center gap-2 px-6 py-3 bg-[var(--text)] text-[var(--bg)] text-sm font-medium hover:opacity-80 transition-opacity group"
+				>
+					Return Home
+					<ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
+				</Link>
 			</div>
 		</div>
 	)
