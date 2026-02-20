@@ -53,8 +53,11 @@ export default function AboutPage() {
 						About
 					</p>
 					<h1 className="text-5xl font-bold text-[var(--text)] max-w-2xl leading-tight">
-						Built on experience. Driven by craft.
+						We digitize. We empower. We deliver.
 					</h1>
+					<p className="mt-6 text-lg text-[var(--text-muted)] max-w-xl leading-relaxed">
+						Passionate about helping traditional businesses step confidently into the digital era — building exactly what you envision.
+					</p>
 				</div>
 			</header>
 
@@ -65,27 +68,29 @@ export default function AboutPage() {
 						<h2 className="text-2xl font-bold text-[var(--text)] mb-6">Our Story</h2>
 						<div className="space-y-4 text-[var(--text-muted)] leading-relaxed">
 							<p>
-								Founded in early 2018, SABAKO began with a simple conviction: that truly great software requires more than technical ability — it demands deep empathy for the people who use it and the businesses that depend on it.
+								Founded in 2018, SABAKO was born from a conviction that technology should be a great equalizer — giving every business, regardless of size, access to world-class digital products. We started with a focus on quality over speed, building lean, maintainable systems that compound in value over time.
 							</p>
 							<p>
-								Even as a young company, our team brought more than a decade of collective experience from day one. Our focus has always been on software design and architecture rather than surface aesthetics — investing time in quality setup, lean development practices, and maintainable codebases.
-							</p>
-							<p>
-								Today we serve clients across government, logistics, commercial real estate, and technology sectors — building web applications, mobile products, and IoT-connected systems that scale.
+								Today we serve clients across government, logistics, commercial real estate, and technology sectors — transforming how they operate through web applications, mobile products, and IoT platforms.
 							</p>
 						</div>
 					</div>
-					<div className="space-y-4 text-[var(--text-muted)] leading-relaxed">
-						<h2 className="text-2xl font-bold text-[var(--text)] mb-6">Our Mission</h2>
-						<p>
-							To deliver technology that transforms. We partner with ambitious businesses to design and build digital products that are fast, secure, accessible, and built to last.
-						</p>
-						<p className="border-l-2 border-[var(--brand)] pl-4 text-[var(--text)] font-medium">
-							&ldquo;We maintained our security practices and prepared to mitigate the disclosure of information that could harm either business.&rdquo;
-						</p>
-						<p>
-							Our extensive experience with government agencies means we treat data privacy as a baseline expectation — not an optional feature. Every project we ship is held to that standard.
-						</p>
+					<div className="space-y-6 text-[var(--text-muted)] leading-relaxed">
+						<div>
+							<h2 className="text-2xl font-bold text-[var(--text)] mb-4">Our Vision</h2>
+							<p>
+								We are passionate about digitizing traditional businesses with better, modern solutions — helping them transition confidently into the digital era. We believe every organization deserves software that works as hard as the people who rely on it.
+							</p>
+						</div>
+						<div>
+							<h2 className="text-2xl font-bold text-[var(--text)] mb-4">Our Promise</h2>
+							<p className="border-l-2 border-[var(--brand)] pl-4 text-[var(--text)] font-medium">
+								&ldquo;Unleash ideas just as you imagined.&rdquo;
+							</p>
+							<p className="mt-4">
+								We turn our clients&apos; visions into reality — exactly as they envision it. Not approximately, not &ldquo;good enough&rdquo;, but precisely the product they set out to build. That fidelity is what keeps our clients coming back.
+							</p>
+						</div>
 					</div>
 				</div>
 			</section>

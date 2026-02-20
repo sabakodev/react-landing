@@ -156,9 +156,37 @@ export default function AboutPage() {
 							<li>Site functionality and security</li>
 							<li>Improving user experience</li>
 						</ul>
-						<p className="border-l-2 border-[var(--brand)] pl-4 text-[var(--text)] font-medium">
-							You can control cookies via your browser settings and, where available, our cookie preference tools.
-						</p>
+						<h3 id="cookies" className="text-xl font-bold text-[var(--text)] mb-2">Analytics &amp; Cookies</h3>
+						<p>We use two analytics systems with different consent requirements:</p>
+						<div className="space-y-3 my-2">
+							<div className="border border-[var(--border)] p-4">
+								<p className="text-sm font-bold text-[var(--text)] mb-1">Cloudflare Web Analytics — Essential</p>
+								<p className="text-xs text-[var(--text-muted)] leading-relaxed">Cookieless, privacy-first RUM. No personal data or cross-site tracking. Legitimate interest basis. <strong>Always active.</strong></p>
+							</div>
+							<div className="border border-[var(--border)] p-4">
+								<p className="text-sm font-bold text-[var(--text)] mb-1">Google Analytics 4 — Analytics (Consent Required)</p>
+								<p className="text-xs text-[var(--text-muted)] leading-relaxed">Tracks page views and events using cookies. Only loaded after consent. Legal basis: consent.</p>
+							</div>
+						</div>
+						<p className="font-bold text-[var(--text)] text-sm mt-4">Cookie Table</p>
+						<div className="overflow-x-auto">
+							<table className="w-full text-xs border-collapse border border-[var(--border)]">
+								<thead className="bg-[var(--bg-subtle)]">
+									<tr className="text-left">
+										<th className="py-2 px-3 border border-[var(--border)] font-mono text-[var(--text-subtle)] uppercase">Name</th>
+										<th className="py-2 px-3 border border-[var(--border)] font-mono text-[var(--text-subtle)] uppercase">Provider</th>
+										<th className="py-2 px-3 border border-[var(--border)] font-mono text-[var(--text-subtle)] uppercase">Purpose</th>
+										<th className="py-2 px-3 border border-[var(--border)] font-mono text-[var(--text-subtle)] uppercase">Expiry</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr><td className="py-2 px-3 border border-[var(--border)] font-mono text-[var(--text)]">_ga</td><td className="py-2 px-3 border border-[var(--border)] text-[var(--text-muted)]">Google Analytics 4</td><td className="py-2 px-3 border border-[var(--border)] text-[var(--text-muted)]">Distinguishes users</td><td className="py-2 px-3 border border-[var(--border)] text-[var(--text-muted)]">2 years</td></tr>
+									<tr><td className="py-2 px-3 border border-[var(--border)] font-mono text-[var(--text)]">_ga_*</td><td className="py-2 px-3 border border-[var(--border)] text-[var(--text-muted)]">Google Analytics 4</td><td className="py-2 px-3 border border-[var(--border)] text-[var(--text-muted)]">Persists GA4 session state</td><td className="py-2 px-3 border border-[var(--border)] text-[var(--text-muted)]">2 years</td></tr>
+									<tr><td className="py-2 px-3 border border-[var(--border)] font-mono text-[var(--text)]">sabako_consent</td><td className="py-2 px-3 border border-[var(--border)] text-[var(--text-muted)]">SABAKO</td><td className="py-2 px-3 border border-[var(--border)] text-[var(--text-muted)]">Stores analytics consent preference</td><td className="py-2 px-3 border border-[var(--border)] text-[var(--text-muted)]">localStorage</td></tr>
+								</tbody>
+							</table>
+						</div>
+						<p className="border-l-2 border-[var(--brand)] pl-4 text-[var(--text)] font-medium">Change your cookie preferences at any time using <strong>Cookie Settings</strong> in the footer.</p>
 						<h3 className="text-xl font-bold text-[var(--text)] mb-2">How your data would be processed</h3>
 						<p>We may use personal information to:</p>
 						<ul className="list-disc list-outside">
