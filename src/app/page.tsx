@@ -5,6 +5,8 @@ import { WorkSection } from '@/components/home/WorkSection'
 import { StatsSection } from '@/components/home/StatsSection'
 import { TestimonialsSection } from '@/components/home/TestimonialsSection'
 import { CtaSection } from '@/components/home/CtaSection'
+import { ProductSpotlightBanner } from '@/components/home/ProductSpotlight'
+import { getFeaturedProduct } from '@/lib/api/products'
 
 export const metadata: Metadata = {
 	title: 'SABAKO — Digital Experiences. Mobile Products. Connected Systems.',
@@ -15,10 +17,13 @@ export const metadata: Metadata = {
 	},
 }
 
-export default function HomePage() {
+export default async function HomePage() {
+	const product = await getFeaturedProduct()
+
 	return (
 		<>
 			<HeroSection />
+			{product && <ProductSpotlightBanner product={product} />}
 			<StatsSection />
 			<ServicesSection />
 			<WorkSection />
