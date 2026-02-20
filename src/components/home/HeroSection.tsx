@@ -121,6 +121,14 @@ export function HeroSection() {
 					</Link>
 				</div>
 
+				{/* Motto */}
+				<p
+					className="mt-8 text-xs font-mono italic text-[var(--text-subtle)] animate-fade-up"
+					style={{ animationDelay: '0.65s', opacity: 0 }}
+				>
+					&ldquo;Beyond the Horizon&rdquo;
+				</p>
+
 				{/* Service pills */}
 				{/* <ServicePills data={[
 					'Web Development',
