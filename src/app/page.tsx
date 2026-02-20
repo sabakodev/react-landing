@@ -6,7 +6,7 @@ import { StatsSection } from '@/components/home/StatsSection'
 import { TestimonialsSection } from '@/components/home/TestimonialsSection'
 import { CtaSection } from '@/components/home/CtaSection'
 import { ProductSpotlightBanner } from '@/components/home/ProductSpotlight'
-import { getFeaturedProduct } from '@/lib/api/products'
+import { getFeaturedAnnouncement } from '@/lib/api/announcements'
 
 export const metadata: Metadata = {
 	title: 'SABAKO — Rewrite your business.',
@@ -18,12 +18,12 @@ export const metadata: Metadata = {
 }
 
 export default async function HomePage() {
-	const product = await getFeaturedProduct()
+	const announcement = await getFeaturedAnnouncement()
 
 	return (
 		<>
 			<HeroSection />
-			{product && <ProductSpotlightBanner product={product} />}
+			{announcement && <ProductSpotlightBanner announcement={announcement} />}
 			<StatsSection />
 			<ServicesSection />
 			<WorkSection />

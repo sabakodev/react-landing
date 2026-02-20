@@ -7,7 +7,7 @@ import { CloudflareAnalytics } from '@/components/analytics/CloudflareAnalytics'
 import { GoogleAnalytics } from '@/components/analytics/GoogleAnalytics'
 import { CookieConsentBanner } from '@/components/analytics/CookieConsentBanner'
 import { ProductSpotlightPill } from '@/components/home/ProductSpotlight'
-import { getFeaturedProduct } from '@/lib/api/products'
+import { getFeaturedAnnouncement } from '@/lib/api/announcements'
 
 const inter = Inter({
 	subsets: ['latin'],
@@ -96,9 +96,9 @@ export const metadata: Metadata = {
 // }
 
 async function SpotlightBar() {
-	const product = await getFeaturedProduct()
-	if (!product) return null
-	return <ProductSpotlightPill product={product} />
+	const announcement = await getFeaturedAnnouncement()
+	if (!announcement) return null
+	return <ProductSpotlightPill announcement={announcement} />
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

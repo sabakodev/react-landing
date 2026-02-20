@@ -1,21 +1,7 @@
 import type { Metadata } from 'next'
 import { Mail, Phone, MapPin, Clock, ArrowRight } from 'lucide-react'
-// import dynamic from 'next/dynamic'
 import OfficeMap from '@/components/contact/OfficeMap'
 import { Suspense } from 'react'
-
-// Dynamically import the map to avoid SSR
-// const OfficeMap = dynamic(
-// 	() => import('@/components/contact/OfficeMap').then((m) => m.OfficeMap),
-// 	{
-// 		ssr: false,
-// 		loading: () => (
-// 			<div className="w-full h-[400px] border border-[var(--border)] bg-[var(--bg-subtle)] flex items-center justify-center">
-// 				<p className="text-xs font-mono text-[var(--text-subtle)]">Loading map…</p>
-// 			</div>
-// 		),
-// 	},
-// )
 
 export const metadata: Metadata = {
 	title: 'Contact',
