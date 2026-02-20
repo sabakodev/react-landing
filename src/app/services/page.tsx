@@ -99,9 +99,9 @@ export default function ServicesPage() {
 
 			{/* CTA */}
 			<section className="border-t border-[var(--border)] bg-[var(--bg-subtle)] py-20" aria-label="Call to action">
-				<div className="mx-auto max-w-7xl px-6 lg:px-8 text-center">
+				<div className="mx-auto max-w-7xl px-6 lg:px-8">
 					<p className="text-2xl font-bold text-[var(--text)] mb-4">Not sure which service you need?</p>
-					<p className="text-[var(--text-muted)] mb-8 max-w-md mx-auto">
+					<p className="text-[var(--text-muted)] mb-8 max-w-md">
 						We offer free initial consultations to help scope your project and recommend the right approach.
 					</p>
 					<Link
