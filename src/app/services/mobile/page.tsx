@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { Smartphone, ArrowRight, CheckCircle } from 'lucide-react'
+import { OtherServices } from '@/components/services/OtherServices'
 
 export const metadata: Metadata = {
 	title: 'Mobile Products — App Development',
@@ -87,6 +88,7 @@ export default function MobileServicePage() {
 					</section>
 				</div>
 			</div>
+			<OtherServices current="mobile" />
 		</article>
 	)
 }

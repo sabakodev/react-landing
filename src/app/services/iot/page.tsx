@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { Cpu, ArrowRight, CheckCircle } from 'lucide-react'
+import { OtherServices } from '@/components/services/OtherServices'
 
 export const metadata: Metadata = {
 	title: 'Connected Systems — IoT Solutions',
@@ -87,6 +88,7 @@ export default function IotServicePage() {
 					</section>
 				</div>
 			</div>
+			<OtherServices current="iot" />
 		</article>
 	)
 }
