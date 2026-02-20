@@ -101,11 +101,11 @@ function formatDate(iso: string) {
 }
 
 export async function generateMetadata(props: { params: Promise<{ slug: string }> }): Promise<Metadata> {
-    const params = await props.params;
-    const post = posts[params.slug]
-    if (!post) return { title: 'Post Not Found' }
+	const params = await props.params
+	const post = posts[params.slug]
+	if (!post) return { title: 'Post Not Found' }
 
-    return {
+	return {
 		title: post.title,
 		description: post.excerpt,
 		alternates: { canonical: `https://sabako.id/blog/${params.slug}` },
@@ -123,11 +123,11 @@ export async function generateStaticParams() {
 }
 
 export default async function BlogPostPage(props: { params: Promise<{ slug: string }> }) {
-    const params = await props.params;
-    const post = posts[params.slug]
-    if (!post) notFound()
+	const params = await props.params
+	const post = posts[params.slug]
+	if (!post) notFound()
 
-    return (
+	return (
 		<article>
 			{/* Header */}
 			<header className="border-b border-[var(--border)] pt-32 pb-16">
@@ -139,10 +139,6 @@ export default async function BlogPostPage(props: { params: Promise<{ slug: stri
 						<ArrowLeft size={12} className="group-hover:-translate-x-1 transition-transform" />
 						Back to Blog
 					</Link>
-
-					<span className="text-xs font-mono px-2 py-0.5 border border-[var(--brand)] text-[var(--brand)] mb-4 inline-block">
-						{post.category}
-					</span>
 
 					<h1 className="text-4xl font-bold text-[var(--text)] leading-tight mt-4 mb-6">
 						{post.title}
@@ -156,6 +152,9 @@ export default async function BlogPostPage(props: { params: Promise<{ slug: stri
 						<span className="flex items-center gap-1.5">
 							<Clock size={12} />
 							{post.readTime}
+						</span>
+						<span className="text-xs font-mono px-2 py-0.5 border border-[var(--brand)] text-[var(--brand)] inline-block">
+							{post.category}
 						</span>
 					</div>
 				</div>

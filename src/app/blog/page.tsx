@@ -33,7 +33,7 @@ export default async function BlogPage() {
 						Thinking out loud.
 					</h1>
 					<p className="mt-4 text-lg text-[var(--text-muted)] max-w-xl">
-						Technical articles, case studies, and perspectives from the SABAKO team.
+						Technical articles, case studies, and perspectives from our team.
 					</p>
 				</div>
 			</header>
