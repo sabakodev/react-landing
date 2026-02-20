@@ -1,61 +1,133 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Inter, JetBrains_Mono } from 'next/font/google'
 import '@/styles/globals.css'
-import { CardComponent } from '@/components/landing'
-import { FooterComponent, NavbarComponent } from '@/components/global'
+import { Navbar } from '@/components/global/Navbar'
+import { Footer } from '@/components/global/Footer'
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({
+	subsets: ['latin'],
+	variable: '--font-inter',
+	display: 'swap',
+})
+
+const jetbrainsMono = JetBrains_Mono({
+	subsets: ['latin'],
+	variable: '--font-mono',
+	display: 'swap',
+})
 
 export const metadata: Metadata = {
-	title: 'SABAKO',
-	description: 'Creative Digital Agency',
+	metadataBase: new URL('https://sabako.id'),
+	title: {
+		default: 'SABAKO — Digital Experiences. Mobile Products. Connected Systems.',
+		template: '%s | SABAKO',
+	},
+	description:
+		'SABAKO is a premium IT agency & consulting firm specializing in Digital Experiences (Web), Mobile Products (App), and Connected Systems (IoT). We transform businesses through technology.',
+	keywords: [
+		'IT agency',
+		'web development',
+		'app development',
+		'IoT solutions',
+		'digital agency',
+		'connected systems',
+		'consulting',
+		'SABAKO',
+		'Jakarta',
+	],
+	authors: [{ name: 'SABAKO', url: 'https://sabako.id' }],
+	creator: 'SABAKO',
+	publisher: 'SABAKO',
+	robots: {
+		index: true,
+		follow: true,
+		googleBot: {
+			index: true,
+			follow: true,
+			'max-video-preview': -1,
+			'max-image-preview': 'large',
+			'max-snippet': -1,
+		},
+	},
+	openGraph: {
+		type: 'website',
+		locale: 'en_US',
+		url: 'https://sabako.id',
+		siteName: 'SABAKO',
+		title: 'SABAKO — Digital Experiences. Mobile Products. Connected Systems.',
+		description:
+			'Premium IT agency & consulting — Web Development, App Development, and IoT Solutions.',
+		images: [
+			{
+				url: '/sky.jpg',
+				width: 1200,
+				height: 630,
+				alt: 'SABAKO — IT Agency & Consulting',
+			},
+		],
+	},
+	twitter: {
+		card: 'summary_large_image',
+		title: 'SABAKO — Digital Experiences. Mobile Products. Connected Systems.',
+		description:
+			'Premium IT agency & consulting — Web Development, App Development, and IoT Solutions.',
+		images: ['/sky.jpg'],
+		creator: '@	',
+	},
+	icons: {
+		icon: '/sabako-bimi.svg',
+		shortcut: '/sabako-bimi.svg',
+		apple: '/sabako-bimi.svg',
+	},
 }
 
-export default function RootLayout({
-	children,
-}: {
-	children: React.ReactNode
-}) {
-	const navbar = [
-		{ href: '/', label: 'HOME' },
-		{ href: '/works', label: 'WORKS' },
-		{ href: '/clients', label: 'CLIENTS' },
-		{ href: '/about', label: 'ABOUT' },
-		{ href: '/contact', label: 'CONTACT' },
-	]
+// export const viewport: Viewport = {
+// 	themeColor: [
+// 		{ media: '(prefers-color-scheme: light)', color: '#ffffff' },
+// 		{ media: '(prefers-color-scheme: dark)', color: '#0a0a0a' },
+// 	],
+// 	width: 'device-width',
+// 	initialScale: 1,
+// }
 
-	const cards = [
-		{
-			href: '/works',
-			title: 'Works',
-			description: 'Learn about what we do in our studio.',
-		},
-		{
-			href: '/clients',
-			title: 'Clients',
-			description: 'Discover who we work for and what we achieve on their projects.',
-		},
-		{
-			href: '/about',
-			title: 'About',
-			description: 'Get to know who we are and find out our teams.',
-		},
-		{
-			href: '/contact',
-			title: 'Contact',
-			description: 'Get in touch with us, business inquiries and more.',
-		},
-	]
-
+export default function RootLayout({ children }: { children: React.ReactNode }) {
 	return (
-		<html lang="en">
-			<body className={`flex min-h-screen flex-col items-center justify-between lg:pb-24 ${inter.className}`}>
-				<NavbarComponent links={navbar} />
-				<div className="mt-36">
-					{children}
-				</div>
-				<CardComponent cards={cards} />
-				<FooterComponent />
+		<html lang="en" className={`${inter.variable} ${jetbrainsMono.variable}`}>
+			<head>
+				<script
+					type="application/ld+json"
+					dangerouslySetInnerHTML={{
+						__html: JSON.stringify({
+							'@context': 'https://schema.org',
+							'@type': 'Organization',
+							name: 'SABAKO',
+							url: 'https://sabako.id',
+							logo: 'https://sabako.id/sabako-bimi.svg',
+							description:
+								'Premium IT agency & consulting specializing in Web Development, App Development, and IoT Solutions.',
+							address: {
+								'@type': 'PostalAddress',
+								streetAddress: 'Jl. Bangka Raya No. 48',
+								addressLocality: 'Mampang Prapatan',
+								postalCode: '12720',
+								addressRegion: 'Jakarta',
+								addressCountry: 'ID',
+							},
+							contactPoint: {
+								'@type': 'ContactPoint',
+								telephone: '+62 857-6061-6555',
+								contactType: 'sales',
+								email: 'sales@sabako.id',
+							},
+							sameAs: [],
+						}),
+					}}
+				/>
+			</head>
+			<body className="flex min-h-screen flex-col antialiased">
+				<Navbar />
+				<main className="flex-1">{children}</main>
+				<Footer />
 			</body>
 		</html>
 	)
