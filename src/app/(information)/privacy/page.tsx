@@ -113,6 +113,13 @@ export default function AboutPage() {
 							<p>You can contact us at <a href="mailto:privacy@sabako.id">privacy@sabako.id</a> to exercise your rights. We may need to verify your identity before completing certain requests. Authorized agents may submit requests where permitted by law.</p>
 							<h3 className="text-xl font-bold text-[var(--text)] mb-2">Children&apos;s Privacy</h3>
 							<p>The Site is not intended for children under 13 (and under 16 for certain California provisions). We do not knowingly collect personal information from children. If you believe a child provided us personal information, contact us to request deletion.</p>
+							<h3 className="text-xl font-bold text-[var(--text)] mb-2">Data retention</h3>
+							<p>We retain personal information only as long as reasonably necessary for the purposes described in this Policy, including to:</p>
+							<ul className="list-disc list-outside">
+								<li>Provide the Site and respond to you</li>
+								<li>Maintain records and comply with legal obligations</li>
+								<li>Retention periods depend on the type of data, purpose, and legal requirements.</li>
+							</ul>
 							<h3 className="text-xl font-bold text-[var(--text)] mb-2">Changes to this Privacy Policy</h3>
 							<p>We may update this Policy from time to time. We will post the updated version on this page and update the “Last Updated” date.</p>
 							<h3 className="text-xl font-bold text-[var(--text)] mb-2">Contact Us</h3>
@@ -204,13 +211,6 @@ export default function AboutPage() {
 						</ul>
 						<p>These providers may process data on our behalf or as independent controllers, depending on the service and configuration.</p>
 						<p>We may share personal information with vendors that help us operate the Site (e.g., hosting, email delivery, security). They are permitted to use personal information only to provide services to us.</p>
-						<h3 className="text-xl font-bold text-[var(--text)] mb-2">Data retention</h3>
-						<p>We retain personal information only as long as reasonably necessary for the purposes described in this Policy, including to:</p>
-						<ul className="list-disc list-outside">
-							<li>Provide the Site and respond to you</li>
-							<li>Maintain records and comply with legal obligations</li>
-							<li>Retention periods depend on the type of data, purpose, and legal requirements.</li>
-						</ul>
 						<h3 className="text-xl font-bold text-[var(--text)] mb-2">Legal & Safety</h3>
 						<p>We may disclose information if required to do so by law, or if we believe disclosure is necessary to:</p>
 						<ul className="list-disc list-outside">
