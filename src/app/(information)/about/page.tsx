@@ -119,35 +119,7 @@ export default function AboutPage() {
 			</section>
 
 			{/* Team */}
-			<section className="py-20 border-b border-[var(--border)]" aria-labelledby="team-heading">
-				<div className="mx-auto max-w-7xl px-6 lg:px-8">
-					<h2 id="team-heading" className="text-2xl font-bold text-[var(--text)] mb-12">
-						The team
-					</h2>
-					<div className="grid grid-cols-1 sm:grid-cols-3 gap-px bg-[var(--border)]">
-						{team.map((member) => (
-							<a
-								key={member.name}
-								href={member.contact}
-								target="_blank"
-								rel="noopener noreferrer"
-								className="bg-[var(--bg)] p-8 flex flex-col gap-3 group hover:bg-[var(--bg-subtle)] transition-colors"
-							>
-								{/* Avatar placeholder */}
-								<div className="w-12 h-12 border border-[var(--border)] bg-[var(--bg-subtle)] flex items-center justify-center text-lg font-bold text-[var(--brand)] font-mono">
-									{member.name.split(' ').map((n) => n[0]).join('').slice(0, 2)}
-								</div>
-								<div>
-									<p className="text-base font-medium text-[var(--text)] group-hover:text-[var(--brand)] transition-colors">
-										{member.name}
-									</p>
-									<p className="text-sm text-[var(--text-muted)] mt-0.5">{member.role}</p>
-								</div>
-							</a>
-						))}
-					</div>
-				</div>
-			</section>
+			{/* <TeamSection /> */}
 
 			{/* CTA */}
 			<section className="py-20" aria-label="Contact call to action">
@@ -165,5 +137,39 @@ export default function AboutPage() {
 				</div>
 			</section>
 		</article>
+	)
+}
+
+export function TeamSection() {
+	return (
+		<section className="py-20 border-b border-[var(--border)]" aria-labelledby="team-heading">
+			<div className="mx-auto max-w-7xl px-6 lg:px-8">
+				<h2 id="team-heading" className="text-2xl font-bold text-[var(--text)] mb-12">
+					The team
+				</h2>
+				<div className="grid grid-cols-1 sm:grid-cols-3 gap-px bg-[var(--border)]">
+					{team.map((member) => (
+						<a
+							key={member.name}
+							href={member.contact}
+							target="_blank"
+							rel="noopener noreferrer"
+							className="bg-[var(--bg)] p-8 flex flex-col gap-3 group hover:bg-[var(--bg-subtle)] transition-colors"
+						>
+							{/* Avatar placeholder */}
+							<div className="w-12 h-12 border border-[var(--border)] bg-[var(--bg-subtle)] flex items-center justify-center text-lg font-bold text-[var(--brand)] font-mono">
+								{member.name.split(' ').map((n) => n[0]).join('').slice(0, 2)}
+							</div>
+							<div>
+								<p className="text-base font-medium text-[var(--text)] group-hover:text-[var(--brand)] transition-colors">
+									{member.name}
+								</p>
+								<p className="text-sm text-[var(--text-muted)] mt-0.5">{member.role}</p>
+							</div>
+						</a>
+					))}
+				</div>
+			</div>
+		</section>
 	)
 }
