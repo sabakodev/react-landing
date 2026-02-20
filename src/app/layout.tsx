@@ -3,6 +3,11 @@ import { Inter, JetBrains_Mono } from 'next/font/google'
 import '@/styles/globals.css'
 import { Navbar } from '@/components/global/Navbar'
 import { Footer } from '@/components/global/Footer'
+import { CloudflareAnalytics } from '@/components/analytics/CloudflareAnalytics'
+import { GoogleAnalytics } from '@/components/analytics/GoogleAnalytics'
+import { CookieConsentBanner } from '@/components/analytics/CookieConsentBanner'
+import { ProductSpotlightPill } from '@/components/home/ProductSpotlight'
+import { getFeaturedProduct } from '@/lib/api/products'
 
 const inter = Inter({
 	subsets: ['latin'],
@@ -90,6 +95,12 @@ export const metadata: Metadata = {
 // 	initialScale: 1,
 // }
 
+async function SpotlightBar() {
+	const product = await getFeaturedProduct()
+	if (!product) return null
+	return <ProductSpotlightPill product={product} />
+}
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
 	return (
 		<html lang="en" className={`${inter.variable} ${jetbrainsMono.variable}`}>
@@ -123,11 +134,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 						}),
 					}}
 				/>
+				<CloudflareAnalytics />
 			</head>
 			<body className="flex min-h-screen flex-col antialiased">
-				<Navbar />
+				<div className="sticky top-0 z-50">
+					<SpotlightBar />
+					<Navbar />
+				</div>
 				<main className="flex-1">{children}</main>
 				<Footer />
+				<GoogleAnalytics />
+				<CookieConsentBanner />
 			</body>
 		</html>
 	)

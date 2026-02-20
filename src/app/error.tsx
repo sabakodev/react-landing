@@ -16,15 +16,21 @@ export default function ErrorPage({
 				Error — Something went wrong
 			</p>
 			<h1 className="text-6xl font-bold text-[var(--text)] mb-4">
-				Unexpected error.
+				This is unexpected.
 			</h1>
 			<p className="text-[var(--text-muted)] mb-2 max-w-sm">
-				An unexpected error occurred. Please try again.
+				{process.env.NODE_ENV === 'development' ? `${error.cause}` : 'Something unexpected happened. Please try again.'}
 			</p>
 			{error?.digest && (
 				<p className="text-xs font-mono text-[var(--text-subtle)] mb-10">
 					Error ID: {error.digest}
 				</p>
+			)}
+			{process.env.NODE_ENV === 'development' && (
+				<pre className="text-xs font-mono text-[var(--text-subtle)] mb-10">
+					{error.message}
+					{error.stack}
+				</pre>
 			)}
 			<div className="flex items-center gap-4">
 				<button
