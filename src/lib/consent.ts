@@ -30,6 +30,7 @@ export function useConsent() {
 
 	useEffect(() => {
 		const stored = readConsent()
+		// eslint-disable-next-line react-hooks/set-state-in-effect
 		setConsentState(stored)
 		setLoaded(true)
 	}, [])
