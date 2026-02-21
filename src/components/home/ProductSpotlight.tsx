@@ -15,11 +15,31 @@ export function ProductSpotlightPill({ announcement }: { announcement: FeaturedA
 	const [hidden, setHidden] = useState(false)
 
 	useEffect(() => {
-		const onScroll = () => setHidden(window.scrollY > 80)
+		let rafId: number
+		// hiddenRef lets the scroll handler read current state without stale closure.
+		// We use a ref so we never need to re-subscribe to the scroll event.
+		const hiddenRef = { current: false }
+
+		const onScroll = () => {
+			cancelAnimationFrame(rafId)
+			rafId = requestAnimationFrame(() => {
+				const y = window.scrollY
+				if (!hiddenRef.current && y > 80) {
+					// ── Hide: threshold crossed going down ──────────────────
+					hiddenRef.current = true
+					setHidden(true)
+				}
+				// Note: we intentionally do NOT un-hide (one-way latch).
+				// This prevents the feedback loop where hiding the banner
+				// reduces page height → lowers scrollY → re-shows banner → loop.
+			})
+		}
+
 		window.addEventListener('scroll', onScroll, { passive: true })
-		// Set initial state in case page is already scrolled (e.g. browser back)
-		onScroll()
-		return () => window.removeEventListener('scroll', onScroll)
+		return () => {
+			window.removeEventListener('scroll', onScroll)
+			cancelAnimationFrame(rafId)
+		}
 	}, [])
 
 	return (
