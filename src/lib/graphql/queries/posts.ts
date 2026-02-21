@@ -70,14 +70,6 @@ export const GET_POST_BY_SLUG = gql`
       tags {
         nodes { id databaseId name slug }
       }
-      seo {
-        title
-        metaDesc
-        canonical
-        opengraphTitle
-        opengraphDescription
-        opengraphImage { sourceUrl altText }
-      }
     }
   }
 `
