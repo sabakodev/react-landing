@@ -41,9 +41,7 @@ function PostCard({ post, onTrack }: { post: BlogPost; onTrack: () => void }) {
 			<h2 className="text-base font-bold text-(--text) group-hover:text-(--brand) transition-colors mb-3 leading-snug">
 				{post.title}
 			</h2>
-			<p className="text-sm text-(--text-muted) leading-relaxed flex-1 mb-4">
-				{post.excerpt}
-			</p>
+			<p className="text-sm text-(--text-muted) leading-relaxed flex-1 mb-4 line-clamp-2" dangerouslySetInnerHTML={{ __html: post.excerpt }} />
 			<div className="flex items-center gap-3 text-xs text-(--text-subtle) mt-auto">
 				<span className="font-mono text-(--brand) border border-(--brand) px-1.5 py-0.5">{post.category}</span>
 				<span className="flex items-center gap-1">

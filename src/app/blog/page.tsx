@@ -68,9 +68,7 @@ export default async function BlogPage() {
 								<h2 className="text-2xl font-bold text-(--text) group-hover:text-(--brand) transition-colors mb-3 max-w-2xl">
 									{featured.title}
 								</h2>
-								<p className="text-(--text-muted) text-sm leading-relaxed max-w-xl mb-6">
-									{featured.excerpt}
-								</p>
+								<p className="text-(--text-muted) text-sm leading-relaxed max-w-xl mb-6 line-clamp-2" dangerouslySetInnerHTML={{ __html: featured.excerpt }} />
 								<div className="flex items-center gap-4 text-xs text-(--text-subtle)">
 									<span className="flex items-center gap-1.5">
 										<Calendar size={12} />
