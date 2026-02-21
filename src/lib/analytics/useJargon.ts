@@ -40,12 +40,14 @@ export function useJargon({ set, setId, section }: UseJargonOptions): UseJargonR
 	const { analyticsEnabled } = useConsent()
 	const [clicked, setClicked] = useState(false)
 
-	// Pick once on mount — stable for the lifetime of the component
-	const text = useMemo(() => {
-		if (set.length === 0) return ''
-		return set[Math.floor(Math.random() * set.length)]
+	const [text, setText] = useState<string>('')
+
+	// Randomize only after hydration on the client
+	useEffect(() => {
+		if (set.length === 0) return
+		setText(set[Math.floor(Math.random() * set.length)])
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [setId]) // re-pick only if setId changes (i.e. different set)
+	}, [setId])
 
 	// Fire impression on mount
 	useEffect(() => {
@@ -59,7 +61,6 @@ export function useJargon({ set, setId, section }: UseJargonOptions): UseJargonR
 			},
 			analyticsEnabled,
 		)
-		// intentionally only on mount
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [text])
 
