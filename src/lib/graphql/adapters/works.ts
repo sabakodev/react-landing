@@ -155,7 +155,7 @@ export async function getWorks(opts?: { featured?: boolean; limit?: number }): P
 	let works: Work[]
 	if (hasWpEndpoint()) {
 		try {
-			const data = await wpClient.request<WorksQueryResponse>(GET_WORKS, { first: 100 })
+			const data = await wpClient.request<WorksQueryResponse>(GET_WORKS, { first: 10 })
 			works = data.works.nodes.map(normalizeWpWork)
 		} catch {
 			// Live query failed (CPT/ACF not yet configured) — use mock fallback

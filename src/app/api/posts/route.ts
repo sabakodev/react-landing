@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getPosts } from '@/lib/graphql/adapters/posts'
 import type { BlogPost } from '@/lib/graphql/adapters/posts'
 
-export const dynamic = 'force-dynamic'
+export const revalidate = 60
 
 export async function GET(req: NextRequest) {
 	const { searchParams } = new URL(req.url)
