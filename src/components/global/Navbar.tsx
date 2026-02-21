@@ -65,8 +65,10 @@ export function Navbar() {
 
 	// Close menu on route change
 	useEffect(() => {
+		/* eslint-disable react-hooks/set-state-in-effect */
 		setMenuOpen(false)
 		setDropdownOpen(false)
+		/* eslint-enable react-hooks/set-state-in-effect */
 	}, [pathname])
 
 	// Close dropdown on outside click

@@ -8,11 +8,10 @@ export function CloudflareAnalytics() {
 	if (!token) return null
 
 	return (
-        // eslint-disable-next-line @next/next/no-sync-scripts
-        <script
+		<script
 			defer
 			src="https://static.cloudflareinsights.com/beacon.min.js"
 			data-cf-beacon={`{"token": "${token}"}`}
 		/>
-    );
+	)
 }

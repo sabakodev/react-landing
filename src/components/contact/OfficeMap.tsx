@@ -42,8 +42,7 @@ export default function OfficeMap() {
 
 	return (
 		<div className="w-full h-[400px] border border-[var(--border)] overflow-hidden">
-			{/* Leaflet CSS — loaded inline to avoid import issues */}
-			{/* eslint-disable-next-line @next/next/no-page-custom-font */}
+			{/* Leaflet CSS */}
 			<link
 				rel="stylesheet"
 				href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"

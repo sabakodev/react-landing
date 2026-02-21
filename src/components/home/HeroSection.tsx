@@ -19,6 +19,7 @@ export function HeroSection() {
 		if (!isDeleting && displayed === currentWord) {
 			timeoutRef.current = setTimeout(() => setIsDeleting(true), 2200)
 		} else if (isDeleting && displayed === '') {
+			// eslint-disable-next-line react-hooks/set-state-in-effect
 			setIsDeleting(false)
 			setWordIndex((i) => (i + 1) % words.length)
 		} else {

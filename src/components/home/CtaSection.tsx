@@ -1,19 +1,26 @@
+'use client'
+
 import Link from 'next/link'
 import { ArrowRight, Mail } from 'lucide-react'
 import { Reveal } from '@/components/ui/Reveal'
+import { useJargon } from '@/lib/analytics/useJargon'
+
+const JARGON_SET = [
+	"Let's turn your idea into reality.",
+	"Let's rewrite your business.",
+	"Let's scale your business.",
+	"Imagine it. We build it.",
+	"Let's make it happen.",
+	"Live your idea.",
+	"Your idea, as you imagine.",
+]
 
 export function CtaSection() {
-	const jargonTemplate = [
-		"Let's turn your idea into reality.",
-		"Let's rewrite your business.",
-		"Let's scale your business.",
-		"Imagine it. We build it.",
-		"Let's make it happen.",
-		"Live your idea.",
-		"Your idea, as you imagine.",
-	]
-
-	const jargon = jargonTemplate[Math.floor(Math.random() * jargonTemplate.length)]
+	const { text: jargon, onCtaClick } = useJargon({
+		set: JARGON_SET,
+		setId: 'homepage-cta',
+		section: 'homepage-cta-section',
+	})
 
 	return (
 		<section
@@ -49,6 +56,7 @@ export function CtaSection() {
 						<Link
 							href="/contact"
 							id="cta-start-project"
+							onClick={onCtaClick}
 							className="inline-flex items-center gap-2 px-8 py-4 bg-[var(--text)] text-[var(--bg)] text-sm font-medium hover:opacity-80 transition-opacity group"
 						>
 							Start a Project
