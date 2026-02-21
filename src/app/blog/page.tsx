@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { ArrowRight, Calendar, Clock } from 'lucide-react'
+import { ArrowRight, Calendar, User } from 'lucide-react'
 import { getPosts } from '@/lib/graphql/adapters/posts'
 import { BlogGrid } from '@/components/blog/BlogGrid'
 
@@ -30,15 +30,15 @@ export default async function BlogPage() {
 
 	return (
 		<article>
-			<header className="border-b border-[var(--border)] pt-32 pb-16">
+			<header className="border-b border-(--border) pt-32 pb-16">
 				<div className="mx-auto max-w-7xl px-6 lg:px-8">
-					<p className="text-xs font-mono uppercase tracking-widest text-[var(--brand)] mb-4">
-						Blog & Insights
+					<p className="text-xs font-mono uppercase tracking-widest text-(--brand) mb-4">
+						Blog &amp; Insights
 					</p>
-					<h1 className="text-5xl font-bold text-[var(--text)] max-w-2xl leading-tight">
+					<h1 className="text-5xl font-bold text-(--text) max-w-2xl leading-tight">
 						Thinking out loud.
 					</h1>
-					<p className="mt-4 text-lg text-[var(--text-muted)] max-w-xl">
+					<p className="mt-4 text-lg text-(--text-muted) max-w-xl">
 						Technical articles, case studies, and perspectives from our team.
 					</p>
 				</div>
@@ -46,48 +46,55 @@ export default async function BlogPage() {
 
 			<section className="py-16" aria-label="Blog posts">
 				<div className="mx-auto max-w-7xl px-6 lg:px-8">
-
-					{/* Featured post — always server-rendered */}
-					<Link
-						href={`/blog/${featured.slug}`}
-						className="group block border border-[var(--border)] p-8 mb-12 hover:border-[var(--border-strong)] hover:bg-[var(--bg-subtle)] transition-colors"
-					>
-						<div className="flex items-center gap-3 mb-4">
-							<span className="text-xs font-mono px-2 py-0.5 border border-[var(--brand)] text-[var(--brand)]">
-								{featured.category}
-							</span>
-							<span className="text-xs font-mono text-[var(--text-subtle)] uppercase tracking-widest">
-								Featured
-							</span>
-						</div>
-						<h2 className="text-2xl font-bold text-[var(--text)] group-hover:text-[var(--brand)] transition-colors mb-3 max-w-2xl">
-							{featured.title}
-						</h2>
-						<p className="text-[var(--text-muted)] text-sm leading-relaxed max-w-xl mb-6">
-							{featured.excerpt}
+					{!featured ? (
+						<p className="py-8 text-(--text-subtle) font-mono text-sm text-center">
+							No articles published yet — check back soon.
 						</p>
-						<div className="flex items-center gap-4 text-xs text-[var(--text-subtle)]">
-							<span className="flex items-center gap-1.5">
-								<Calendar size={12} />
-								{formatDate(featured.date)}
-							</span>
-							<span className="flex items-center gap-1.5">
-								<Clock size={12} />
-								{featured.readTime}
-							</span>
-							<span className="flex items-center gap-1.5 text-[var(--brand)] ml-auto group-hover:gap-2.5 transition-all font-mono">
-								Read Article <ArrowRight size={12} />
-							</span>
-						</div>
-					</Link>
+					) : (
+						<>
+							{/* Featured post — always server-rendered */}
+							<Link
+								href={`/blog/${featured.slug}`}
+								className="group block border border-(--border) p-8 mb-12 hover:border-(--border-strong) hover:bg-(--bg-subtle) transition-colors"
+							>
+								<div className="flex items-center gap-3 mb-4">
+									<span className="text-xs font-mono px-2 py-0.5 border border-(--brand) text-(--brand)">
+										{featured.category}
+									</span>
+									<span className="text-xs font-mono text-(--text-subtle) uppercase tracking-widest">
+										Featured
+									</span>
+								</div>
+								<h2 className="text-2xl font-bold text-(--text) group-hover:text-(--brand) transition-colors mb-3 max-w-2xl">
+									{featured.title}
+								</h2>
+								<p className="text-(--text-muted) text-sm leading-relaxed max-w-xl mb-6">
+									{featured.excerpt}
+								</p>
+								<div className="flex items-center gap-4 text-xs text-(--text-subtle)">
+									<span className="flex items-center gap-1.5">
+										<Calendar size={12} />
+										{formatDate(featured.date)}
+									</span>
+									<span className="flex items-center gap-1.5">
+										<User size={12} />
+										{featured.author}
+									</span>
+									<span className="flex items-center gap-1.5 text-(--brand) ml-auto group-hover:gap-2.5 transition-all font-mono">
+										Read Article <ArrowRight size={12} />
+									</span>
+								</div>
+							</Link>
 
-					{/* Infinite scroll grid */}
-					<BlogGrid
-						initialItems={initialItems}
-						initialCursor={initialCursor}
-						initialHasMore={initialHasMore}
-						pageSize={PAGE_SIZE}
-					/>
+							{/* Infinite scroll grid — remaining posts */}
+							<BlogGrid
+								initialItems={initialItems}
+								initialCursor={initialCursor}
+								initialHasMore={initialHasMore}
+								pageSize={PAGE_SIZE}
+							/>
+						</>
+					)}
 				</div>
 			</section>
 		</article>
