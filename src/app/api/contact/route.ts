@@ -19,6 +19,7 @@ export type ContactSubmission = {
 	email: string
 	service: string
 	companySize: string
+	preference: string
 	message: string
 	/** e.g. IP address, user-agent — omit if privacy-sensitive */
 	meta?: {
@@ -31,6 +32,7 @@ type ContactFormPayload = {
 	email: string
 	service?: string
 	companySize?: string
+	preference?: string
 	message: string
 }
 
@@ -97,6 +99,7 @@ export async function POST(req: NextRequest) {
 		email: sanitize(raw.email),
 		service: sanitize(raw.service),
 		companySize: sanitize(raw.companySize),
+		preference: sanitize(raw.preference),
 		message: sanitize(raw.message),
 	}
 
@@ -111,6 +114,7 @@ export async function POST(req: NextRequest) {
 		email: payload.email,
 		service: payload.service ?? '',
 		companySize: payload.companySize ?? '',
+		preference: payload.preference ?? '',
 		message: payload.message,
 		meta: {
 			userAgent: req.headers.get('user-agent') ?? undefined,

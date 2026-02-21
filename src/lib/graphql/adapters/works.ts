@@ -152,12 +152,18 @@ function normalizeWpWork(w: WPWork | WPWorkCard): Work {
 // ---------------------------------------------------------------------------
 
 export async function getWorks(opts?: { featured?: boolean; limit?: number }): Promise<Work[]> {
-	const works = hasWpEndpoint()
-		? await (async () => {
+	let works: Work[]
+	if (hasWpEndpoint()) {
+		try {
 			const data = await wpClient.request<WorksQueryResponse>(GET_WORKS, { first: 100 })
-			return data.works.nodes.map(normalizeWpWork)
-		})()
-		: mockWorks
+			works = data.works.nodes.map(normalizeWpWork)
+		} catch {
+			// Live query failed (CPT/ACF not yet configured) — use mock fallback
+			works = mockWorks
+		}
+	} else {
+		works = mockWorks
+	}
 
 	let result = works
 	if (opts?.featured) result = result.filter((w) => w.featured)
@@ -166,10 +172,12 @@ export async function getWorks(opts?: { featured?: boolean; limit?: number }): P
 }
 
 export async function getWork(slug: string): Promise<Work | null> {
-	if (!hasWpEndpoint()) {
+	if (!hasWpEndpoint()) return mockWorks.find((w) => w.slug === slug) ?? null
+	try {
+		const data = await wpClient.request<WorkBySlugQueryResponse>(GET_WORK_BY_SLUG, { slug })
+		if (!data.workBy) return null
+		return normalizeWpWork(data.workBy)
+	} catch {
 		return mockWorks.find((w) => w.slug === slug) ?? null
 	}
-	const data = await wpClient.request<WorkBySlugQueryResponse>(GET_WORK_BY_SLUG, { slug })
-	if (!data.workBy) return null
-	return normalizeWpWork(data.workBy)
 }

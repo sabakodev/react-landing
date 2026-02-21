@@ -132,18 +132,22 @@ function normalizeWpPost(post: WPPost | WPPostCard): BlogPost {
 // ---------------------------------------------------------------------------
 
 export async function getPosts(): Promise<BlogPost[]> {
-	if (!hasWpEndpoint()) {
+	if (!hasWpEndpoint()) return Object.values(mockPosts)
+	try {
+		const data = await wpClient.request<PostsQueryResponse>(GET_POSTS, { first: 100 })
+		return data.posts.nodes.map(normalizeWpPost)
+	} catch {
 		return Object.values(mockPosts)
 	}
-	const data = await wpClient.request<PostsQueryResponse>(GET_POSTS, { first: 100 })
-	return data.posts.nodes.map(normalizeWpPost)
 }
 
 export async function getPost(slug: string): Promise<BlogPost | null> {
-	if (!hasWpEndpoint()) {
+	if (!hasWpEndpoint()) return mockPosts[slug] ?? null
+	try {
+		const data = await wpClient.request<PostBySlugQueryResponse>(GET_POST_BY_SLUG, { slug })
+		if (!data.postBy) return null
+		return normalizeWpPost(data.postBy)
+	} catch {
 		return mockPosts[slug] ?? null
 	}
-	const data = await wpClient.request<PostBySlugQueryResponse>(GET_POST_BY_SLUG, { slug })
-	if (!data.postBy) return null
-	return normalizeWpPost(data.postBy)
 }
