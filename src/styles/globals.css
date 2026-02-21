@@ -1,6 +1,155 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+
+@plugin "@tailwindcss/typography";
+
+@custom-variant dark (@media (prefers-color-scheme: dark));
+
+@theme {
+  --font-sans: var(--font-geist-sans), var(--font-inter), system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), monospace;
+
+  --color-brand-50: #f0f4ff;
+  --color-brand-100: #dce6ff;
+  --color-brand-200: #b9ccff;
+  --color-brand-300: #8aaaff;
+  --color-brand-400: #5c84ff;
+  --color-brand-500: #3a5ce8;
+  --color-brand-600: #2a43c9;
+  --color-brand-700: #1e30a0;
+  --color-brand-800: #172281;
+  --color-brand-900: #111868;
+  --color-brand-950: #0a0f40;
+
+  --animate-fade-up: fadeUp 0.6s ease forwards;
+  --animate-fade-in: fadeIn 0.5s ease forwards;
+  --animate-slide-in: slideIn 0.5s ease forwards;
+  --animate-marquee: marquee 30s linear infinite;
+  --animate-marquee2: marquee2 30s linear infinite;
+  --animate-blink: blink 1.2s step-end infinite;
+
+  --background-image-gradient-radial: radial-gradient(var(--tw-gradient-stops));
+  --background-image-gradient-conic: conic-gradient(
+    from 180deg at 50% 50%,
+    var(--tw-gradient-stops)
+  );
+  --background-image-grid-light: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Cpath d='M0 0h40v40H0z' fill='none' stroke='%23e5e7eb' stroke-width='1'/%3E%3C/svg%3E");
+  --background-image-grid-dark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Cpath d='M0 0h40v40H0z' fill='none' stroke='%23262626' stroke-width='1'/%3E%3C/svg%3E");
+
+  @keyframes fadeUp {
+    0% {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  @keyframes slideIn {
+    0% {
+      opacity: 0;
+      transform: translateX(-16px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  @keyframes marquee {
+    0% {
+      transform: translateX(0%);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+  @keyframes marquee2 {
+    0% {
+      transform: translateX(100%);
+    }
+    100% {
+      transform: translateX(0%);
+    }
+  }
+  @keyframes blink {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0;
+    }
+  }
+}
+
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+}
+
+@utility text-balance {
+  text-wrap: balance;
+}
+
+@utility hover-underline {
+  /* Animated underline */
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 0;
+    height: 1px;
+    background: currentColor;
+    transition: width 0.3s ease;
+  }
+
+  &:hover::after {
+    width: 100%;
+  }
+}
+
+@utility bg-grid {
+  /* Grid background */
+  background-image:
+    linear-gradient(var(--border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+@utility animate-marquee {
+  /* Infinite marquee (used in ClientLogoStrip) */
+  display: flex;
+  width: max-content;
+  animation: marquee linear infinite;
+
+  &:hover {
+    animation-play-state: paused;
+  }
+}
 
 @layer base {
 	:root {
@@ -91,51 +240,12 @@
 	}
 }
 
-@layer utilities {
-	.text-balance {
-		text-wrap: balance;
-	}
-
-	/* Animated underline */
-	.hover-underline {
-		position: relative;
-	}
-
-	.hover-underline::after {
-		content: '';
-		position: absolute;
-		left: 0;
-		bottom: -2px;
-		width: 0;
-		height: 1px;
-		background: currentColor;
-		transition: width 0.3s ease;
-	}
-
-	.hover-underline:hover::after {
-		width: 100%;
-	}
-
-	/* Grid background */
-	.bg-grid {
-		background-image: linear-gradient(var(--border) 1px, transparent 1px),
-			linear-gradient(90deg, var(--border) 1px, transparent 1px);
-		background-size: 40px 40px;
-	}
-
-	/* Infinite marquee (used in ClientLogoStrip) */
-	.animate-marquee {
-		display: flex;
-		width: max-content;
-		animation: marquee linear infinite;
-	}
-
-	.animate-marquee:hover {
-		animation-play-state: paused;
-	}
-}
-
 @keyframes marquee {
-	from { transform: translateX(0); }
-	to   { transform: translateX(-50%); }
+	from {
+		transform: translateX(0);
+	}
+
+	to {
+		transform: translateX(-50%);
+	}
 }

@@ -5,7 +5,9 @@ const nextConfig = {
 		remotePatterns: [
 			{ protocol: 'https', hostname: 'images.unsplash.com' },
 			{ protocol: 'https', hostname: 'tailwindui.com' },
+			{ protocol: 'https', hostname: 'cms.sabako.id' },
 		],
+
 	},
 }
 
