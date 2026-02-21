@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { ArrowRight, Calendar, Clock } from 'lucide-react'
-import { getPosts } from '@/lib/api/posts'
+import { getPosts } from '@/lib/graphql/adapters/posts'
 import { BlogGrid } from '@/components/blog/BlogGrid'
 
 export const metadata: Metadata = {
