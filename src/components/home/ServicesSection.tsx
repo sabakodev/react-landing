@@ -62,12 +62,12 @@ export function ServicesSection() {
 				{/* Header */}
 				<Reveal>
 					<div className="mb-16">
-						<p className="text-xs font-mono uppercase tracking-widest text-[var(--brand)] mb-3">
+						<p className="text-xs font-mono uppercase tracking-widest text-(--brand) mb-3">
 							What We Do
 						</p>
 						<h2
 							id="services-heading"
-							className="text-4xl font-bold text-[var(--text)] max-w-lg leading-tight"
+							className="text-4xl font-bold text-(--text) max-w-lg leading-tight"
 						>
 							Services built for impact.
 						</h2>
@@ -75,7 +75,7 @@ export function ServicesSection() {
 				</Reveal>
 
 				{/* Services grid */}
-				<div className="grid grid-cols-1 lg:grid-cols-3 gap-px bg-[var(--border)]">
+				<div className="grid grid-cols-1 lg:grid-cols-3 gap-px bg-(--border)">
 					{services.map((service) => {
 						const Icon = service.icon
 						return (
@@ -83,25 +83,25 @@ export function ServicesSection() {
 								key={service.id}
 								href={service.href}
 								aria-label={`Learn more about ${service.label}`}
-								className="transition-all group bg-[var(--bg)] p-8 hover:bg-[var(--bg-subtle)] transition-colors"
+								className="transition-all group bg-(--bg) p-8 hover:bg-(--bg-subtle) transition-colors"
 							>
 								<article
 									className="flex flex-col"
 								>
 									<div className="flex items-center gap-3 mb-6">
-										<div className="p-2 border border-[var(--border)] text-[var(--brand)] bg-[var(--bg-subtle)]">
+										<div className="p-2 border border-(--border) text-(--brand) bg-(--bg-subtle)">
 											<Icon size={18} />
 										</div>
-										<p className="text-xs font-mono uppercase tracking-widest text-[var(--text-subtle)]">
+										<p className="text-xs font-mono uppercase tracking-widest text-(--text-subtle)">
 											{service.tagline}
 										</p>
 									</div>
 
-									<h3 className="text-2xl font-bold text-[var(--text)] mb-4 group-hover:text-[var(--brand)] transition-colors">
+									<h3 className="text-2xl font-bold text-(--text) mb-4 group-hover:text-(--brand) transition-colors">
 										{service.label}
 									</h3>
 
-									<p className="text-sm text-[var(--text-muted)] leading-relaxed mb-8 flex-1">
+									<p className="text-sm text-(--text-muted) leading-relaxed mb-8 flex-1">
 										{service.description}
 									</p>
 
@@ -109,15 +109,15 @@ export function ServicesSection() {
 										{service.capabilities.map((cap) => (
 											<li
 												key={cap}
-												className="flex items-center gap-2 text-xs text-[var(--text-muted)]"
+												className="flex items-center gap-2 text-xs text-(--text-muted)"
 											>
-												<span className="w-1 h-1 bg-[var(--brand)] flex-shrink-0" />
+												<span className="w-1 h-1 bg-(--brand) shrink-0" />
 												{cap}
 											</li>
 										))}
 									</ul>
 
-									<span className="inline-flex items-center gap-1.5 text-xs font-mono text-[var(--brand)] group-hover:gap-3">
+									<span className="inline-flex items-center gap-1.5 text-xs font-mono text-(--brand) group-hover:gap-3">
 										Learn More
 										<ArrowRight size={12} className="group-hover:translate-x-1 transition-transform" />
 									</span>

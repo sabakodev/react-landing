@@ -29,14 +29,14 @@ export default function ContactPage() {
 
 				{/* RIGHT — Form (DOM first for mobile tab order) */}
 				<section
-					className="order-first lg:order-last flex items-start lg:items-center justify-center px-8 lg:px-16 pt-32 pb-12 lg:py-24 bg-[var(--bg)]"
+					className="order-first lg:order-last flex items-start lg:items-center justify-center px-8 lg:px-16 pt-32 pb-12 lg:py-24 bg-(--bg)"
 					aria-labelledby="inquiry-form-heading"
 				>
 					<div className="w-full max-w-md">
-						<p className="text-xs font-mono uppercase tracking-widest text-[var(--brand)] mb-2">
+						<p className="text-xs font-mono uppercase tracking-widest text-(--brand) mb-2">
 							Start a Project
 						</p>
-						<h1 id="inquiry-form-heading" className="text-3xl font-bold text-[var(--text)] mb-8 leading-snug">
+						<h1 id="inquiry-form-heading" className="text-3xl font-bold text-(--text) mb-8 leading-snug">
 							Let&apos;s build something.
 						</h1>
 						<ContactForm />
@@ -45,18 +45,18 @@ export default function ContactPage() {
 
 				{/* LEFT — Contact info + embedded map */}
 				<section
-					className="order-last lg:order-first flex flex-col border-t lg:border-t-0 lg:border-r border-[var(--border)] bg-[var(--bg-subtle)]"
+					className="order-last lg:order-first flex flex-col border-t lg:border-t-0 lg:border-r border-(--border) bg-(--bg-subtle)"
 					aria-label="Contact information"
 				>
 					<div className="px-8 lg:px-12 pt-10 lg:pt-32 pb-8 space-y-6">
 						<div>
-							<p className="text-xs font-mono uppercase tracking-widest text-[var(--text-subtle)] mb-1">SABAKO</p>
-							<p className="text-sm text-[var(--text-muted)] leading-relaxed">
+							<p className="text-xs font-mono uppercase tracking-widest text-(--text-subtle) mb-1">SABAKO</p>
+							<p className="text-sm text-(--text-muted) leading-relaxed">
 								Jakarta-based IT agency specialising in web, mobile, and IoT solutions.
 							</p>
 						</div>
 
-						<div className="divide-y divide-[var(--border)] border-y border-[var(--border)]">
+						<div className="divide-y divide-(--border) border-y border-(--border)">
 							{contacts.map((c) => {
 								const Icon = c.icon
 								return (
@@ -65,26 +65,26 @@ export default function ContactPage() {
 										href={c.href}
 										target={c.icon === Phone ? '_blank' : undefined}
 										rel={c.icon === Phone ? 'noopener noreferrer' : undefined}
-										className="flex items-center justify-between py-3 group hover:bg-[var(--bg)] transition-colors px-3 -mx-3"
+										className="flex items-center justify-between py-3 group hover:bg-(--bg) transition-colors px-3 -mx-3"
 									>
 										<span className="flex items-center gap-2.5">
-											<Icon size={13} className="text-[var(--brand)] flex-shrink-0" />
+											<Icon size={13} className="text-(--brand) shrink-0" />
 											<span>
-												<span className="block text-[10px] font-mono text-[var(--text-subtle)]">{c.label}</span>
-												<span className="block text-sm text-[var(--text)] group-hover:text-[var(--brand)] transition-colors">
+												<span className="block text-[10px] font-mono text-(--text-subtle)">{c.label}</span>
+												<span className="block text-sm text-(--text) group-hover:text-(--brand) transition-colors">
 													{c.value}
 												</span>
 											</span>
 										</span>
-										<ArrowRight size={12} className="text-[var(--text-subtle)] group-hover:translate-x-1 group-hover:text-[var(--brand)] transition-all" />
+										<ArrowRight size={12} className="text-(--text-subtle) group-hover:translate-x-1 group-hover:text-(--brand) transition-all" />
 									</a>
 								)
 							})}
 						</div>
 
-						<div className="space-y-3 text-sm text-[var(--text-muted)]">
+						<div className="space-y-3 text-sm text-(--text-muted)">
 							<div className="flex items-start gap-2.5">
-								<MapPin size={13} className="mt-0.5 text-[var(--brand)] flex-shrink-0" />
+								<MapPin size={13} className="mt-0.5 text-(--brand) shrink-0" />
 								<div className="space-y-0.5 text-xs leading-relaxed">
 									<p>Unit 1C, Jl. Bangka Raya No. 48</p>
 									<p>Mampang Prapatan 12720</p>
@@ -92,18 +92,18 @@ export default function ContactPage() {
 								</div>
 							</div>
 							<div className="flex items-start gap-2.5">
-								<Clock size={13} className="mt-0.5 text-[var(--brand)] flex-shrink-0" />
+								<Clock size={13} className="mt-0.5 text-(--brand) shrink-0" />
 								<div className="text-xs space-y-0.5">
-									<p><span className="text-[var(--text-subtle)] mr-0.5">Mon – Fri</span>  08:30 – 19:00 WIB</p>
-									<p><span className="text-[var(--text-subtle)] mr-0.5">Saturday</span>  10:00 – 14:00 WIB</p>
+									<p><span className="text-(--text-subtle) mr-0.5">Mon – Fri</span>  08:30 – 19:00 WIB</p>
+									<p><span className="text-(--text-subtle) mr-0.5">Saturday</span>  10:00 – 14:00 WIB</p>
 								</div>
 							</div>
 						</div>
 					</div>
 
-					<div className="flex-1 min-h-[240px] relative border-t border-[var(--border)]">
+					<div className="flex-1 min-h-[240px] relative border-t border-(--border)">
 						<OfficeMap />
-						<p className="absolute bottom-2 right-3 text-[10px] font-mono text-[var(--text-subtle)] bg-[var(--bg)]/80 px-1.5 py-0.5 z-[1000]">
+						<p className="absolute bottom-2 right-3 text-[10px] font-mono text-(--text-subtle) bg-(--bg)/80 px-1.5 py-0.5 z-1000">
 							© OpenStreetMap contributors
 						</p>
 					</div>

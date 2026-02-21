@@ -93,30 +93,30 @@ export function PricingCatalog() {
 		: ''
 
 	return tz.startsWith('Asia') && (
-		<section className="py-20 border-t border-[var(--border)]" aria-labelledby="pricing-heading">
+		<section className="py-20 border-t border-(--border)" aria-labelledby="pricing-heading">
 			<div className="mx-auto max-w-7xl px-6 lg:px-8">
-				<p className="text-xs font-mono uppercase tracking-widest text-[var(--brand)] mb-4">
+				<p className="text-xs font-mono uppercase tracking-widest text-(--brand) mb-4">
 					Pricing
 				</p>
-				<h2 id="pricing-heading" className="text-2xl lg:text-3xl font-bold text-[var(--text)] mb-4">
+				<h2 id="pricing-heading" className="text-2xl lg:text-3xl font-bold text-(--text) mb-4">
 					Transparent starting prices.
 				</h2>
-				<p className="text-[var(--text-muted)] mb-14 max-w-xl text-sm leading-relaxed">
+				<p className="text-(--text-muted) mb-14 max-w-xl text-sm leading-relaxed">
 					Every project is unique — these are starting points. Final pricing depends on scope, timeline, and integrations required. We always provide a detailed quote before work begins.
 				</p>
 
-				<div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-[var(--border)]">
+				<div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-(--border)">
 					{TIERS.map((tier) => (
 						<div
 							key={tier.id}
 							className={`relative flex flex-col p-8 ${tier.popular
-								? 'bg-[var(--bg-subtle)]'
-								: 'bg-[var(--bg)]'
+								? 'bg-(--bg-subtle)'
+								: 'bg-(--bg)'
 								}`}
 						>
 							{/* Popular badge */}
 							{tier.popular && (
-								<div className="absolute top-0 right-0 flex items-center gap-1 px-3 py-1.5 bg-[var(--brand)] text-white text-[10px] font-mono uppercase tracking-widest">
+								<div className="absolute top-0 right-0 flex items-center gap-1 px-3 py-1.5 bg-(--brand) text-white text-[10px] font-mono uppercase tracking-widest">
 									<Rocket size={10} />
 									Popular
 								</div>
@@ -124,32 +124,32 @@ export function PricingCatalog() {
 
 							{/* Header */}
 							<div className="mb-6">
-								<p className="text-xs font-mono uppercase tracking-widest text-[var(--text-subtle)] mb-2">
+								<p className="text-xs font-mono uppercase tracking-widest text-(--text-subtle) mb-2">
 									{tier.name}
 								</p>
 								<div className="mb-3">
 									{tier.price ? (
 										<>
-											<p className="text-[10px] font-mono text-[var(--text-subtle)] mb-1">{tier.priceLabel}</p>
-											<p className="text-2xl font-bold text-[var(--text)]">
+											<p className="text-[10px] font-mono text-(--text-subtle) mb-1">{tier.priceLabel}</p>
+											<p className="text-2xl font-bold text-(--text)">
 												{tier.price}
-												<span className="text-xs font-mono font-normal text-[var(--text-subtle)] ml-1.5">/ year</span>
+												<span className="text-xs font-mono font-normal text-(--text-subtle) ml-1.5">/ year</span>
 											</p>
 										</>
 									) : (
-										<p className="text-2xl font-bold text-[var(--brand)]">{tier.priceLabel}</p>
+										<p className="text-2xl font-bold text-(--brand)">{tier.priceLabel}</p>
 									)}
 								</div>
-								<p className="text-xs text-[var(--text-muted)] leading-relaxed">{tier.description}</p>
+								<p className="text-xs text-(--text-muted) leading-relaxed">{tier.description}</p>
 							</div>
 
 							{/* Features */}
 							<ul className="space-y-3 mb-8 flex-1">
 								{tier.features.map((feature) => (
-									<li key={feature} className="flex items-start gap-2.5 text-sm text-[var(--text-muted)]">
+									<li key={feature} className="flex items-start gap-2.5 text-sm text-(--text-muted)">
 										<CheckCircle
 											size={14}
-											className="text-[var(--brand)] flex-shrink-0 mt-0.5"
+											className="text-(--brand) shrink-0 mt-0.5"
 										/>
 										{feature}
 									</li>
@@ -162,8 +162,8 @@ export function PricingCatalog() {
 								id={`pricing-cta-${tier.id}`}
 								onClick={track(tier.cta, 'pricing-catalog', { tier: tier.id, price: tier.price ?? 'custom' })}
 								className={`inline-flex items-center justify-center gap-2 w-full py-3 text-sm font-medium transition-all group ${tier.popular
-									? 'bg-[var(--text)] text-[var(--bg)] hover:opacity-80'
-									: 'border border-[var(--border)] text-[var(--text)] hover:border-[var(--brand)] hover:text-[var(--brand)]'
+									? 'bg-(--text) text-(--bg) hover:opacity-80'
+									: 'border border-(--border) text-(--text) hover:border-(--brand) hover:text-(--brand)'
 									}`}
 							>
 								{tier.cta}
@@ -173,7 +173,7 @@ export function PricingCatalog() {
 					))}
 				</div>
 
-				<p className="text-[10px] font-mono text-[var(--text-subtle)] mt-6">
+				<p className="text-[10px] font-mono text-(--text-subtle) mt-6">
 					Prices in IDR and exclude VAT (PPN 11%). International projects quoted in USD.
 				</p>
 			</div>

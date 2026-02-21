@@ -12,21 +12,21 @@ const stats = [
 export function StatsSection() {
 	return (
 		<section
-			className="border-y border-[var(--border)] bg-[var(--bg-subtle)]"
+			className="border-y border-(--border) bg-(--bg-subtle)"
 			aria-label="Company statistics"
 		>
 			<div className="mx-auto max-w-7xl px-6 lg:px-8">
-				<dl className="grid grid-cols-2 lg:grid-cols-4 divide-x divide-y lg:divide-y-0 divide-[var(--border)]">
+				<dl className="grid grid-cols-2 lg:grid-cols-4 divide-x divide-y lg:divide-y-0 divide-(--border)">
 					{stats.map((stat, i) => (
 						<div key={stat.label} className="px-6 py-10 first:pl-0 last:pr-0">
 							<Reveal delay={i * 0.1}>
-								<dt className="text-xs font-mono uppercase tracking-widest text-[var(--text-subtle)] mb-1">
+								<dt className="text-xs font-mono uppercase tracking-widest text-(--text-subtle) mb-1">
 									{stat.label}
 								</dt>
-								<dd className="text-4xl font-bold text-[var(--text)] tabular-nums">
+								<dd className="text-4xl font-bold text-(--text) tabular-nums">
 									{stat.value}
 								</dd>
-								<dd className="text-xs text-[var(--text-subtle)] mt-1">
+								<dd className="text-xs text-(--text-subtle) mt-1">
 									{stat.description}
 								</dd>
 							</Reveal>

@@ -25,54 +25,54 @@ export async function WorkSection() {
 
 	return (
 		<section
-			className="py-28 border-t border-[var(--border)] bg-[var(--bg-subtle)]"
+			className="py-28 border-t border-(--border) bg-(--bg-subtle)"
 			aria-labelledby="work-heading"
 		>
 			<div className="mx-auto max-w-7xl px-6 lg:px-8">
 				{/* Header */}
 				<div className="mb-16">
-					<p className="text-xs font-mono uppercase tracking-widest text-[var(--brand)] mb-3">
+					<p className="text-xs font-mono uppercase tracking-widest text-(--brand) mb-3">
 						Featured Work
 					</p>
 					<h2
 						id="work-heading"
-						className="text-4xl font-bold text-[var(--text)] leading-tight max-w-lg"
+						className="text-4xl font-bold text-(--text) leading-tight max-w-lg"
 					>
 						Selected projects.
 					</h2>
 				</div>
 
 				{/* Projects — 3-column curated grid */}
-				<div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-[var(--border)]">
+				<div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-(--border)">
 					{projects.map((project, i) => {
 						const Icon = typeIcon[project.type] ?? Globe
 						return (
 							<Reveal key={project.id} delay={i * 0.1}>
 								<Link
 									href={`/work/${project.slug}`}
-									className="bg-[var(--bg)] p-8 flex flex-col group hover:bg-white dark:hover:bg-neutral-900 transition-colors"
+									className="bg-(--bg) p-8 flex flex-col group hover:bg-white dark:hover:bg-neutral-900 transition-colors"
 								>
 									<div className="flex items-center justify-between mb-8">
-										<div className={`p-2 border border-[var(--border)] ${typeColor[project.type]} ${typeColorHover[project.type]}`}>
+										<div className={`p-2 border border-(--border) ${typeColor[project.type]} ${typeColorHover[project.type]}`}>
 											<Icon size={16} aria-hidden="true" />
 										</div>
-										<span className="text-xs font-mono text-[var(--text-subtle)]">{project.year}</span>
+										<span className="text-xs font-mono text-(--text-subtle)">{project.year}</span>
 									</div>
 
 									<div className="flex-1">
 										<span className={`text-[10px] font-mono uppercase tracking-widest ${typeColor[project.type]}`}>
 											{project.category}
 										</span>
-										<h3 className="text-lg font-bold text-[var(--text)] group-hover:text-[var(--brand)] transition-colors leading-snug my-3">
+										<h3 className="text-lg font-bold text-(--text) group-hover:text-(--brand) transition-colors leading-snug my-3">
 											{project.title}
 										</h3>
-										<p className="text-xs text-[var(--text-subtle)] mb-4">{project.client}</p>
-										<p className="text-sm text-[var(--text-muted)] leading-relaxed">
+										<p className="text-xs text-(--text-subtle) mb-4">{project.client}</p>
+										<p className="text-sm text-(--text-muted) leading-relaxed">
 											{project.description}
 										</p>
 									</div>
 
-									<div className="mt-8 pt-6 border-t border-[var(--border)] flex items-center gap-1.5 text-xs font-mono text-[var(--text-subtle)] group-hover:text-[var(--brand)] transition-colors">
+									<div className="mt-8 pt-6 border-t border-(--border) flex items-center gap-1.5 text-xs font-mono text-(--text-subtle) group-hover:text-(--brand) transition-colors">
 										View case study
 										<ArrowRight size={12} className="transition-transform group-hover:translate-x-1" />
 									</div>
@@ -86,7 +86,7 @@ export async function WorkSection() {
 				<div className="mt-10 flex justify-end">
 					<Link
 						href="/work"
-						className="inline-flex items-center gap-1.5 text-sm text-[var(--text-muted)] hover:text-[var(--text)] transition-colors group"
+						className="inline-flex items-center gap-1.5 text-sm text-(--text-muted) hover:text-(--text) transition-colors group"
 					>
 						View all projects
 						<ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />

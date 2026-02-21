@@ -99,7 +99,7 @@ export function Navbar() {
 				className={clsx(
 					'w-full transition-all duration-300 border-b',
 					scrolled
-						? 'border-[var(--border)] bg-[var(--bg)]/90 backdrop-blur-xl'
+						? 'border-(--border) bg-(--bg)/90 backdrop-blur-xl'
 						: 'border-transparent bg-transparent',
 				)}
 			>
@@ -128,7 +128,7 @@ export function Navbar() {
 							height={32}
 							className="h-7 w-7 block dark:hidden"
 						/>
-						<span className="text-lg font-bold tracking-tight font-mono text-[var(--text)] group-hover:text-[var(--brand)] transition-colors">
+						<span className="text-lg font-bold tracking-tight font-mono text-(--text) group-hover:text-(--brand) transition-colors">
 							SABAKO
 						</span>
 					</Link>
@@ -145,7 +145,7 @@ export function Navbar() {
 										onClick={() => setDropdownOpen((v) => !v)}
 										className={clsx(
 											'flex items-center gap-1 px-3 py-2 text-sm font-medium transition-colors',
-											'text-[var(--text-muted)] hover:text-[var(--text)]',
+											'text-(--text-muted) hover:text-(--text)',
 										)}
 									>
 										{item.label}
@@ -162,7 +162,7 @@ export function Navbar() {
 											aria-labelledby="services-menu-button"
 											className={clsx(
 												'absolute top-full left-1/2 -translate-x-1/2 mt-2 w-72',
-												'border border-[var(--border)] bg-[var(--bg)]',
+												'border border-(--border) bg-(--bg)',
 												'shadow-lg shadow-black/5',
 												'animate-fade-up',
 											)}
@@ -175,19 +175,19 @@ export function Navbar() {
 													onClick={track(service.label, 'navbar-services-dropdown')}
 													className={clsx(
 														'flex items-start gap-3 px-4 py-3',
-														'text-[var(--text-muted)] hover:text-[var(--text)] hover:bg-[var(--bg-subtle)]',
-														'border-b border-[var(--border)] last:border-b-0',
+														'text-(--text-muted) hover:text-(--text) hover:bg-(--bg-subtle)',
+														'border-b border-(--border) last:border-b-0',
 														'transition-colors group',
 													)}
 												>
-													<span className="mt-0.5 text-[var(--brand)] flex-shrink-0">
+													<span className="mt-0.5 text-(--brand) shrink-0">
 														{service.icon}
 													</span>
 													<span>
-														<span className="block text-sm font-medium text-[var(--text)] group-hover:text-[var(--brand)] transition-colors">
+														<span className="block text-sm font-medium text-(--text) group-hover:text-(--brand) transition-colors">
 															{service.label}
 														</span>
-														<span className="block text-xs text-[var(--text-subtle)] mt-0.5">
+														<span className="block text-xs text-(--text-subtle) mt-0.5">
 															{service.description}
 														</span>
 													</span>
@@ -204,8 +204,8 @@ export function Navbar() {
 										className={clsx(
 											'px-3 py-2 text-sm font-medium transition-colors block',
 											isActive(item.href!)
-												? 'text-[var(--text)]'
-												: 'text-[var(--text-muted)] hover:text-[var(--text)]',
+												? 'text-(--text)'
+												: 'text-(--text-muted) hover:text-(--text)',
 										)}
 									>
 										{item.label}
@@ -223,7 +223,7 @@ export function Navbar() {
 							onClick={track('Start a Project', 'navbar-cta')}
 							className={clsx(
 								'px-4 py-2 text-sm font-medium',
-								'bg-[var(--text)] text-[var(--bg)]',
+								'bg-(--text) text-(--bg)',
 								'hover:opacity-80 transition-opacity',
 							)}
 						>
@@ -235,7 +235,7 @@ export function Navbar() {
 					<button
 						id="mobile-menu-toggle"
 						onClick={() => setMenuOpen((v) => !v)}
-						className="lg:hidden p-2 text-[var(--text-muted)] hover:text-[var(--text)] transition-colors"
+						className="lg:hidden p-2 text-(--text-muted) hover:text-(--text) transition-colors"
 						aria-label={menuOpen ? 'Close menu' : 'Open menu'}
 						aria-expanded={menuOpen}
 					>
@@ -253,23 +253,23 @@ export function Navbar() {
 			>
 				{/* Backdrop */}
 				<div
-					className="absolute inset-0 bg-black/40 backdrop-blur-sm"
+					className="absolute inset-0 bg-black/40 backdrop-blur-xs"
 					onClick={() => setMenuOpen(false)}
 				/>
 				{/* Panel */}
 				<div
 					className={clsx(
-						'absolute top-0 right-0 h-full w-full max-w-sm border-l border-[var(--border)]',
-						'bg-[var(--bg)] flex flex-col',
+						'absolute top-0 right-0 h-full w-full max-w-sm border-l border-(--border)',
+						'bg-(--bg) flex flex-col',
 						'transition-transform duration-300',
 						menuOpen ? 'translate-x-0' : 'translate-x-full',
 					)}
 				>
-					<div className="flex items-center justify-between px-6 h-16 border-b border-[var(--border)]">
-						<span className="text-sm font-mono font-bold text-[var(--text)]">Navigation</span>
+					<div className="flex items-center justify-between px-6 h-16 border-b border-(--border)">
+						<span className="text-sm font-mono font-bold text-(--text)">Navigation</span>
 						<button
 							onClick={() => setMenuOpen(false)}
-							className="p-2 text-[var(--text-muted)] hover:text-[var(--text)]"
+							className="p-2 text-(--text-muted) hover:text-(--text)"
 							aria-label="Close menu"
 						>
 							<X size={20} />
@@ -280,7 +280,7 @@ export function Navbar() {
 							{navItems.map((item) =>
 								item.children ? (
 									<li key={item.label}>
-										<p className="text-xs font-mono uppercase tracking-widest text-[var(--text-subtle)] mt-6 mb-2 first:mt-0">
+										<p className="text-xs font-mono uppercase tracking-widest text-(--text-subtle) mt-6 mb-2 first:mt-0">
 											{item.label}
 										</p>
 										{item.children.map((child) => (
@@ -289,16 +289,16 @@ export function Navbar() {
 												href={child.href}
 												onClick={track(child.label, 'mobile-navbar-services')}
 												className={clsx(
-													'flex items-start gap-3 py-3 border-b border-[var(--border)]',
-													'text-[var(--text-muted)] hover:text-[var(--text)] transition-colors',
+													'flex items-start gap-3 py-3 border-b border-(--border)',
+													'text-(--text-muted) hover:text-(--text) transition-colors',
 												)}
 											>
-												<span className="mt-0.5 text-[var(--brand)]">{child.icon}</span>
+												<span className="mt-0.5 text-(--brand)">{child.icon}</span>
 												<span>
-													<span className="block text-sm font-medium text-[var(--text)]">
+													<span className="block text-sm font-medium text-(--text)">
 														{child.label}
 													</span>
-													<span className="block text-xs text-[var(--text-subtle)]">
+													<span className="block text-xs text-(--text-subtle)">
 														{child.description}
 													</span>
 												</span>
@@ -311,11 +311,11 @@ export function Navbar() {
 											href={item.href!}
 											onClick={track(item.label, 'mobile-navbar')}
 											className={clsx(
-												'flex items-center justify-between py-3 border-b border-[var(--border)]',
+												'flex items-center justify-between py-3 border-b border-(--border)',
 												'text-sm font-medium transition-colors',
 												isActive(item.href!)
-													? 'text-[var(--text)]'
-													: 'text-[var(--text-muted)] hover:text-[var(--text)]',
+													? 'text-(--text)'
+													: 'text-(--text-muted) hover:text-(--text)',
 											)}
 										>
 											{item.label}
@@ -325,11 +325,11 @@ export function Navbar() {
 							)}
 						</ul>
 					</nav>
-					<div className="px-6 py-6 border-t border-[var(--border)]">
+					<div className="px-6 py-6 border-t border-(--border)">
 						<Link
 							href="/contact"
 							onClick={track('Start a Project', 'mobile-navbar-cta')}
-							className="block w-full text-center py-3 text-sm font-medium bg-[var(--text)] text-[var(--bg)] hover:opacity-80 transition-opacity"
+							className="block w-full text-center py-3 text-sm font-medium bg-(--text) text-(--bg) hover:opacity-80 transition-opacity"
 						>
 							Start a Project
 						</Link>

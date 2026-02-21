@@ -59,17 +59,17 @@ export default function AboutPage() {
 					className="object-cover object-center"
 				/>
 				{/* Dark gradient overlay for legibility */}
-				<div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/10" />
+				<div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/30 to-black/10" />
 
 				{/* Overlay text */}
 				<div className="relative max-w-7xl mx-auto px-6 lg:px-8 pb-16 lg:pb-24 w-full">
-					<p className="text-xs font-mono uppercase tracking-widest text-[var(--brand)] mb-4">
+					<p className="text-xs font-mono uppercase tracking-widest text-(--brand) mb-4">
 						About SABAKO
 					</p>
 					<h1 className="text-[clamp(2.5rem,6vw,4.5rem)] font-bold text-white leading-[1.08] max-w-3xl">
 						We digitize.<br />
 						We empower.<br />
-						<span className="text-[var(--brand)]">We deliver.</span>
+						<span className="text-(--brand)">We deliver.</span>
 					</h1>
 					<p className="mt-6 text-base lg:text-lg text-white/70 max-w-xl leading-relaxed">
 						Helping traditional businesses step confidently into the digital era since 2018.
@@ -81,11 +81,11 @@ export default function AboutPage() {
 			<section className="py-24 lg:py-32" aria-label="Our story">
 				<div className="max-w-7xl mx-auto px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
 					<div>
-						<p className="text-xs font-mono uppercase tracking-widest text-[var(--brand)] mb-4">Our Story</p>
-						<h2 className="text-3xl lg:text-4xl font-bold text-[var(--text)] mb-6 leading-tight">
+						<p className="text-xs font-mono uppercase tracking-widest text-(--brand) mb-4">Our Story</p>
+						<h2 className="text-3xl lg:text-4xl font-bold text-(--text) mb-6 leading-tight">
 							Born out of a conviction that technology should be a great equalizer.
 						</h2>
-						<div className="space-y-4 text-[var(--text-muted)] leading-relaxed">
+						<div className="space-y-4 text-(--text-muted) leading-relaxed">
 							<p>
 								Founded in early 2018, SABAKO began with a simple conviction: that truly great software requires more than technical ability — it demands deep empathy for the people who use it and the businesses that depend on it.
 							</p>
@@ -98,21 +98,21 @@ export default function AboutPage() {
 						</div>
 					</div>
 					<div className="space-y-6">
-						<blockquote className="border-l-4 border-[var(--brand)] pl-6">
-							<p className="text-xl lg:text-2xl font-medium text-[var(--text)] leading-snug">
+						<blockquote className="border-l-4 border-(--brand) pl-6">
+							<p className="text-xl lg:text-2xl font-medium text-(--text) leading-snug">
 								&ldquo;Unleash ideas just as you imagined.&rdquo;
 							</p>
 						</blockquote>
-						<p className="text-[var(--text-muted)] leading-relaxed">
+						<p className="text-(--text-muted) leading-relaxed">
 							We turn our clients&apos; visions into reality — not approximately, not &ldquo;good enough&rdquo;,
 							but precisely the product they set out to build. That fidelity is what keeps our clients
 							coming back.
 						</p>
 						<div className="grid grid-cols-3 gap-4 pt-4">
 							{[['2018', 'Founded'], ['7+', 'Years active'], ['3', 'Disciplines']].map(([num, label]) => (
-								<div key={label} className="border-t-2 border-[var(--brand)] pt-4">
-									<p className="text-2xl font-bold text-[var(--text)]">{num}</p>
-									<p className="text-xs font-mono text-[var(--text-subtle)] mt-0.5">{label}</p>
+								<div key={label} className="border-t-2 border-(--brand) pt-4">
+									<p className="text-2xl font-bold text-(--text)">{num}</p>
+									<p className="text-xs font-mono text-(--text-subtle) mt-0.5">{label}</p>
 								</div>
 							))}
 						</div>
@@ -136,21 +136,21 @@ export default function AboutPage() {
 			</div>
 
 			{/* ── WHAT WE DO — alternating text + image ────────────────────────── */}
-			<section className="py-24 lg:py-32 border-b border-[var(--border)]" aria-label="What we do">
+			<section className="py-24 lg:py-32 border-b border-(--border)" aria-label="What we do">
 				<div className="max-w-7xl mx-auto px-6 lg:px-8 space-y-24">
 
 					{/* Row 1: text left, image right */}
 					<div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-center">
 						<div>
-							<p className="text-xs font-mono uppercase tracking-widest text-[var(--brand)] mb-4">2018</p>
-							<h2 className="text-2xl lg:text-3xl font-bold text-[var(--text)] mb-5 leading-tight">
+							<p className="text-xs font-mono uppercase tracking-widest text-(--brand) mb-4">2018</p>
+							<h2 className="text-2xl lg:text-3xl font-bold text-(--text) mb-5 leading-tight">
 								The Beginning.
 							</h2>
-							<p className="text-[var(--text-muted)] leading-relaxed">
+							<p className="text-(--text-muted) leading-relaxed">
 								SABAKO was founded on the principle of fulfilling market needs. The era of digital transformation, and many businesses were beginning to look for partners to help them build websites and company profiles.
 							</p>
 						</div>
-						<div className="relative aspect-[4/3] overflow-hidden">
+						<div className="relative aspect-4/3 overflow-hidden">
 							<Image
 								src="/images/about/DSCF9436.jpg"
 								alt="Web application development at SABAKO"
@@ -163,7 +163,7 @@ export default function AboutPage() {
 
 					{/* Row 2: image left, text right */}
 					<div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-center">
-						<div className="relative aspect-[4/3] overflow-hidden lg:order-first order-last">
+						<div className="relative aspect-4/3 overflow-hidden lg:order-first order-last">
 							<Image
 								src="/images/about/IMG-20200718-WA0017.jpg"
 								alt="Filming a person"
@@ -173,11 +173,11 @@ export default function AboutPage() {
 							/>
 						</div>
 						<div>
-							<p className="text-xs font-mono uppercase tracking-widest text-[var(--brand)] mb-4">2020</p>
-							<h2 className="text-2xl lg:text-3xl font-bold text-[var(--text)] mb-5 leading-tight">
+							<p className="text-xs font-mono uppercase tracking-widest text-(--brand) mb-4">2020</p>
+							<h2 className="text-2xl lg:text-3xl font-bold text-(--text) mb-5 leading-tight">
 								Pandemic Effect.
 							</h2>
-							<p className="text-[var(--text-muted)] leading-relaxed">
+							<p className="text-(--text-muted) leading-relaxed">
 								The economic bubble burst, and physical businesses could not operate; as a result, the digital transformation grew even more massive, and we began shifting the focus not only to websites but also to mobile apps, which were in greater demand than ever before.
 							</p>
 						</div>
@@ -186,15 +186,15 @@ export default function AboutPage() {
 					{/* Row 3: text left, image right */}
 					<div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-center">
 						<div>
-							<p className="text-xs font-mono uppercase tracking-widest text-[var(--brand)] mb-4">2023</p>
-							<h2 className="text-2xl lg:text-3xl font-bold text-[var(--text)] mb-5 leading-tight">
+							<p className="text-xs font-mono uppercase tracking-widest text-(--brand) mb-4">2023</p>
+							<h2 className="text-2xl lg:text-3xl font-bold text-(--text) mb-5 leading-tight">
 								And Beyond.
 							</h2>
-							<p className="text-[var(--text-muted)] leading-relaxed">
+							<p className="text-(--text-muted) leading-relaxed">
 								We slowly organise our business by forming a legal entity, which lets us work with big corporations and governments. Iterating on our process, we are now able to deliver products that are not only functional but also scalable and maintainable.
 							</p>
 						</div>
-						<div className="relative aspect-[4/3] overflow-hidden">
+						<div className="relative aspect-4/3 overflow-hidden">
 							<Image
 								src="/images/about/IMG_20240104_131752.jpg"
 								alt="Meeting area"
@@ -209,22 +209,22 @@ export default function AboutPage() {
 			</section>
 
 			{/* ── VALUES GRID ───────────────────────────────────────────────────── */}
-			<section className="py-24 bg-[var(--bg-subtle)] border-b border-[var(--border)]" aria-labelledby="values-heading">
+			<section className="py-24 bg-(--bg-subtle) border-b border-(--border)" aria-labelledby="values-heading">
 				<div className="max-w-7xl mx-auto px-6 lg:px-8">
-					<p className="text-xs font-mono uppercase tracking-widest text-[var(--brand)] mb-4">Our principles</p>
-					<h2 id="values-heading" className="text-2xl lg:text-3xl font-bold text-[var(--text)] mb-14">
+					<p className="text-xs font-mono uppercase tracking-widest text-(--brand) mb-4">Our principles</p>
+					<h2 id="values-heading" className="text-2xl lg:text-3xl font-bold text-(--text) mb-14">
 						What we stand for
 					</h2>
-					<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-[var(--border)]">
+					<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-(--border)">
 						{values.map((value) => {
 							const Icon = value.icon
 							return (
-								<div key={value.title} className="bg-[var(--bg-subtle)] p-8">
-									<div className="p-2 border border-[var(--border)] text-[var(--brand)] bg-[var(--bg)] w-fit mb-5">
+								<div key={value.title} className="bg-(--bg-subtle) p-8">
+									<div className="p-2 border border-(--border) text-(--brand) bg-(--bg) w-fit mb-5">
 										<Icon size={18} />
 									</div>
-									<h3 className="text-base font-bold text-[var(--text)] mb-2">{value.title}</h3>
-									<p className="text-sm text-[var(--text-muted)] leading-relaxed">{value.description}</p>
+									<h3 className="text-base font-bold text-(--text) mb-2">{value.title}</h3>
+									<p className="text-sm text-(--text-muted) leading-relaxed">{value.description}</p>
 								</div>
 							)
 						})}
@@ -241,7 +241,7 @@ export default function AboutPage() {
 					sizes="100vw"
 					className="object-cover object-top"
 				/>
-				<div className="absolute inset-0 bg-gradient-to-r from-black/70 to-black/20" />
+				<div className="absolute inset-0 bg-linear-to-r from-black/70 to-black/20" />
 				<div className="absolute inset-0 flex items-center">
 					<div className="max-w-7xl mx-auto px-6 lg:px-8">
 						<p className="text-xs font-mono uppercase tracking-widest text-white/60 mb-4">Our culture</p>
@@ -258,12 +258,12 @@ export default function AboutPage() {
 			{/* ── CTA ──────────────────────────────────────────────────────────── */}
 			<section className="py-24" aria-label="Contact call to action">
 				<div className="max-w-7xl mx-auto px-6 lg:px-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
-					<p className="text-2xl font-bold text-[var(--text)] max-w-sm">
+					<p className="text-2xl font-bold text-(--text) max-w-sm">
 						Interested in working with us?
 					</p>
 					<Link
 						href="/contact"
-						className="inline-flex items-center gap-2 px-6 py-3 bg-[var(--text)] text-[var(--bg)] text-sm font-medium hover:opacity-80 transition-opacity group"
+						className="inline-flex items-center gap-2 px-6 py-3 bg-(--text) text-(--bg) text-sm font-medium hover:opacity-80 transition-opacity group"
 					>
 						Get in Touch
 						<ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
@@ -277,18 +277,18 @@ export default function AboutPage() {
 
 export function TeamSection() {
 	return (
-		<section className="py-24 border-b border-[var(--border)]" aria-labelledby="team-heading">
+		<section className="py-24 border-b border-(--border)" aria-labelledby="team-heading">
 			<div className="max-w-7xl mx-auto px-6 lg:px-8">
-				<p className="text-xs font-mono uppercase tracking-widest text-[var(--brand)] mb-4">People</p>
-				<h2 id="team-heading" className="text-2xl lg:text-3xl font-bold text-[var(--text)] mb-14">
+				<p className="text-xs font-mono uppercase tracking-widest text-(--brand) mb-4">People</p>
+				<h2 id="team-heading" className="text-2xl lg:text-3xl font-bold text-(--text) mb-14">
 					The team
 				</h2>
 
 				{/* Photo grid */}
-				<div className="grid grid-cols-1 sm:grid-cols-3 gap-px bg-[var(--border)] mb-px">
+				<div className="grid grid-cols-1 sm:grid-cols-3 gap-px bg-(--border) mb-px">
 					{team.map((member, i) => (
-						<div key={member.name} className="relative bg-[var(--bg)] overflow-hidden group">
-							<div className="relative aspect-[3/4] overflow-hidden bg-[var(--bg-subtle)]">
+						<div key={member.name} className="relative bg-(--bg) overflow-hidden group">
+							<div className="relative aspect-3/4 overflow-hidden bg-(--bg-subtle)">
 								<Image
 									src={`/images/about/team-${i + 1}.jpg`}
 									alt={member.name}
@@ -301,13 +301,13 @@ export function TeamSection() {
 								href={member.contact}
 								target="_blank"
 								rel="noopener noreferrer"
-								className="flex items-center justify-between p-5 hover:bg-[var(--bg-subtle)] transition-colors group/link"
+								className="flex items-center justify-between p-5 hover:bg-(--bg-subtle) transition-colors group/link"
 							>
 								<div>
-									<p className="text-sm font-medium text-[var(--text)]">{member.name}</p>
-									<p className="text-xs text-[var(--text-muted)] mt-0.5">{member.role}</p>
+									<p className="text-sm font-medium text-(--text)">{member.name}</p>
+									<p className="text-xs text-(--text-muted) mt-0.5">{member.role}</p>
 								</div>
-								<ArrowRight size={14} className="text-[var(--text-subtle)] group-hover/link:translate-x-1 group-hover/link:text-[var(--brand)] transition-all" />
+								<ArrowRight size={14} className="text-(--text-subtle) group-hover/link:translate-x-1 group-hover/link:text-(--brand) transition-all" />
 							</a>
 						</div>
 					))}

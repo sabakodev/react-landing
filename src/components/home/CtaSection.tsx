@@ -24,7 +24,7 @@ export function CtaSection() {
 
 	return (
 		<section
-			className="py-28 border-t border-[var(--border)] bg-[var(--bg-subtle)] relative overflow-hidden"
+			className="py-28 border-t border-(--border) bg-(--bg-subtle) relative overflow-hidden"
 			aria-labelledby="cta-heading"
 		>
 			{/* Subtle accent */}
@@ -39,16 +39,16 @@ export function CtaSection() {
 
 			<Reveal>
 				<div className="relative mx-auto max-w-2xl px-6 lg:px-8">
-					<p className="text-xs font-mono uppercase tracking-widest text-[var(--brand)] mb-4">
+					<p className="text-xs font-mono uppercase tracking-widest text-(--brand) mb-4">
 						Ready to Build?
 					</p>
 					<h2
 						id="cta-heading"
-						className="text-5xl font-bold text-[var(--text)] max-w-2xl mx-auto leading-tight mb-6"
+						className="text-5xl font-bold text-(--text) max-w-2xl mx-auto leading-tight mb-6"
 					>
 						{jargon}
 					</h2>
-					<p className="text-lg text-[var(--text-muted)] mb-12">
+					<p className="text-lg text-(--text-muted) mb-12">
 						Whether you need a web app, mobile product, or IoT solution — our team is ready to consult, architect, and deliver.
 					</p>
 
@@ -57,7 +57,7 @@ export function CtaSection() {
 							href="/contact"
 							id="cta-start-project"
 							onClick={onCtaClick}
-							className="inline-flex items-center gap-2 px-8 py-4 bg-[var(--text)] text-[var(--bg)] text-sm font-medium hover:opacity-80 transition-opacity group"
+							className="inline-flex items-center gap-2 px-8 py-4 bg-(--text) text-(--bg) text-sm font-medium hover:opacity-80 transition-opacity group"
 						>
 							Start a Project
 							<ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
@@ -65,7 +65,7 @@ export function CtaSection() {
 						<a
 							href="mailto:sales@sabako.id"
 							id="cta-email"
-							className="inline-flex items-center gap-2 px-8 py-4 border border-[var(--border)] text-[var(--text)] text-sm font-medium hover:bg-[var(--bg)] transition-colors"
+							className="inline-flex items-center gap-2 px-8 py-4 border border-(--border) text-(--text) text-sm font-medium hover:bg-(--bg) transition-colors"
 						>
 							<Mail size={16} />
 							sales@sabako.id
@@ -73,7 +73,7 @@ export function CtaSection() {
 					</div>
 
 					{/* Office hours */}
-					<div className="mt-12 inline-flex items-center gap-3 text-xs font-mono text-[var(--text-subtle)]">
+					<div className="mt-12 inline-flex items-center gap-3 text-xs font-mono text-(--text-subtle)">
 						<span className="w-1.5 h-1.5 bg-green-500 animate-pulse" />
 						Available Monday–Friday, 08:30–18:00 WIB · Saturday, 10:00–14:00 WIB
 					</div>

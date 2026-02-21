@@ -42,7 +42,7 @@ export function HeroSection() {
 
 	return (
 		<section
-			className="relative min-h-[100svh] flex flex-col justify-center overflow-hidden cursor-crosshair"
+			className="relative min-h-svh flex flex-col justify-center overflow-hidden cursor-crosshair"
 			aria-label="Hero section"
 		>
 			{/* Grid background */}
@@ -60,7 +60,7 @@ export function HeroSection() {
 
 			{/* Accent line */}
 			<div
-				className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[var(--brand)] to-transparent opacity-40"
+				className="absolute top-0 left-0 right-0 h-px bg-linear-to-r from-transparent via-(--brand) to-transparent opacity-40"
 				aria-hidden="true"
 			/>
 
@@ -70,23 +70,23 @@ export function HeroSection() {
 			<div className="relative max-w-7xl px-6 lg:px-24 pt-32 pb-24">
 				{/* Badge */}
 				<div
-					className="inline-flex items-center gap-2 px-3 py-1.5 border border-[var(--border)] bg-[var(--bg-subtle)] text-xs font-mono text-[var(--text-muted)] mb-8 animate-fade-up"
+					className="inline-flex items-center gap-2 px-3 py-1.5 border border-(--border) bg-(--bg-subtle) text-xs font-mono text-(--text-muted) mb-8 animate-fade-up"
 					style={{ animationDelay: '0.1s', opacity: 0 }}
 				>
-					<Sparkles size={12} className="text-[var(--brand)]" />
+					<Sparkles size={12} className="text-(--brand)" />
 					IT Agency &amp; Consulting — Jakarta, Indonesia
 				</div>
 
 				{/* Headline */}
 				<h1
-					className="text-[clamp(2.5rem,7vw,4.5rem)] font-bold leading-[1.05] tracking-tight text-[var(--text)] max-w-4xl animate-fade-up"
+					className="text-[clamp(2.5rem,7vw,4.5rem)] font-bold leading-[1.05] tracking-tight text-(--text) max-w-4xl animate-fade-up"
 					style={{ animationDelay: '0.2s', opacity: 0 }}
 				>
 					We build{' '}<br />
 					<span className="relative">
-						<span className="text-[var(--brand)]">
+						<span className="text-(--brand)">
 							{displayed}
-							<span className="animate-blink text-[var(--brand)]">|</span>
+							<span className="animate-blink text-(--brand)">|</span>
 						</span>
 					</span>
 					<br />
@@ -97,7 +97,7 @@ export function HeroSection() {
 
 				{/* Description */}
 				<p
-					className="mt-8 text-lg text-[var(--text-muted)] max-w-xl leading-relaxed animate-fade-up"
+					className="mt-8 text-lg text-(--text-muted) max-w-xl leading-relaxed animate-fade-up"
 					style={{ animationDelay: '0.35s', opacity: 0 }}
 				>
 					From enterprise web platforms to cross-platform mobile apps and IoT-connected systems — SABAKO delivers technology that scales.
@@ -111,7 +111,7 @@ export function HeroSection() {
 					<Link
 						href="/contact"
 						id="hero-start-project"
-						className="inline-flex items-center gap-2 px-6 py-3 bg-[var(--text)] text-[var(--bg)] text-sm font-medium hover:opacity-80 transition-opacity group"
+						className="inline-flex items-center gap-2 px-6 py-3 bg-(--text) text-(--bg) text-sm font-medium hover:opacity-80 transition-opacity group"
 						onClick={track('Start a Project', 'hero')}
 					>
 						Start a Project
@@ -123,7 +123,7 @@ export function HeroSection() {
 					<Link
 						href="/work"
 						id="hero-view-work"
-						className="inline-flex items-center gap-2 px-6 py-3 border border-[var(--border)] text-[var(--text)] text-sm font-medium hover:border-[var(--border-strong)] hover:bg-[var(--bg-subtle)] transition-colors"
+						className="inline-flex items-center gap-2 px-6 py-3 border border-(--border) text-(--text) text-sm font-medium hover:border-(--border-strong) hover:bg-(--bg-subtle) transition-colors"
 						onClick={track('View Our Work', 'hero')}
 					>
 						View Our Work
@@ -145,12 +145,12 @@ export function HeroSection() {
 
 			{/* Scroll indicator */}
 			<div
-				className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-[var(--text-subtle)] animate-fade-in"
+				className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-(--text-subtle) animate-fade-in"
 				style={{ animationDelay: '1s', opacity: 0 }}
 				aria-hidden="true"
 			>
 				<span className="text-xs font-mono uppercase tracking-widest">Scroll</span>
-				{/* <div className="animate-ping w-px h-8 bg-gradient-to-t from-[var(--border-strong)] to-transparent" /> */}
+				{/* <div className="animate-ping w-px h-8 bg-linear-to-t from-(--border-strong) to-transparent" /> */}
 				<MouseIcon size={24} className="animate-bounce opacity-50" />
 			</div>
 		</section>
@@ -166,7 +166,7 @@ export function ServicePills({ data }: { data: string[] }) {
 			{data.map((tag) => (
 				<span
 					key={tag}
-					className="px-3 py-1.5 text-xs font-mono border border-[var(--border)] text-[var(--text-muted)] bg-[var(--bg-subtle)]"
+					className="px-3 py-1.5 text-xs font-mono border border-(--border) text-(--text-muted) bg-(--bg-subtle)"
 				>
 					{tag}
 				</span>

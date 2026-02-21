@@ -29,17 +29,17 @@ export function OtherServices({ current }: { current: ServiceKey }) {
 
 	return (
 		<section
-			className="border-t border-[var(--border)] py-16"
+			className="border-t border-(--border) py-16"
 			aria-labelledby="other-services-heading"
 		>
 			<div className="mx-auto max-w-7xl px-6 lg:px-8">
 				<p
 					id="other-services-heading"
-					className="text-xs font-mono uppercase tracking-widest text-[var(--text-subtle)] mb-8"
+					className="text-xs font-mono uppercase tracking-widest text-(--text-subtle) mb-8"
 				>
 					Explore Other Services
 				</p>
-				<div className="grid grid-cols-1 sm:grid-cols-2 gap-px bg-[var(--border)]">
+				<div className="grid grid-cols-1 sm:grid-cols-2 gap-px bg-(--border)">
 					{others.map((key) => {
 						const s = services[key]
 						const Icon = s.icon
@@ -47,20 +47,20 @@ export function OtherServices({ current }: { current: ServiceKey }) {
 							<Link
 								key={key}
 								href={s.href}
-								className="bg-[var(--bg)] p-6 flex items-start gap-4 group hover:bg-[var(--bg-subtle)] transition-colors"
+								className="bg-(--bg) p-6 flex items-start gap-4 group hover:bg-(--bg-subtle) transition-colors"
 							>
-								<div className="p-2 border border-[var(--border)] text-[var(--brand)] flex-shrink-0 group-hover:border-[var(--brand)] transition-colors">
+								<div className="p-2 border border-(--border) text-(--brand) shrink-0 group-hover:border-(--brand) transition-colors">
 									<Icon size={16} aria-hidden="true" />
 								</div>
 								<div className="flex-1 min-w-0">
-									<p className="text-sm font-bold text-[var(--text)] group-hover:text-[var(--brand)] transition-colors mb-1">
+									<p className="text-sm font-bold text-(--text) group-hover:text-(--brand) transition-colors mb-1">
 										{s.label}
 									</p>
-									<p className="text-xs text-[var(--text-subtle)] leading-relaxed">{s.description}</p>
+									<p className="text-xs text-(--text-subtle) leading-relaxed">{s.description}</p>
 								</div>
 								<ArrowRight
 									size={14}
-									className="flex-shrink-0 mt-0.5 text-[var(--text-subtle)] group-hover:text-[var(--brand)] transition-all group-hover:translate-x-1"
+									className="shrink-0 mt-0.5 text-(--text-subtle) group-hover:text-(--brand) transition-all group-hover:translate-x-1"
 								/>
 							</Link>
 						)

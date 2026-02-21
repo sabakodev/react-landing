@@ -28,7 +28,7 @@ export function Footer() {
 	const track = useButtonTracking()
 
 	return (
-		<footer className="border-t border-[var(--border)] bg-[var(--bg-subtle)]" aria-label="Site footer">
+		<footer className="border-t border-(--border) bg-(--bg-subtle)" aria-label="Site footer">
 			<div className="mx-auto max-w-7xl px-6 py-16 lg:px-8">
 				<div className="grid grid-cols-1 gap-12 lg:grid-cols-5">
 					{/* Brand */}
@@ -52,21 +52,21 @@ export function Footer() {
 								height={28}
 								className="h-7 w-7 dark:hidden"
 							/>
-							<span className="text-base font-bold font-mono text-[var(--text)] group-hover:text-[var(--brand)] transition-colors">
+							<span className="text-base font-bold font-mono text-(--text) group-hover:text-(--brand) transition-colors">
 								SABAKO
 							</span>
 						</Link>
-						<p className="text-sm text-[var(--text-muted)] leading-relaxed max-w-xs">
+						<p className="text-sm text-(--text-muted) leading-relaxed max-w-xs">
 							IT Agency & Consulting — building Digital Experiences, Mobile Products, and Connected Systems for businesses worldwide.
 						</p>
-						<p className="text-sm font-mono font-semibold text-[var(--brand)]">
+						<p className="text-sm font-mono font-semibold text-(--brand)">
 							&ldquo;Beyond the Horizon&rdquo;
 						</p>
-						<div className="space-y-2 text-sm text-[var(--text-muted)]">
+						<div className="space-y-2 text-sm text-(--text-muted)">
 							<a
 								href="mailto:sales@sabako.id"
 								onClick={track('Email us', 'footer-contact', { external: true, href: 'mailto:sales@sabako.id' })}
-								className="flex items-center gap-2 hover:text-[var(--text)] transition-colors hover-underline w-fit"
+								className="flex items-center gap-2 hover:text-(--text) transition-colors hover-underline w-fit"
 							>
 								<Mail size={14} />
 								sales@sabako.id
@@ -76,13 +76,13 @@ export function Footer() {
 								target="_blank"
 								rel="noopener noreferrer"
 								onClick={track('WhatsApp', 'footer-contact', { external: true, href: 'https://wa.me/62859106681052' })}
-								className="flex items-center gap-2 hover:text-[var(--text)] transition-colors hover-underline w-fit"
+								className="flex items-center gap-2 hover:text-(--text) transition-colors hover-underline w-fit"
 							>
 								<Phone size={14} />
 								+62 857-6061-6555
 							</a>
 							<span className="flex items-start gap-2">
-								<MapPin size={14} className="mt-0.5 flex-shrink-0" />
+								<MapPin size={14} className="mt-0.5 shrink-0" />
 								<span>
 									<span className="block">Jl. Bangka Raya No. 48, Mampang Prapatan 12720</span>
 									<span className="block">Jakarta Selatan, Indonesia</span>
@@ -94,7 +94,7 @@ export function Footer() {
 					{/* Links */}
 					{Object.entries(footerLinks).map(([title, links]) => (
 						<div key={title}>
-							<h3 className="text-xs font-mono uppercase tracking-widest text-[var(--text-subtle)] mb-4">
+							<h3 className="text-xs font-mono uppercase tracking-widest text-(--text-subtle) mb-4">
 								{title}
 							</h3>
 							<ul className="space-y-2.5" role="list">
@@ -103,7 +103,7 @@ export function Footer() {
 										<Link
 											href={link.href}
 											onClick={track(link.label, `footer-${title.toLowerCase()}`)}
-											className="text-sm text-[var(--text-muted)] hover:text-[var(--text)] transition-colors hover-underline"
+											className="text-sm text-(--text-muted) hover:text-(--text) transition-colors hover-underline"
 										>
 											{link.label}
 										</Link>
@@ -117,7 +117,7 @@ export function Footer() {
 												track('Cookie Settings', 'footer-legal')()
 												window.dispatchEvent(new CustomEvent('cookie-settings-open'))
 											}}
-											className="text-sm text-[var(--text-muted)] hover:text-[var(--text)] transition-colors hover-underline text-left"
+											className="text-sm text-(--text-muted) hover:text-(--text) transition-colors hover-underline text-left"
 										>
 											Cookie Settings
 										</button>
@@ -129,11 +129,11 @@ export function Footer() {
 				</div>
 
 				{/* Bottom bar */}
-				<div className="mt-16 pt-6 border-t border-[var(--border)] flex flex-col sm:flex-row items-center justify-between gap-4">
-					<p className="text-xs text-[var(--text-subtle)] font-mono">
+				<div className="mt-16 pt-6 border-t border-(--border) flex flex-col sm:flex-row items-center justify-between gap-4">
+					<p className="text-xs text-(--text-subtle) font-mono">
 						&copy; 2018 - {new Date().getFullYear()} All rights reserved.
 					</p>
-					<p className="text-xs text-[var(--text-subtle)]">
+					<p className="text-xs text-(--text-subtle)">
 						PT. SABAKO KREATIV DIGITAL is registered entity in Indonesia.
 					</p>
 				</div>

@@ -87,14 +87,14 @@ export default function ContactForm() {
 					<CheckCircle size={24} />
 				</div>
 				<div>
-					<p className="text-base font-bold text-[var(--text)] mb-1">Message received!</p>
-					<p className="text-sm text-[var(--text-muted)] leading-relaxed">
+					<p className="text-base font-bold text-(--text) mb-1">Message received!</p>
+					<p className="text-sm text-(--text-muted) leading-relaxed">
 						We&apos;ll get back to you within one business day.
 					</p>
 				</div>
 				<button
 					onClick={() => setFormState('idle')}
-					className="text-xs font-mono text-[var(--brand)] underline underline-offset-2 hover:no-underline transition-all"
+					className="text-xs font-mono text-(--brand) underline underline-offset-2 hover:no-underline transition-all"
 				>
 					Send another message
 				</button>
@@ -116,7 +116,7 @@ export default function ContactForm() {
 				<div>
 					<label
 						htmlFor="contact-name"
-						className="block text-[10px] font-mono uppercase tracking-widest text-[var(--text-subtle)] mb-1.5"
+						className="block text-[10px] font-mono uppercase tracking-widest text-(--text-subtle) mb-1.5"
 					>
 						Full Name
 					</label>
@@ -127,13 +127,13 @@ export default function ContactForm() {
 						required
 						disabled={isLoading}
 						placeholder="Your name"
-						className="w-full border border-[var(--border)] bg-[var(--bg)] text-[var(--text)] px-3 py-2.5 text-sm placeholder:text-[var(--text-subtle)] focus:outline-none focus:border-[var(--brand)] transition-colors disabled:opacity-50"
+						className="w-full border border-(--border) bg-(--bg) text-(--text) px-3 py-2.5 text-sm placeholder:text-(--text-subtle) focus:outline-hidden focus:border-(--brand) transition-colors disabled:opacity-50"
 					/>
 				</div>
 				<div>
 					<label
 						htmlFor="contact-email"
-						className="block text-[10px] font-mono uppercase tracking-widest text-[var(--text-subtle)] mb-1.5"
+						className="block text-[10px] font-mono uppercase tracking-widest text-(--text-subtle) mb-1.5"
 					>
 						Email
 					</label>
@@ -144,7 +144,7 @@ export default function ContactForm() {
 						required
 						disabled={isLoading}
 						placeholder="you@company.com"
-						className="w-full border border-[var(--border)] bg-[var(--bg)] text-[var(--text)] px-3 py-2.5 text-sm placeholder:text-[var(--text-subtle)] focus:outline-none focus:border-[var(--brand)] transition-colors disabled:opacity-50"
+						className="w-full border border-(--border) bg-(--bg) text-(--text) px-3 py-2.5 text-sm placeholder:text-(--text-subtle) focus:outline-hidden focus:border-(--brand) transition-colors disabled:opacity-50"
 					/>
 				</div>
 			</div>
@@ -152,7 +152,7 @@ export default function ContactForm() {
 			<div>
 				<label
 					htmlFor="contact-service"
-					className="block text-[10px] font-mono uppercase tracking-widest text-[var(--text-subtle)] mb-1.5"
+					className="block text-[10px] font-mono uppercase tracking-widest text-(--text-subtle) mb-1.5"
 				>
 					Service
 				</label>
@@ -161,7 +161,7 @@ export default function ContactForm() {
 					name="service"
 					disabled={isLoading}
 					defaultValue={preferredService}
-					className="w-full border border-[var(--border)] bg-[var(--bg)] text-[var(--text)] px-3 py-2.5 text-sm focus:outline-none focus:border-[var(--brand)] transition-colors appearance-none cursor-pointer disabled:opacity-50"
+					className="w-full border border-(--border) bg-(--bg) text-(--text) px-3 py-2.5 text-sm focus:outline-hidden focus:border-(--brand) transition-colors appearance-none cursor-pointer disabled:opacity-50"
 				>
 					<option value="">Select a service…</option>
 					<option value="web">Digital Experiences (Web)</option>
@@ -175,7 +175,7 @@ export default function ContactForm() {
 			<div>
 				<label
 					htmlFor="contact-size"
-					className="block text-[10px] font-mono uppercase tracking-widest text-[var(--text-subtle)] mb-1.5"
+					className="block text-[10px] font-mono uppercase tracking-widest text-(--text-subtle) mb-1.5"
 				>
 					Company Size
 				</label>
@@ -183,7 +183,7 @@ export default function ContactForm() {
 					id="contact-size"
 					name="companySize"
 					disabled={isLoading}
-					className="w-full border border-[var(--border)] bg-[var(--bg)] text-[var(--text)] px-3 py-2.5 text-sm focus:outline-none focus:border-[var(--brand)] transition-colors appearance-none cursor-pointer disabled:opacity-50"
+					className="w-full border border-(--border) bg-(--bg) text-(--text) px-3 py-2.5 text-sm focus:outline-hidden focus:border-(--brand) transition-colors appearance-none cursor-pointer disabled:opacity-50"
 				>
 					<option value="">Select…</option>
 					<option value="solo">Solo / Freelancer</option>
@@ -201,7 +201,7 @@ export default function ContactForm() {
 			<div>
 				<label
 					htmlFor="contact-message"
-					className="block text-[10px] font-mono uppercase tracking-widest text-[var(--text-subtle)] mb-1.5"
+					className="block text-[10px] font-mono uppercase tracking-widest text-(--text-subtle) mb-1.5"
 				>
 					Message
 				</label>
@@ -212,13 +212,13 @@ export default function ContactForm() {
 					required
 					disabled={isLoading}
 					placeholder="Tell us about your idea…"
-					className="w-full border border-[var(--border)] bg-[var(--bg)] text-[var(--text)] px-3 py-2.5 text-sm placeholder:text-[var(--text-subtle)] focus:outline-none focus:border-[var(--brand)] transition-colors resize-none disabled:opacity-50"
+					className="w-full border border-(--border) bg-(--bg) text-(--text) px-3 py-2.5 text-sm placeholder:text-(--text-subtle) focus:outline-hidden focus:border-(--brand) transition-colors resize-none disabled:opacity-50"
 				/>
 			</div>
 
 			{formState === 'error' && (
 				<div className="flex items-start gap-2 p-3 border border-red-200 bg-red-50 text-red-700 text-xs">
-					<AlertCircle size={14} className="flex-shrink-0 mt-0.5" />
+					<AlertCircle size={14} className="shrink-0 mt-0.5" />
 					<span>{errorMsg}</span>
 				</div>
 			)}
@@ -227,7 +227,7 @@ export default function ContactForm() {
 				id="contact-submit-btn"
 				type="submit"
 				disabled={isLoading}
-				className="w-full py-3 bg-[var(--text)] text-[var(--bg)] text-sm font-medium hover:opacity-80 transition-opacity flex items-center justify-center gap-2 group disabled:opacity-60 disabled:cursor-not-allowed"
+				className="w-full py-3 bg-(--text) text-(--bg) text-sm font-medium hover:opacity-80 transition-opacity flex items-center justify-center gap-2 group disabled:opacity-60 disabled:cursor-not-allowed"
 			>
 				{isLoading ? (
 					<>

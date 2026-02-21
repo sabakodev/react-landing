@@ -13,37 +13,37 @@ export default function ErrorPage({
 	const dev = process.env.NODE_ENV === 'development'
 
 	return (
-		<div className="flex flex-col items-center justify-center min-h-[100svh] px-6 text-center">
+		<div className="flex flex-col items-center justify-center min-h-svh px-6 text-center">
 			<p className="text-xs font-mono uppercase tracking-widest text-red-500 mb-4">
 				Error — Something went wrong
 			</p>
-			<h1 className="text-6xl font-bold text-[var(--text)] mb-4">
+			<h1 className="text-6xl font-bold text-(--text) mb-4">
 				This is unexpected.
 			</h1>
-			<p className="text-[var(--text-muted)] mb-2 max-w-sm">
+			<p className="text-(--text-muted) mb-2 max-w-sm">
 				Something unexpected happened. Please try again.
 			</p>
 			{error?.digest && (
-				<p className="text-xs font-mono text-[var(--text-subtle)] mb-10">
+				<p className="text-xs font-mono text-(--text-subtle) mb-10">
 					Error ID: {error.digest}
 				</p>
 			)}
 			{dev && (
-				<pre className="text-xs font-mono text-[var(--text-subtle)] mb-10 max-w-sm overflow-scroll bg-gray-50 p-2">
+				<pre className="text-xs font-mono text-(--text-subtle) mb-10 max-w-sm overflow-scroll bg-gray-50 p-2">
 					{error.message}
 				</pre>
 			)}
 			<div className="flex items-center gap-4">
 				<button
 					onClick={reset}
-					className="inline-flex items-center gap-2 px-6 py-3 border border-[var(--border)] text-[var(--text)] text-sm font-medium hover:bg-[var(--bg-subtle)] transition-colors"
+					className="inline-flex items-center gap-2 px-6 py-3 border border-(--border) text-(--text) text-sm font-medium hover:bg-(--bg-subtle) transition-colors"
 				>
 					<RefreshCw size={16} />
 					Try Again
 				</button>
 				<Link
 					href="/"
-					className="inline-flex items-center gap-2 px-6 py-3 bg-[var(--text)] text-[var(--bg)] text-sm font-medium hover:opacity-80 transition-opacity group"
+					className="inline-flex items-center gap-2 px-6 py-3 bg-(--text) text-(--bg) text-sm font-medium hover:opacity-80 transition-opacity group"
 				>
 					Return Home
 					<ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />

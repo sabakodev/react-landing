@@ -26,27 +26,27 @@ const techStack = ['Embedded C', 'MQTT', 'Node.js', 'TimescaleDB', 'InfluxDB', '
 export default function IotServicePage() {
 	return (
 		<article>
-			<header className="border-b border-[var(--border)] pt-32 pb-16">
+			<header className="border-b border-(--border) pt-32 pb-16">
 				<div className="mx-auto max-w-7xl px-6 lg:px-8">
 					<div className="flex items-center gap-3 mb-6">
-						<div className="p-2 border border-[var(--border)] text-[var(--brand)]">
+						<div className="p-2 border border-(--border) text-(--brand)">
 							<Cpu size={20} />
 						</div>
-						<p className="text-xs font-mono uppercase tracking-widest text-[var(--brand)]">
+						<p className="text-xs font-mono uppercase tracking-widest text-(--brand)">
 							Connected Systems
 						</p>
 					</div>
-					<h1 className="text-5xl font-bold text-[var(--text)] max-w-2xl leading-tight">
+					<h1 className="text-5xl font-bold text-(--text) max-w-2xl leading-tight">
 						Smart Devices &amp; Embedded Platforms.
 					</h1>
-					<p className="mt-6 text-lg text-[var(--text-muted)] max-w-xl leading-relaxed">
+					<p className="mt-6 text-lg text-(--text-muted) max-w-xl leading-relaxed">
 						From sensor firmware to cloud dashboards — we engineer the full IoT stack for industrial, commercial, and consumer applications.
 					</p>
 					<div className="mt-8 flex flex-wrap gap-4">
-						<Link href="/contact?service=iot" className="inline-flex items-center gap-2 px-6 py-3 bg-[var(--text)] text-[var(--bg)] text-sm font-medium hover:opacity-80 transition-opacity group">
+						<Link href="/contact?service=iot" className="inline-flex items-center gap-2 px-6 py-3 bg-(--text) text-(--bg) text-sm font-medium hover:opacity-80 transition-opacity group">
 							Start an IoT Project <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
 						</Link>
-						<Link href="/work" className="inline-flex items-center gap-2 px-6 py-3 border border-[var(--border)] text-[var(--text)] text-sm font-medium hover:bg-[var(--bg-subtle)] transition-colors">
+						<Link href="/work" className="inline-flex items-center gap-2 px-6 py-3 border border-(--border) text-(--text) text-sm font-medium hover:bg-(--bg-subtle) transition-colors">
 							See Our IoT Work
 						</Link>
 					</div>
@@ -56,11 +56,11 @@ export default function IotServicePage() {
 			<div className="mx-auto max-w-7xl px-6 lg:px-8 py-20">
 				<div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
 					<section aria-labelledby="capabilities-heading">
-						<h2 id="capabilities-heading" className="text-2xl font-bold text-[var(--text)] mb-8">What We Deliver</h2>
+						<h2 id="capabilities-heading" className="text-2xl font-bold text-(--text) mb-8">What We Deliver</h2>
 						<ul className="space-y-3" role="list">
 							{capabilities.map((cap) => (
-								<li key={cap} className="flex items-center gap-3 text-sm text-[var(--text-muted)]">
-									<CheckCircle size={16} className="text-[var(--brand)] flex-shrink-0" />
+								<li key={cap} className="flex items-center gap-3 text-sm text-(--text-muted)">
+									<CheckCircle size={16} className="text-(--brand) shrink-0" />
 									{cap}
 								</li>
 							))}
@@ -68,18 +68,18 @@ export default function IotServicePage() {
 					</section>
 
 					<section aria-labelledby="approach-heading">
-						<h2 id="approach-heading" className="text-2xl font-bold text-[var(--text)] mb-6">Our Approach</h2>
-						<div className="space-y-4 text-sm text-[var(--text-muted)] leading-relaxed">
+						<h2 id="approach-heading" className="text-2xl font-bold text-(--text) mb-6">Our Approach</h2>
+						<div className="space-y-4 text-sm text-(--text-muted) leading-relaxed">
 							<p>IoT projects fail most often at the integration layer. We de-risk this from the start by designing the full system architecture — firmware, messaging protocol, cloud ingestion, and UI — before any hardware is ordered.</p>
 							<p>We are fluent in the real-world constraints of embedded systems: memory-limited microcontrollers, intermittent connectivity, and long device lifespans that require secure OTA update strategies.</p>
 							<p>Our data engineering expertise means the time-series data your devices produce becomes actionable insight — through real-time dashboards, anomaly detection, and compliance reporting.</p>
 						</div>
 
 						<div className="mt-10">
-							<h3 className="text-xs font-mono uppercase tracking-widest text-[var(--text-subtle)] mb-4">Technology Stack</h3>
+							<h3 className="text-xs font-mono uppercase tracking-widest text-(--text-subtle) mb-4">Technology Stack</h3>
 							<div className="flex flex-wrap gap-2">
 								{techStack.map((tech) => (
-									<span key={tech} className="px-2.5 py-1 text-xs border border-[var(--border)] text-[var(--text-muted)] bg-[var(--bg-subtle)] font-mono">
+									<span key={tech} className="px-2.5 py-1 text-xs border border-(--border) text-(--text-muted) bg-(--bg-subtle) font-mono">
 										{tech}
 									</span>
 								))}

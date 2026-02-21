@@ -27,19 +27,19 @@ const testimonials = [
 export function TestimonialsSection() {
 	return (
 		<section
-			className="py-28 border-t border-[var(--border)]"
+			className="py-28 border-t border-(--border)"
 			aria-labelledby="testimonials-heading"
 		>
 			<div className="mx-auto max-w-7xl px-6 lg:px-8">
 				{/* Header */}
 				<Reveal>
 					<div className="mb-16">
-						<p className="text-xs font-mono uppercase tracking-widest text-[var(--brand)] mb-3">
+						<p className="text-xs font-mono uppercase tracking-widest text-(--brand) mb-3">
 							Testimonials
 						</p>
 						<h2
 							id="testimonials-heading"
-							className="text-4xl font-bold text-[var(--text)] max-w-lg leading-tight"
+							className="text-4xl font-bold text-(--text) max-w-lg leading-tight"
 						>
 							Trusted by those who demand the best.
 						</h2>
@@ -47,24 +47,24 @@ export function TestimonialsSection() {
 				</Reveal>
 
 				{/* Grid */}
-				<div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-[var(--border)]">
+				<div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-(--border)">
 					{testimonials.map((t, i) => (
 						<Reveal key={t.id} delay={i * 0.1}>
 							<blockquote
-								className="bg-[var(--bg)] p-8 flex flex-col h-full"
+								className="bg-(--bg) p-8 flex flex-col h-full"
 							>
 								<Quote
 									size={24}
-									className="text-[var(--brand)] opacity-60 mb-6 flex-shrink-0"
+									className="text-(--brand) opacity-60 mb-6 shrink-0"
 									aria-hidden="true"
 								/>
-								<p className="text-[var(--text-muted)] text-sm leading-relaxed flex-1 mb-8">
+								<p className="text-(--text-muted) text-sm leading-relaxed flex-1 mb-8">
 									&ldquo;{t.quote}&rdquo;
 								</p>
-								<footer className="mt-auto border-t border-[var(--border)] pt-4">
+								<footer className="mt-auto border-t border-(--border) pt-4">
 									<cite className="not-italic">
-										<p className="text-sm font-medium text-[var(--text)]">{t.author}</p>
-										<p className="text-xs text-[var(--text-subtle)] mt-0.5">{t.company}</p>
+										<p className="text-sm font-medium text-(--text)">{t.author}</p>
+										<p className="text-xs text-(--text-subtle) mt-0.5">{t.company}</p>
 									</cite>
 								</footer>
 							</blockquote>
