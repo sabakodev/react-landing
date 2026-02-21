@@ -4,7 +4,8 @@ import { useState, useCallback } from 'react'
 import Link from 'next/link'
 import { ArrowRight, Calendar, Clock, Loader2, CheckCircle } from 'lucide-react'
 import { useInfiniteScroll } from '@/lib/hooks/useInfiniteScroll'
-import type { Post } from '@/lib/api/posts'
+import { useButtonTracking } from '@/lib/analytics/useButtonTracking'
+import type { BlogPost } from '@/lib/graphql/adapters/posts'
 
 function formatDate(iso: string) {
 	return new Date(iso).toLocaleDateString('en-US', {
@@ -30,11 +31,12 @@ function PostSkeleton() {
 }
 
 // ── Card ──────────────────────────────────────────────────────────────────────
-function PostCard({ post }: { post: Post }) {
+function PostCard({ post, onTrack }: { post: BlogPost; onTrack: () => void }) {
 	return (
 		<Link
 			href={`/blog/${post.slug}`}
 			className="bg-[var(--bg)] p-6 flex flex-col group hover:bg-[var(--bg-subtle)] transition-colors"
+			onClick={onTrack}
 		>
 			<h2 className="text-base font-bold text-[var(--text)] group-hover:text-[var(--brand)] transition-colors mb-3 leading-snug">
 				{post.title}
@@ -60,18 +62,19 @@ function PostCard({ post }: { post: Post }) {
 
 // ── Grid with infinite scroll ─────────────────────────────────────────────────
 type Props = {
-	initialItems: Post[]
+	initialItems: BlogPost[]
 	initialCursor: string | null
 	initialHasMore: boolean
 	pageSize?: number
 }
 
 export function BlogGrid({ initialItems, initialCursor, initialHasMore, pageSize = 6 }: Props) {
-	const [items, setItems] = useState<Post[]>(initialItems)
+	const [items, setItems] = useState<BlogPost[]>(initialItems)
 	const [cursor, setCursor] = useState<string | null>(initialCursor)
 	const [hasMore, setHasMore] = useState(initialHasMore)
 	const [loading, setLoading] = useState(false)
 	const [error, setError] = useState(false)
+	const track = useButtonTracking()
 
 	const loadMore = useCallback(async () => {
 		if (!hasMore || loading) return
@@ -83,7 +86,7 @@ export function BlogGrid({ initialItems, initialCursor, initialHasMore, pageSize
 			const res = await fetch(`/api/posts?${params}`)
 			if (!res.ok) throw new Error('Network error')
 			const json = await res.json() as {
-				nodes: Post[]
+				nodes: BlogPost[]
 				pageInfo: { hasNextPage: boolean; endCursor: string | null }
 			}
 			setItems((prev) => [...prev, ...json.nodes])
@@ -102,7 +105,11 @@ export function BlogGrid({ initialItems, initialCursor, initialHasMore, pageSize
 		<>
 			<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-[var(--border)] border border-[var(--border)]">
 				{items.map((post) => (
-					<PostCard key={post.slug} post={post} />
+					<PostCard
+						key={post.slug}
+						post={post}
+						onTrack={track('Read Post', 'blog-grid', { slug: post.slug, title: post.title, category: post.category })}
+					/>
 				))}
 				{loading && Array.from({ length: 3 }).map((_, i) => <PostSkeleton key={`sk-${i}`} />)}
 			</div>
