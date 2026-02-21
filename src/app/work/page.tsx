@@ -1,24 +1,25 @@
 import type { Metadata } from 'next'
-import { ArrowRight } from 'lucide-react'
 import Link from 'next/link'
+import { ArrowRight } from 'lucide-react'
 import { getWorks } from '@/lib/api/works'
+import { WorksGrid } from '@/components/work/WorksGrid'
 
 export const metadata: Metadata = {
 	title: 'Work',
 	description:
-		'Explore SABAKO\'s portfolio of enterprise web applications, mobile products, and IoT solutions delivered for clients across Indonesia.',
+		"Explore SABAKO's portfolio of enterprise web applications, mobile products, and IoT solutions delivered for clients across Indonesia.",
 	alternates: { canonical: 'https://sabako.id/work' },
 	openGraph: { title: 'Work & Portfolio — SABAKO', description: 'Selected projects from SABAKO.' },
 }
 
-const categoryColors: Record<string, string> = {
-	web: 'text-blue-500',
-	mobile: 'text-purple-500',
-	iot: 'text-green-500',
-}
+const PAGE_SIZE = 9
 
 export default async function WorkPage() {
-	const projects = await getWorks()
+	// First batch: server-rendered for SEO
+	const all = await getWorks()
+	const initialItems = all.slice(0, PAGE_SIZE)
+	const initialCursor = initialItems.length ? initialItems[initialItems.length - 1].slug : null
+	const initialHasMore = all.length > PAGE_SIZE
 
 	return (
 		<article>
@@ -38,47 +39,12 @@ export default async function WorkPage() {
 
 			<section className="py-16" aria-label="Projects">
 				<div className="mx-auto max-w-7xl px-6 lg:px-8">
-					<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-[var(--border)]">
-						{projects.map((project) => (
-							<Link
-								key={project.id}
-								href={`/work/${project.slug}`}
-								id={project.id}
-								className="bg-[var(--bg)] p-8 flex flex-col group hover:bg-[var(--bg-subtle)] transition-colors"
-							>
-								<div className="flex items-center justify-between mb-6">
-									<span className={`text-xs font-mono uppercase tracking-wider ${categoryColors[project.type] || 'text-[var(--brand)]'}`}>
-										{project.category}
-									</span>
-									<span className="text-xs font-mono text-[var(--text-subtle)]">{project.year}</span>
-								</div>
-
-								<h2 className="text-lg font-bold text-[var(--text)] group-hover:text-[var(--brand)] transition-colors mb-2">
-									{project.title}
-								</h2>
-								<p className="text-xs text-[var(--text-subtle)] mb-4">{project.client}</p>
-								<p className="text-sm text-[var(--text-muted)] leading-relaxed flex-1 mb-6">
-									{project.description}
-								</p>
-
-								<div className="flex flex-wrap gap-2 mb-6">
-									{project.tags.map((tag) => (
-										<span
-											key={tag}
-											className="px-2 py-0.5 text-xs border border-[var(--border)] text-[var(--text-subtle)] bg-[var(--bg-subtle)]"
-										>
-											{tag}
-										</span>
-									))}
-								</div>
-
-								<div className="mt-auto flex items-center gap-1.5 text-xs font-mono text-[var(--text-subtle)] group-hover:text-[var(--brand)] transition-colors">
-									View case study
-									<ArrowRight size={12} className="transition-transform group-hover:translate-x-1" />
-								</div>
-							</Link>
-						))}
-					</div>
+					<WorksGrid
+						initialItems={initialItems}
+						initialCursor={initialCursor}
+						initialHasMore={initialHasMore}
+						pageSize={PAGE_SIZE}
+					/>
 				</div>
 			</section>
 

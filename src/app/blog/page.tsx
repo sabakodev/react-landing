@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { ArrowRight, Calendar, Clock } from 'lucide-react'
 import { getPosts } from '@/lib/api/posts'
+import { BlogGrid } from '@/components/blog/BlogGrid'
 
 export const metadata: Metadata = {
 	title: 'Blog & Insights',
@@ -11,6 +12,7 @@ export const metadata: Metadata = {
 	openGraph: { title: 'Blog & Insights — SABAKO', description: 'Technical articles and case studies from SABAKO.' },
 }
 
+const PAGE_SIZE = 6
 
 function formatDate(iso: string) {
 	return new Date(iso).toLocaleDateString('en-US', {
@@ -19,8 +21,12 @@ function formatDate(iso: string) {
 }
 
 export default async function BlogPage() {
-	const posts = await getPosts()
-	const [featured, ...rest] = posts
+	// First batch: server-rendered for SEO
+	const all = await getPosts()
+	const [featured, ...rest] = all
+	const initialItems = rest.slice(0, PAGE_SIZE - 1)
+	const initialCursor = initialItems.length ? initialItems[initialItems.length - 1].slug : null
+	const initialHasMore = rest.length > PAGE_SIZE - 1
 
 	return (
 		<article>
@@ -41,7 +47,7 @@ export default async function BlogPage() {
 			<section className="py-16" aria-label="Blog posts">
 				<div className="mx-auto max-w-7xl px-6 lg:px-8">
 
-					{/* Featured post */}
+					{/* Featured post — always server-rendered */}
 					<Link
 						href={`/blog/${featured.slug}`}
 						className="group block border border-[var(--border)] p-8 mb-12 hover:border-[var(--border-strong)] hover:bg-[var(--bg-subtle)] transition-colors"
@@ -75,34 +81,13 @@ export default async function BlogPage() {
 						</div>
 					</Link>
 
-					{/* Post grid */}
-					<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-[var(--border)] border border-[var(--border)]">
-						{rest.map((post) => (
-							<Link
-								key={post.slug}
-								href={`/blog/${post.slug}`}
-								className="bg-[var(--bg)] p-6 flex flex-col group hover:bg-[var(--bg-subtle)] transition-colors"
-							>
-								<h2 className="text-base font-bold text-[var(--text)] group-hover:text-[var(--brand)] transition-colors mb-3 leading-snug">
-									{post.title}
-								</h2>
-								<p className="text-sm text-[var(--text-muted)] leading-relaxed flex-1 mb-4">
-									{post.excerpt}
-								</p>
-								<div className="flex items-center gap-3 text-xs text-[var(--text-subtle)] mt-auto">
-									<span className="font-mono text-[var(--brand)] border border-[var(--brand)] px-1.5 py-0.5">{post.category}</span>
-									<span className="flex items-center gap-1">
-										<Calendar size={10} />
-										{formatDate(post.date)}
-									</span>
-									<span className="flex items-center gap-1">
-										<Clock size={10} />
-										{post.readTime}
-									</span>
-								</div>
-							</Link>
-						))}
-					</div>
+					{/* Infinite scroll grid */}
+					<BlogGrid
+						initialItems={initialItems}
+						initialCursor={initialCursor}
+						initialHasMore={initialHasMore}
+						pageSize={PAGE_SIZE}
+					/>
 				</div>
 			</section>
 		</article>
