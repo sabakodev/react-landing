@@ -9,8 +9,9 @@
  */
 
 import Link from 'next/link'
-import { CheckCircle, ArrowRight, Sparkles } from 'lucide-react'
+import { CheckCircle, ArrowRight, Sparkles, Rocket } from 'lucide-react'
 import { useButtonTracking } from '@/lib/analytics/useButtonTracking'
+
 
 type Tier = {
 	id: string
@@ -28,7 +29,7 @@ const TIERS: Tier[] = [
 	{
 		id: 'essential',
 		name: 'Essential',
-		price: 'IDR 3.500.000',
+		price: 'IDR 2.499.000',
 		priceLabel: 'Starting from',
 		description: 'The right foundation for businesses making their first digital move.',
 		features: [
@@ -38,6 +39,7 @@ const TIERS: Tier[] = [
 			'Fully responsive design',
 			'Basic SEO setup',
 			'2 revision rounds',
+			'Basic hosting',
 		],
 		cta: 'Get Started',
 		ctaHref: '/contact?service=web&tier=essential',
@@ -45,11 +47,12 @@ const TIERS: Tier[] = [
 	{
 		id: 'growth',
 		name: 'Growth',
-		price: 'IDR 5.600.000',
+		price: 'IDR 5.699.000',
 		priceLabel: 'Starting from',
 		description: 'For businesses ready to scale with content and commerce capabilities.',
 		features: [
 			'Everything in Essential',
+			'Free domain for first year',
 			'Multi-page architecture',
 			'Blog / CMS integration',
 			'Basic e-commerce functionality',
@@ -82,7 +85,14 @@ const TIERS: Tier[] = [
 export function PricingCatalog() {
 	const track = useButtonTracking()
 
-	return (
+	// Timezone check: only show IDR pricing for SE Asian visitors.
+	// Reading at render time is fine — Intl is always available.
+	// During SSR this returns '' so the section is hidden server-side (safe hydration).
+	const tz = typeof window !== 'undefined'
+		? Intl.DateTimeFormat().resolvedOptions().timeZone
+		: ''
+
+	return tz.startsWith('Asia') && (
 		<section className="py-20 border-t border-[var(--border)]" aria-labelledby="pricing-heading">
 			<div className="mx-auto max-w-7xl px-6 lg:px-8">
 				<p className="text-xs font-mono uppercase tracking-widest text-[var(--brand)] mb-4">
@@ -100,14 +110,14 @@ export function PricingCatalog() {
 						<div
 							key={tier.id}
 							className={`relative flex flex-col p-8 ${tier.popular
-									? 'bg-[var(--bg-subtle)]'
-									: 'bg-[var(--bg)]'
+								? 'bg-[var(--bg-subtle)]'
+								: 'bg-[var(--bg)]'
 								}`}
 						>
 							{/* Popular badge */}
 							{tier.popular && (
 								<div className="absolute top-0 right-0 flex items-center gap-1 px-3 py-1.5 bg-[var(--brand)] text-white text-[10px] font-mono uppercase tracking-widest">
-									<Sparkles size={10} />
+									<Rocket size={10} />
 									Popular
 								</div>
 							)}
@@ -121,7 +131,10 @@ export function PricingCatalog() {
 									{tier.price ? (
 										<>
 											<p className="text-[10px] font-mono text-[var(--text-subtle)] mb-1">{tier.priceLabel}</p>
-											<p className="text-2xl font-bold text-[var(--text)]">{tier.price}</p>
+											<p className="text-2xl font-bold text-[var(--text)]">
+												{tier.price}
+												<span className="text-xs font-mono font-normal text-[var(--text-subtle)] ml-1.5">/ year</span>
+											</p>
 										</>
 									) : (
 										<p className="text-2xl font-bold text-[var(--brand)]">{tier.priceLabel}</p>
@@ -149,8 +162,8 @@ export function PricingCatalog() {
 								id={`pricing-cta-${tier.id}`}
 								onClick={track(tier.cta, 'pricing-catalog', { tier: tier.id, price: tier.price ?? 'custom' })}
 								className={`inline-flex items-center justify-center gap-2 w-full py-3 text-sm font-medium transition-all group ${tier.popular
-										? 'bg-[var(--text)] text-[var(--bg)] hover:opacity-80'
-										: 'border border-[var(--border)] text-[var(--text)] hover:border-[var(--brand)] hover:text-[var(--brand)]'
+									? 'bg-[var(--text)] text-[var(--bg)] hover:opacity-80'
+									: 'border border-[var(--border)] text-[var(--text)] hover:border-[var(--brand)] hover:text-[var(--brand)]'
 									}`}
 							>
 								{tier.cta}
