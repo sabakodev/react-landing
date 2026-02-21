@@ -4,10 +4,12 @@ import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
 import { ArrowRight, MouseIcon, Sparkles } from 'lucide-react'
 import { HeroSphere } from './HeroSphere'
+import { useButtonTracking } from '@/lib/analytics/useButtonTracking'
 
 const words = ['Digital Experiences', 'Mobile Products', 'Connected Systems']
 
 export function HeroSection() {
+	const track = useButtonTracking()
 	const [wordIndex, setWordIndex] = useState(0)
 	const [displayed, setDisplayed] = useState('')
 	const [isDeleting, setIsDeleting] = useState(false)
@@ -110,6 +112,7 @@ export function HeroSection() {
 						href="/contact"
 						id="hero-start-project"
 						className="inline-flex items-center gap-2 px-6 py-3 bg-[var(--text)] text-[var(--bg)] text-sm font-medium hover:opacity-80 transition-opacity group"
+						onClick={track('Start a Project', 'hero')}
 					>
 						Start a Project
 						<ArrowRight
@@ -121,6 +124,7 @@ export function HeroSection() {
 						href="/work"
 						id="hero-view-work"
 						className="inline-flex items-center gap-2 px-6 py-3 border border-[var(--border)] text-[var(--text)] text-sm font-medium hover:border-[var(--border-strong)] hover:bg-[var(--bg-subtle)] transition-colors"
+						onClick={track('View Our Work', 'hero')}
 					>
 						View Our Work
 					</Link>

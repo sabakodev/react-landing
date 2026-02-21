@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { Globe, ArrowRight, CheckCircle } from 'lucide-react'
 import { OtherServices } from '@/components/services/OtherServices'
+import { PricingCatalog } from '@/components/services/PricingCatalog'
 
 export const metadata: Metadata = {
 	title: 'Digital Experiences — Web Development',
@@ -92,6 +93,7 @@ export default function WebServicePage() {
 					</section>
 				</div>
 			</div>
+			<PricingCatalog />
 			<OtherServices current="web" />
 		</article>
 	)
