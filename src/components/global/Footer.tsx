@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { Mail, MapPin, Phone } from 'lucide-react'
+import { useButtonTracking } from '@/lib/analytics/useButtonTracking'
 
 const footerLinks = {
 	Company: [
@@ -24,13 +25,19 @@ const footerLinks = {
 }
 
 export function Footer() {
+	const track = useButtonTracking()
+
 	return (
 		<footer className="border-t border-[var(--border)] bg-[var(--bg-subtle)]" aria-label="Site footer">
 			<div className="mx-auto max-w-7xl px-6 py-16 lg:px-8">
 				<div className="grid grid-cols-1 gap-12 lg:grid-cols-5">
 					{/* Brand */}
 					<div className="lg:col-span-2 space-y-6">
-						<Link href="/" className="flex items-center gap-2.5 group w-fit">
+						<Link
+							href="/"
+							className="flex items-center gap-2.5 group w-fit"
+							onClick={track('SABAKO Logo', 'footer')}
+						>
 							<Image
 								src="/sabako-light.svg"
 								alt="SABAKO logo"
@@ -58,6 +65,7 @@ export function Footer() {
 						<div className="space-y-2 text-sm text-[var(--text-muted)]">
 							<a
 								href="mailto:sales@sabako.id"
+								onClick={track('Email us', 'footer-contact', { external: true, href: 'mailto:sales@sabako.id' })}
 								className="flex items-center gap-2 hover:text-[var(--text)] transition-colors hover-underline w-fit"
 							>
 								<Mail size={14} />
@@ -67,6 +75,7 @@ export function Footer() {
 								href="https://wa.me/62859106681052"
 								target="_blank"
 								rel="noopener noreferrer"
+								onClick={track('WhatsApp', 'footer-contact', { external: true, href: 'https://wa.me/62859106681052' })}
 								className="flex items-center gap-2 hover:text-[var(--text)] transition-colors hover-underline w-fit"
 							>
 								<Phone size={14} />
@@ -93,6 +102,7 @@ export function Footer() {
 									<li key={link.href}>
 										<Link
 											href={link.href}
+											onClick={track(link.label, `footer-${title.toLowerCase()}`)}
 											className="text-sm text-[var(--text-muted)] hover:text-[var(--text)] transition-colors hover-underline"
 										>
 											{link.label}
@@ -103,7 +113,10 @@ export function Footer() {
 								{title === 'Legal' && (
 									<li>
 										<button
-											onClick={() => window.dispatchEvent(new CustomEvent('cookie-settings-open'))}
+											onClick={() => {
+												track('Cookie Settings', 'footer-legal')()
+												window.dispatchEvent(new CustomEvent('cookie-settings-open'))
+											}}
 											className="text-sm text-[var(--text-muted)] hover:text-[var(--text)] transition-colors hover-underline text-left"
 										>
 											Cookie Settings

@@ -6,6 +6,7 @@ import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { Menu, X, ChevronDown, Globe, Smartphone, Cpu } from 'lucide-react'
 import clsx from 'clsx'
+import { useButtonTracking } from '@/lib/analytics/useButtonTracking'
 
 type ServiceItem = {
 	label: string
@@ -56,6 +57,7 @@ export function Navbar() {
 	const [dropdownOpen, setDropdownOpen] = useState(false)
 	const pathname = usePathname()
 	const dropdownRef = useRef<HTMLLIElement>(null)
+	const track = useButtonTracking()
 
 	useEffect(() => {
 		const handleScroll = () => setScrolled(window.scrollY > 40)
@@ -110,6 +112,7 @@ export function Navbar() {
 						href="/"
 						className="flex items-center gap-2.5 group"
 						aria-label="SABAKO home"
+						onClick={track('SABAKO Logo', 'navbar')}
 					>
 						<Image
 							src="/sabako-light.svg"
@@ -169,6 +172,7 @@ export function Navbar() {
 													key={service.href}
 													href={service.href}
 													role="menuitem"
+													onClick={track(service.label, 'navbar-services-dropdown')}
 													className={clsx(
 														'flex items-start gap-3 px-4 py-3',
 														'text-[var(--text-muted)] hover:text-[var(--text)] hover:bg-[var(--bg-subtle)]',
@@ -196,6 +200,7 @@ export function Navbar() {
 								<li key={item.label}>
 									<Link
 										href={item.href!}
+										onClick={track(item.label, 'navbar')}
 										className={clsx(
 											'px-3 py-2 text-sm font-medium transition-colors block',
 											isActive(item.href!)
@@ -215,6 +220,7 @@ export function Navbar() {
 						<Link
 							href="/contact"
 							id="nav-cta-button"
+							onClick={track('Start a Project', 'navbar-cta')}
 							className={clsx(
 								'px-4 py-2 text-sm font-medium',
 								'bg-[var(--text)] text-[var(--bg)]',
@@ -281,6 +287,7 @@ export function Navbar() {
 											<Link
 												key={child.href}
 												href={child.href}
+												onClick={track(child.label, 'mobile-navbar-services')}
 												className={clsx(
 													'flex items-start gap-3 py-3 border-b border-[var(--border)]',
 													'text-[var(--text-muted)] hover:text-[var(--text)] transition-colors',
@@ -302,6 +309,7 @@ export function Navbar() {
 									<li key={item.label}>
 										<Link
 											href={item.href!}
+											onClick={track(item.label, 'mobile-navbar')}
 											className={clsx(
 												'flex items-center justify-between py-3 border-b border-[var(--border)]',
 												'text-sm font-medium transition-colors',
@@ -320,6 +328,7 @@ export function Navbar() {
 					<div className="px-6 py-6 border-t border-[var(--border)]">
 						<Link
 							href="/contact"
+							onClick={track('Start a Project', 'mobile-navbar-cta')}
 							className="block w-full text-center py-3 text-sm font-medium bg-[var(--text)] text-[var(--bg)] hover:opacity-80 transition-opacity"
 						>
 							Start a Project
