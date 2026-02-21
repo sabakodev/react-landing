@@ -41,7 +41,7 @@ export default function OfficeMap() {
 	}, [])
 
 	return (
-		<div className="w-full h-[400px] border border-[var(--border)] overflow-hidden">
+		<div className="relative z-0 w-full h-[400px] border border-[var(--border)] overflow-hidden">
 			{/* Leaflet CSS */}
 			<link
 				rel="stylesheet"

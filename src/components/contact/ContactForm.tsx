@@ -3,6 +3,9 @@
 import { useState, useRef } from 'react'
 import { ArrowRight, CheckCircle, AlertCircle, Loader2 } from 'lucide-react'
 import { useJargon } from '@/lib/analytics/useJargon'
+import { trackEvent } from '@/lib/analytics/trackEvent'
+import { useConsent } from '@/lib/consent'
+import { useSearchParams } from 'next/navigation'
 
 const JARGON_SET = [
 	"Let's talk about your next project.",
@@ -16,12 +19,17 @@ export default function ContactForm() {
 	const [formState, setFormState] = useState<FormState>('idle')
 	const [errorMsg, setErrorMsg] = useState('')
 	const formRef = useRef<HTMLFormElement>(null)
+	const searchParams = useSearchParams()
+
+	const preferredService = searchParams.get('service') || ''
+	const preferredPackage = searchParams.get('tier') || ''
 
 	const { onCtaClick } = useJargon({
 		set: JARGON_SET,
 		setId: 'contact-form-submit',
 		section: 'contact-page',
 	})
+	const { analyticsEnabled } = useConsent()
 
 	async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
 		e.preventDefault()
@@ -34,6 +42,7 @@ export default function ContactForm() {
 			email: data.get('email') as string,
 			service: data.get('service') as string,
 			companySize: data.get('companySize') as string,
+			preference: data.get('preference') as string,
 			message: data.get('message') as string,
 		}
 
@@ -52,8 +61,17 @@ export default function ContactForm() {
 				return
 			}
 
-			// Track successful submission as jargon click
+			// Track successful submission
 			onCtaClick()
+			trackEvent(
+				'contact_form_submit',
+				{
+					service: payload.service || 'unspecified',
+					tier: preferredPackage || 'unspecified',
+					timestamp: new Date().toISOString(),
+				},
+				analyticsEnabled,
+			)
 			setFormState('success')
 			formRef.current?.reset()
 		} catch {
@@ -142,6 +160,7 @@ export default function ContactForm() {
 					id="contact-service"
 					name="service"
 					disabled={isLoading}
+					defaultValue={preferredService}
 					className="w-full border border-[var(--border)] bg-[var(--bg)] text-[var(--text)] px-3 py-2.5 text-sm focus:outline-none focus:border-[var(--brand)] transition-colors appearance-none cursor-pointer disabled:opacity-50"
 				>
 					<option value="">Select a service…</option>
@@ -173,6 +192,10 @@ export default function ContactForm() {
 					<option value="mid">Mid-size (100–999)</option>
 					<option value="enterprise">Enterprise (1,000+)</option>
 				</select>
+			</div>
+
+			<div>
+				<input type="hidden" name="package" value={preferredPackage ?? ''} />
 			</div>
 
 			<div>
