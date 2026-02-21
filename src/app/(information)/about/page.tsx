@@ -123,15 +123,15 @@ export default function AboutPage() {
 			{/* ── FULL-BLEED IMAGE DIVIDER 1 ───────────────────────────────────── */}
 			<div className="relative h-[50vh] min-h-[320px] overflow-hidden">
 				<Image
-					src="/images/about/workspace.jpg"
-					alt="SABAKO workspace — open-plan office in South Jakarta"
+					src="/images/about/IMG_0009.JPEG"
+					alt="SABAKO birthplace — North Jakarta"
 					fill
 					sizes="100vw"
 					className="object-cover object-center"
 				/>
 				<div className="absolute inset-0 bg-black/30" />
 				<div className="absolute bottom-6 left-8 lg:left-16">
-					<p className="text-xs font-mono text-white/60 uppercase tracking-widest">Jakarta Selatan, Indonesia</p>
+					<p className="text-xs font-mono text-white/60 uppercase tracking-widest">North Jakarta, Indonesia</p>
 				</div>
 			</div>
 
@@ -152,7 +152,7 @@ export default function AboutPage() {
 						</div>
 						<div className="relative aspect-[4/3] overflow-hidden">
 							<Image
-								src="/images/about/web-work.jpg"
+								src="/images/about/DSCF9436.jpg"
 								alt="Web application development at SABAKO"
 								fill
 								sizes="(max-width: 1024px) 100vw, 50vw"
@@ -165,8 +165,8 @@ export default function AboutPage() {
 					<div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-center">
 						<div className="relative aspect-[4/3] overflow-hidden lg:order-first order-last">
 							<Image
-								src="/images/about/mobile-work.jpg"
-								alt="Mobile product development — React Native testing"
+								src="/images/about/IMG-20200718-WA0017.jpg"
+								alt="Filming a person"
 								fill
 								sizes="(max-width: 1024px) 100vw, 50vw"
 								className="object-cover object-center"
@@ -191,13 +191,13 @@ export default function AboutPage() {
 								And Beyond.
 							</h2>
 							<p className="text-[var(--text-muted)] leading-relaxed">
-								We slowly organise our business by forming a legal entity, which lets us work with big corporations and governments.
+								We slowly organise our business by forming a legal entity, which lets us work with big corporations and governments. Iterating on our process, we are now able to deliver products that are not only functional but also scalable and maintainable.
 							</p>
 						</div>
 						<div className="relative aspect-[4/3] overflow-hidden">
 							<Image
-								src="/images/about/iot-work.jpg"
-								alt="IoT hardware prototyping at SABAKO"
+								src="/images/about/IMG_20240104_131752.jpg"
+								alt="Meeting area"
 								fill
 								sizes="(max-width: 1024px) 100vw, 50vw"
 								className="object-cover object-center"
