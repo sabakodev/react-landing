@@ -1,3 +1,4 @@
+
 /**
  * WPGraphQL queries — Works / Portfolio CPT
  *
@@ -39,6 +40,12 @@ export const GET_WORKS = gql`
           featured
           tags
         }
+		  categories {
+          nodes { id databaseId name slug }
+        }
+        tags {
+          nodes { id databaseId name slug }
+        }
       }
     }
   }
@@ -53,6 +60,7 @@ export const GET_WORK_BY_SLUG = gql`
       title
       slug
       date
+	  content(format: RENDERED)
       featuredImage {
         node {
           sourceUrl
@@ -72,13 +80,11 @@ export const GET_WORK_BY_SLUG = gql`
         tags
         featured
       }
-      seo {
-        title
-        metaDesc
-        canonical
-        opengraphTitle
-        opengraphDescription
-        opengraphImage { sourceUrl altText }
+		categories {
+        nodes { id databaseId name slug }
+      }
+      tags {
+        nodes { id databaseId name slug }
       }
     }
   }

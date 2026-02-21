@@ -24,15 +24,15 @@ export default async function WorkPage() {
 
 	return (
 		<article>
-			<header className="border-b border-[var(--border)] pt-32 pb-16">
+			<header className="border-b border-(--border) pt-32 pb-16">
 				<div className="mx-auto max-w-7xl px-6 lg:px-8">
-					<p className="text-xs font-mono uppercase tracking-widest text-[var(--brand)] mb-4">
+					<p className="text-xs font-mono uppercase tracking-widest text-(--brand) mb-4">
 						Portfolio
 					</p>
-					<h1 className="text-5xl font-bold text-[var(--text)] max-w-2xl leading-tight">
+					<h1 className="text-5xl font-bold text-(--text) max-w-2xl leading-tight">
 						Partner with the experienced.
 					</h1>
-					<p className="mt-4 text-lg text-[var(--text-muted)] max-w-xl">
+					<p className="mt-4 text-lg text-(--text-muted) max-w-xl">
 						A selection of projects across web, mobile, and connected systems.
 					</p>
 				</div>
@@ -52,12 +52,12 @@ export default async function WorkPage() {
 			</section>
 
 			{/* CTA */}
-			<section className="border-t border-[var(--border)] bg-[var(--bg-subtle)] py-16" aria-label="Start a project">
+			<section className="border-t border-(--border) bg-(--bg-subtle) py-16" aria-label="Start a project">
 				<div className="mx-auto max-w-7xl px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-6">
-					<p className="text-2xl font-bold text-[var(--text)]">Have a project in mind?</p>
+					<p className="text-2xl font-bold text-(--text)">Have a project in mind?</p>
 					<Link
 						href="/contact"
-						className="inline-flex items-center gap-2 px-6 py-3 bg-[var(--text)] text-[var(--bg)] text-sm font-medium hover:opacity-80 transition-opacity group"
+						className="inline-flex items-center gap-2 px-6 py-3 bg-(--text) text-(--bg) text-sm font-medium hover:opacity-80 transition-opacity group"
 					>
 						Let&apos;s Discuss
 						<ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />

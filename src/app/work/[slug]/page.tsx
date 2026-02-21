@@ -49,18 +49,18 @@ export default async function WorkCaseStudyPage(props: Props) {
 	return (
 		<article>
 			{/* Header */}
-			<header className="border-b border-[var(--border)] pt-32 pb-16">
+			<header className="border-b border-(--border) pt-32 pb-16">
 				<div className="mx-auto max-w-7xl px-6 lg:px-8">
 					<Link
 						href="/work"
-						className="inline-flex items-center gap-1.5 text-xs font-mono text-[var(--text-subtle)] hover:text-[var(--text)] transition-colors mb-10 group"
+						className="inline-flex items-center gap-1.5 text-xs font-mono text-(--text-subtle) hover:text-(--text) transition-colors mb-10 group"
 					>
 						<ArrowLeft size={12} className="transition-transform group-hover:-translate-x-1" />
 						All Projects
 					</Link>
 
 					<div className="flex items-center gap-3 mb-6">
-						<div className={`p-2 border border-[var(--border)] ${typeColor[work.type]}`}>
+						<div className={`p-2 border border-(--border) ${typeColor[work.type]}`}>
 							<Icon size={18} aria-hidden="true" />
 						</div>
 						<span className={`text-xs font-mono uppercase tracking-widest ${typeColor[work.type]}`}>
@@ -72,6 +72,9 @@ export default async function WorkCaseStudyPage(props: Props) {
 					<h1 className="text-5xl font-bold text-[var(--text)] max-w-3xl leading-tight">
 						{work.title}
 					</h1>
+					<p className="mt-4 text-base text-(--text-muted) font-medium">
+						{work.client}
+					</p>
 					<p className="mt-4 text-base text-[var(--text-muted)] font-medium">
 						{work.client}
 					</p>

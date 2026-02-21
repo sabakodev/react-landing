@@ -102,12 +102,13 @@ export type WPWork = WPNode & {
 		featured?: boolean
 	}
 	featuredImage?: { node: WPImage }
-	seo?: WPSeo
+	categories?: { nodes: WPCategory[] }
+	tags?: { nodes: WPTag[] }
 }
 
-export type WPWorkCard = Pick<WPWork, 'id' | 'databaseId' | 'title' | 'slug' | 'date' | 'featuredImage' | 'workFields'>
+export type WPWorkCard = Pick<WPWork, 'id' | 'databaseId' | 'title' | 'slug' | 'date' | 'featuredImage' | 'categories' | 'tags' | 'workFields'>
 
-// ---------------------------------------------------------------------------
+// --------------------------------------------------------------------------
 // GraphQL connection wrappers
 // ---------------------------------------------------------------------------
 
