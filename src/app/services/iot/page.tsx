@@ -43,7 +43,7 @@ export default function IotServicePage() {
 						From sensor firmware to cloud dashboards — we engineer the full IoT stack for industrial, commercial, and consumer applications.
 					</p>
 					<div className="mt-8 flex flex-wrap gap-4">
-						<Link href="/contact" className="inline-flex items-center gap-2 px-6 py-3 bg-[var(--text)] text-[var(--bg)] text-sm font-medium hover:opacity-80 transition-opacity group">
+						<Link href="/contact?service=iot" className="inline-flex items-center gap-2 px-6 py-3 bg-[var(--text)] text-[var(--bg)] text-sm font-medium hover:opacity-80 transition-opacity group">
 							Start an IoT Project <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
 						</Link>
 						<Link href="/work" className="inline-flex items-center gap-2 px-6 py-3 border border-[var(--border)] text-[var(--text)] text-sm font-medium hover:bg-[var(--bg-subtle)] transition-colors">

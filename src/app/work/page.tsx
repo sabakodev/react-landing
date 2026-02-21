@@ -1,8 +1,9 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
-import { getWorks } from '@/lib/api/works'
+import { getWorks } from '@/lib/graphql/adapters/works'
 import { WorksGrid } from '@/components/work/WorksGrid'
+import { ClientLogoStrip } from '@/components/work/ClientLogoStrip'
 
 export const metadata: Metadata = {
 	title: 'Work',
@@ -36,6 +37,8 @@ export default async function WorkPage() {
 					</p>
 				</div>
 			</header>
+
+			<ClientLogoStrip />
 
 			<section className="py-16" aria-label="Projects">
 				<div className="mx-auto max-w-7xl px-6 lg:px-8">
