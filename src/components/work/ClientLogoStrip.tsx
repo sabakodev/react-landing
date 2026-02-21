@@ -23,9 +23,9 @@ export function ClientLogoStrip() {
 	return (
 		<section
 			aria-label="Our clients"
-			className="py-12 border-t border-[var(--border)] overflow-hidden"
+			className="py-12 border-t border-(--border) overflow-hidden"
 		>
-			<p className="text-xs font-mono uppercase tracking-widest text-[var(--text-subtle)] text-center mb-8">
+			<p className="text-xs font-mono uppercase tracking-widest text-(--text-subtle) text-center mb-8">
 				Trusted by leading organisations
 			</p>
 
@@ -50,7 +50,7 @@ export function ClientLogoStrip() {
 					{clients.map((client) => (
 						<div
 							key={`a-${client.label}`}
-							className="flex-shrink-0 h-8 flex items-center dark:invert dark:hover:invert-0 grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
+							className="shrink-0 h-8 flex items-center dark:invert dark:hover:invert-0 grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
 						>
 							<Image
 								src={client.image}
@@ -64,7 +64,7 @@ export function ClientLogoStrip() {
 					{clients.map((client) => (
 						<div
 							key={`b-${client.label}`}
-							className="flex-shrink-0 h-8 flex items-center grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
+							className="shrink-0 h-8 flex items-center grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
 							aria-hidden="true"
 						>
 							<Image
