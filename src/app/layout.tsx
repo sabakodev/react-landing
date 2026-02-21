@@ -28,7 +28,7 @@ export const metadata: Metadata = {
 		template: '%s | SABAKO',
 	},
 	description:
-		'SABAKO is a premium IT agency & consulting firm specializing in Digital Experiences (Web), Mobile Products (App), and Connected Systems (IoT). We transform businesses through technology.',
+		'We are an agency that expertise on digital transformation solutions. We build web, mobile, and IoT solutions for ambitious businesses.',
 	keywords: [
 		'IT agency',
 		'web development',
@@ -59,9 +59,9 @@ export const metadata: Metadata = {
 		locale: 'en_US',
 		url: 'https://sabako.id',
 		siteName: 'SABAKO',
-		title: 'SABAKO — Digital Experiences. Mobile Products. Connected Systems.',
+		title: 'SABAKO — Transform your business experience',
 		description:
-			'Premium IT agency & consulting — Web Development, App Development, and IoT Solutions.',
+			'We are an agency that expertise on digital transformation solutions. We build web, mobile, and IoT solutions for ambitious businesses.',
 		images: [
 			{
 				url: '/sky.jpg',
@@ -73,9 +73,9 @@ export const metadata: Metadata = {
 	},
 	twitter: {
 		card: 'summary_large_image',
-		title: 'SABAKO — Digital Experiences. Mobile Products. Connected Systems.',
+		title: 'SABAKO — Evolution of Digital Experiences',
 		description:
-			'Premium IT agency & consulting — Web Development, App Development, and IoT Solutions.',
+			'We are an agency that expertise on digital transformation solutions. We build web, mobile, and IoT solutions for ambitious businesses.',
 		images: ['/sky.jpg'],
 		creator: '@	',
 	},
@@ -85,15 +85,6 @@ export const metadata: Metadata = {
 		apple: '/sabako-bimi.svg',
 	},
 }
-
-// export const viewport: Viewport = {
-// 	themeColor: [
-// 		{ media: '(prefers-color-scheme: light)', color: '#ffffff' },
-// 		{ media: '(prefers-color-scheme: dark)', color: '#0a0a0a' },
-// 	],
-// 	width: 'device-width',
-// 	initialScale: 1,
-// }
 
 async function SpotlightBar() {
 	const announcement = await getFeaturedAnnouncement()
@@ -115,7 +106,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 							url: 'https://sabako.id',
 							logo: 'https://sabako.id/sabako-bimi.svg',
 							description:
-								'Premium IT agency & consulting specializing in Web Development, App Development, and IoT Solutions.',
+								'We are an agency that expertise on digital transformation solutions. We build web, mobile, and IoT solutions for ambitious businesses.',
 							address: {
 								'@type': 'PostalAddress',
 								streetAddress: 'Jl. Bangka Raya No. 48',
