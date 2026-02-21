@@ -4,7 +4,8 @@ import { useState, useCallback } from 'react'
 import Link from 'next/link'
 import { ArrowRight, Loader2, CheckCircle } from 'lucide-react'
 import { useInfiniteScroll } from '@/lib/hooks/useInfiniteScroll'
-import type { Work } from '@/lib/api/works'
+import { useButtonTracking } from '@/lib/analytics/useButtonTracking'
+import type { Work } from '@/lib/graphql/adapters/works'
 
 const categoryColors: Record<string, string> = {
 	web: 'text-blue-500',
@@ -36,12 +37,13 @@ function WorkSkeleton() {
 }
 
 // ── Card ──────────────────────────────────────────────────────────────────────
-function WorkCard({ project }: { project: Work }) {
+function WorkCard({ project, onTrack }: { project: Work; onTrack: () => void }) {
 	return (
 		<Link
 			href={`/work/${project.slug}`}
 			id={project.id}
 			className="bg-[var(--bg)] p-8 flex flex-col group hover:bg-[var(--bg-subtle)] transition-colors"
+			onClick={onTrack}
 		>
 			<div className="flex items-center justify-between mb-6">
 				<span className={`text-xs font-mono uppercase tracking-wider ${categoryColors[project.type] || 'text-[var(--brand)]'}`}>
@@ -88,6 +90,7 @@ export function WorksGrid({ initialItems, initialCursor, initialHasMore, pageSiz
 	const [hasMore, setHasMore] = useState(initialHasMore)
 	const [loading, setLoading] = useState(false)
 	const [error, setError] = useState(false)
+	const track = useButtonTracking()
 
 	const loadMore = useCallback(async () => {
 		if (!hasMore || loading) return
@@ -118,7 +121,11 @@ export function WorksGrid({ initialItems, initialCursor, initialHasMore, pageSiz
 		<>
 			<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-[var(--border)]">
 				{items.map((project) => (
-					<WorkCard key={project.slug} project={project} />
+					<WorkCard
+						key={project.slug}
+						project={project}
+						onTrack={track('View Case Study', 'works-grid', { slug: project.slug, title: project.title, type: project.type })}
+					/>
 				))}
 				{/* Skeleton slots while loading */}
 				{loading && Array.from({ length: 3 }).map((_, i) => <WorkSkeleton key={`sk-${i}`} />)}
