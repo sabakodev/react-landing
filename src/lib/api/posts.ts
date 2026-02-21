@@ -114,7 +114,7 @@ const mockPosts: Post[] = [
 		content: [
 			'When your sensor needs to respond in under 50 milliseconds, the architecture of your firmware matters as much as the hardware it runs on. In this article, we share the embedded C patterns we developed for an industrial water quality monitoring system.',
 			'The core pattern is a priority-based event loop. Instead of the typical Arduino-style loop-delay pattern, we use a cooperative scheduler with priority queues. Sensor readings get the highest priority, followed by MQTT publishing, and finally LED status updates.',
-			'Memory management on constrained microcontrollers (we used an ESP32 with 520KB SRAM) requires discipline. We allocate all buffers statically at compile time and use ring buffers for sensor data. No malloc, no fragmentation, no surprises.',
+			'Memory management on constrained microcontrollers (we used an ESP32 with 520KB SRAM) requires discipline. We allocate all buffers statically at compile time and use ring-3 buffers for sensor data. No malloc, no fragmentation, no surprises.',
 		],
 	},
 ]
