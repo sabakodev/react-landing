@@ -76,10 +76,10 @@ export default async function BlogPage() {
 										<Calendar size={12} />
 										{formatDate(featured.date)}
 									</span>
-									<span className="flex items-center gap-1.5">
+									{/* <span className="flex items-center gap-1.5">
 										<User size={12} />
 										{featured.author}
-									</span>
+									</span> */}
 									<span className="flex items-center gap-1.5 text-(--brand) ml-auto group-hover:gap-2.5 transition-all font-mono">
 										Read Article <ArrowRight size={12} />
 									</span>
