@@ -12,6 +12,8 @@ export const metadata: Metadata = {
 	openGraph: { title: 'Blog & Insights — SABAKO', description: 'Technical articles and case studies from SABAKO.' },
 }
 
+export const revalidate = 10
+
 const PAGE_SIZE = 6
 
 function formatDate(iso: string) {

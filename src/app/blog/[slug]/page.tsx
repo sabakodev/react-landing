@@ -155,7 +155,7 @@ export function ContentSection({ post }: { post: BlogPost }) {
 				<div className="mx-auto max-w-3xl px-6 lg:px-8">
 					{post.content ? (
 						<div
-							className="wp-content prose prose-neutral max-w-none text-(--text-muted) leading-relaxed"
+							className="wp-content prose prose-neutral dark:prose-invert max-w-none text-(--text-muted) leading-relaxed"
 							dangerouslySetInnerHTML={{ __html: post.content }}
 						/>
 					) : (

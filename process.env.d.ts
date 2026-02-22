@@ -19,5 +19,15 @@ declare namespace NodeJS {
 		NEXT_PUBLIC_GA_ID?: string
 
 		NODE_ENV: 'development' | 'production' | 'test'
+
+		/** Firebase Admin credentials */
+		FIREBASE_PROJECT_ID?: string
+		FIREBASE_CLIENT_EMAIL?: string
+		FIREBASE_PRIVATE_KEY?: string
+
+		/** Webhook integrations */
+		DISCORD_WEBHOOK_URL?: string
+		TELEGRAM_BOT_TOKEN?: string
+		TELEGRAM_CHAT_ID?: string
 	}
 }
