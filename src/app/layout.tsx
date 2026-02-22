@@ -64,7 +64,7 @@ export const metadata: Metadata = {
 			'We are an agency that expertise on digital transformation solutions. We build web, mobile, and IoT solutions for ambitious businesses.',
 		images: [
 			{
-				url: '/sky.jpg',
+				url: 'https://sabako.id/sky.jpg',
 				width: 1200,
 				height: 630,
 				alt: 'SABAKO — IT Agency & Consulting',
@@ -76,7 +76,7 @@ export const metadata: Metadata = {
 		title: 'SABAKO — Evolution of Digital Experiences',
 		description:
 			'We are an agency that expertise on digital transformation solutions. We build web, mobile, and IoT solutions for ambitious businesses.',
-		images: ['/sky.jpg'],
+		images: ['https://sabako.id/sky.jpg'],
 		creator: '@	',
 	},
 	icons: {
