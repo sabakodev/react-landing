@@ -57,19 +57,19 @@ export function CtaSection() {
 							href="/contact"
 							id="cta-start-project"
 							onClick={onCtaClick}
-							className="inline-flex items-center gap-2 px-8 py-4 bg-(--text) text-(--bg) text-sm font-medium hover:opacity-80 transition-opacity group"
+							className="w-52 inline-flex items-center gap-2 px-8 py-4 bg-(--text) text-(--bg) text-sm font-medium hover:opacity-80 transition-opacity group"
 						>
 							Start a Project
 							<ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
 						</Link>
-						<a
+						<Link
 							href="mailto:sales@sabako.id"
 							id="cta-email"
-							className="inline-flex items-center gap-2 px-8 py-4 border border-(--border) text-(--text) text-sm font-medium hover:bg-(--bg) transition-colors"
+							className="w-52 inline-flex items-center gap-2 px-8 py-4 border border-(--border) text-(--text) text-sm font-medium hover:bg-(--bg) transition-colors"
 						>
 							<Mail size={16} />
 							sales@sabako.id
-						</a>
+						</Link>
 					</div>
 
 					{/* Office hours */}
