@@ -99,7 +99,7 @@ export function Navbar() {
 				className={clsx(
 					'w-full transition-all duration-300 border-b',
 					scrolled
-						? 'border-(--border) bg-(--bg)/90 backdrop-blur-xl'
+						? 'border-(--border) bg-(--bg)/75 backdrop-blur-xl'
 						: 'border-transparent bg-transparent',
 				)}
 			>
