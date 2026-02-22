@@ -15,10 +15,10 @@ export function StatsSection() {
 			className="border-y border-(--border) bg-(--bg-subtle)"
 			aria-label="Company statistics"
 		>
-			<div className="mx-auto max-w-7xl px-6 lg:px-8">
+			<div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
 				<dl className="grid grid-cols-2 lg:grid-cols-4 divide-x divide-y lg:divide-y-0 divide-(--border)">
 					{stats.map((stat, i) => (
-						<div key={stat.label} className="px-6 py-10 first:pl-0 last:pr-0">
+						<div key={stat.label} className="px-6 py-10 md:first:pl-0 md:last:pr-0">
 							<Reveal delay={i * 0.1}>
 								<dt className="text-xs font-mono uppercase tracking-widest text-(--text-subtle) mb-1">
 									{stat.label}

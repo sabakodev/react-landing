@@ -6,7 +6,7 @@ import { ArrowRight, MouseIcon, Sparkles } from 'lucide-react'
 import { HeroSphere } from './HeroSphere'
 import { useButtonTracking } from '@/lib/analytics/useButtonTracking'
 
-const words = ['Digital Experiences', 'Mobile Products', 'Connected Systems']
+const words = ['Digital Experiences', 'Mobile Products', 'Connected System']
 
 export function HeroSection() {
 	const track = useButtonTracking()
@@ -79,7 +79,7 @@ export function HeroSection() {
 
 				{/* Headline */}
 				<h1
-					className="text-[clamp(2.5rem,7vw,4.5rem)] font-bold leading-[1.05] tracking-tight text-(--text) max-w-4xl animate-fade-up"
+					className="text-[clamp(2.25rem,7vw,4.5rem)] font-bold leading-[1.05] tracking-tight text-(--text) max-w-4xl animate-fade-up"
 					style={{ animationDelay: '0.2s', opacity: 0 }}
 				>
 					We build{' '}<br />

@@ -107,7 +107,7 @@ export function ProductSpotlightBanner({ announcement }: { announcement: Feature
 							<p className="text-sm text-(--text-muted) leading-relaxed">{announcement.description}</p>
 						</div>
 					</div>
-					<div className="flex items-center gap-3 shrink-0">
+					<div className="hidden sm:flex items-center gap-3 shrink-0">
 						<Link
 							href={announcement.href}
 							id="spotlight-banner-cta"
