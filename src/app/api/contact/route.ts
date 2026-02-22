@@ -64,6 +64,86 @@ function validate(payload: ContactFormPayload): string | null {
 }
 
 // ---------------------------------------------------------------------------
+// Webhook helpers
+// ---------------------------------------------------------------------------
+
+async function sendDiscordWebhook(entry: ContactSubmission) {
+	const webhookUrl = process.env.DISCORD_WEBHOOK_URL
+	if (!webhookUrl) return
+
+	const embed = {
+		title: 'New Contact Form Submission',
+		color: 16735270, // Matches Sabako brand
+		fields: [
+			{ name: 'Name', value: entry.name || 'N/A', inline: true },
+			{ name: 'Email', value: entry.email || 'N/A', inline: true },
+			{ name: 'Service', value: entry.segment.service || 'N/A', inline: true },
+			{ name: 'Company Size', value: entry.segment.companySize || 'N/A', inline: true },
+			{ name: 'Preference', value: entry.segment.preference || 'N/A', inline: true },
+			{ name: 'Location', value: `${entry.meta?.city || 'Unknown'}, ${entry.meta?.country || 'Unknown'}`, inline: true },
+			{ name: 'Message', value: entry.message || 'N/A' },
+		],
+		footer: { text: `IP: ${entry.meta?.ipAddress || 'Unknown'} | User Agent: ${entry.meta?.userAgent?.slice(0, 40) || 'Unknown'}` },
+		timestamp: new Date().toISOString(),
+	}
+
+	try {
+		await fetch(webhookUrl, {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({ embeds: [embed] }),
+		})
+	} catch (error) {
+		console.error('Discord webhook failed:', error)
+	}
+}
+
+async function sendTelegramWebhook(entry: ContactSubmission) {
+	const botToken = process.env.TELEGRAM_BOT_TOKEN
+	const chatId = process.env.TELEGRAM_CHAT_ID
+	if (!botToken || !chatId) return
+
+	const header = [
+		{
+			label: 'Name',
+			content: entry.name,
+		},
+		{
+			label: 'Email',
+			content: entry.email,
+		},
+		{
+			label: 'Service',
+			content: entry.segment.service || 'N/A',
+		},
+		{
+			label: 'Company',
+			content: entry.segment.companySize || 'N/A',
+		},
+		{
+			label: 'Location',
+			content: `${entry.meta?.city || 'Unknown'}, ${entry.meta?.country || 'Unknown'}`
+		}
+	].map((item) => `<b>${item.label}</b>: ${item.content}`).join('\n')
+
+	const text = `<b>New Contact Form Submission</b>\n\n${header}\n\n<b>Message:</b>\n${entry.message}`.trim()
+
+	try {
+		await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({
+				chat_id: chatId,
+				text,
+				parse_mode: 'HTML',
+			}),
+		})
+	} catch (error) {
+		console.error('Telegram webhook failed:', error)
+	}
+}
+
+// ---------------------------------------------------------------------------
 // Route handler
 // ---------------------------------------------------------------------------
 
@@ -124,6 +204,12 @@ export async function POST(req: NextRequest) {
 			{ status: 500 }
 		)
 	}
+
+	// Fire webhooks asynchronously so they don't block the request if they are slow
+	Promise.allSettled([
+		sendDiscordWebhook(entry),
+		sendTelegramWebhook(entry),
+	]).catch((err) => console.error('Webhook execution error:', err))
 
 	return NextResponse.json(
 		{ success: true, id: entry.id },
