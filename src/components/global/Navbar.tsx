@@ -279,7 +279,7 @@ export function Navbar() {
 						<ul className="space-y-1" role="list">
 							{navItems.map((item) =>
 								item.children ? (
-									<li key={item.label}>
+									<li key={item.label} className="pt-3">
 										<p className="text-xs font-mono uppercase tracking-widest text-(--text-subtle) mt-6 mb-2 first:mt-0">
 											{item.label}
 										</p>
