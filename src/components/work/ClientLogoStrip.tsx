@@ -1,25 +1,65 @@
 'use client'
 
 /**
- * ClientLogoStrip — infinite marquee of client logos.
+ * ClientLogoStrip — virtualized infinite marquee
  *
- * Two duplicated sets give seamless looping.
- * Logos are grayscale by default, full-color on hover.
- * Animation pauses on hover so the user can read them.
+ * This version handles images with completely arbitrary, varying widths natively.
+ * It strictly creates only enough DOM nodes to fill wide screens and then
+ * mechanically recycles off-screen logos to the end, keeping memory footprint static.
  */
 
+import { useEffect, useRef } from 'react'
 import Image from 'next/image'
 import { clients } from '@/app/(marketing)/clients/_data'
 
-// Build a clean alt label from the filename, e.g. "otabyte.png" → "Otabyte"
 function toAltLabel(raw: string) {
 	return raw
-		.replace(/\.[^.]+$/, '')      // strip extension
-		.replace(/[-_]/g, ' ')         // hyphens/underscores → spaces
-		.replace(/\b\w/g, (c) => c.toUpperCase()) // title-case
+		.replace(/\.[^.]+$/, '')
+		.replace(/[-_]/g, ' ')
+		.replace(/\b\w/g, (c) => c.toUpperCase())
 }
 
 export function ClientLogoStrip() {
+	const trackRef = useRef<HTMLDivElement>(null)
+	const hoverRef = useRef(false)
+
+	useEffect(() => {
+		const track = trackRef.current
+		if (!track) return
+
+		let animationId: number
+		let offset = 0
+		const speed = 0.5 // pixels per frame
+
+		const loop = () => {
+			if (!hoverRef.current && track.children.length > 0) {
+				const firstChild = track.children[0] as HTMLElement
+
+				// Calculate exact pixel width of the first DOM item.
+				// Next.js local images load intrinsic aspect-ratios immediately, 
+				// so the offsetWidth correctly represents dynamic widths.
+				// We add 48px to account for the `gap-12` (3rem) spacing.
+				const itemTotalWidth = firstChild.getBoundingClientRect().width + 48
+
+				offset += speed
+
+				// When the item translates exactly its full width out of view, 
+				// physically recycle the DOM node to the end.
+				if (offset >= itemTotalWidth && itemTotalWidth > 0) {
+					offset -= itemTotalWidth
+					track.appendChild(firstChild)
+				}
+
+				// Apply translation
+				track.style.transform = `translate3d(${-offset}px, 0, 0)`
+			}
+			animationId = requestAnimationFrame(loop)
+		}
+
+		animationId = requestAnimationFrame(loop)
+		return () => cancelAnimationFrame(animationId)
+	}, [])
+
 	return (
 		<section
 			aria-label="Our clients"
@@ -29,11 +69,6 @@ export function ClientLogoStrip() {
 				Trusted by leading organisations
 			</p>
 
-			{/*
-			 * Marquee: two identical sets side by side.
-			 * CSS animation scrolls both leftward — when the first set exits,
-			 * the second seamlessly takes its place.
-			 */}
 			<div
 				className="flex"
 				style={{
@@ -42,14 +77,20 @@ export function ClientLogoStrip() {
 				}}
 			>
 				<div
-					className="flex items-center gap-12 animate-marquee"
-					style={{ animationDuration: '32s' }}
-					aria-hidden="false"
+					ref={trackRef}
+					className="flex items-center gap-12 w-max"
+					onMouseEnter={() => (hoverRef.current = true)}
+					onMouseLeave={() => (hoverRef.current = false)}
 				>
-					{/* Set A */}
-					{clients.map((client) => (
+					{/* 
+					  We render 3 times the base clients so we have enough DOM nodes to span 
+					  even ultrawide 4K monitors before they recycle. Once they scroll past, 
+					  the JS loop above recycles their exact DOM nodes to the end without 
+					  allocating any new memory. 
+					*/}
+					{[...clients, ...clients, ...clients].map((client, idx) => (
 						<div
-							key={`a-${client.label}`}
+							key={`logo-${client.label}-${idx}`}
 							className="shrink-0 h-8 flex items-center dark:invert dark:hover:invert-0 grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
 						>
 							<Image
@@ -57,21 +98,7 @@ export function ClientLogoStrip() {
 								alt={toAltLabel(client.label)}
 								height={32}
 								style={{ height: '32px', width: 'auto', objectFit: 'contain' }}
-							/>
-						</div>
-					))}
-					{/* Set B — duplicate for seamless loop */}
-					{clients.map((client) => (
-						<div
-							key={`b-${client.label}`}
-							className="shrink-0 h-8 flex items-center grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
-							aria-hidden="true"
-						>
-							<Image
-								src={client.image}
-								alt=""
-								height={32}
-								style={{ height: '32px', width: 'auto', objectFit: 'contain' }}
+								unoptimized={true} // ensure instantaneous sizing mapping when recycled
 							/>
 						</div>
 					))}
