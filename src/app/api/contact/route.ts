@@ -1,29 +1,35 @@
 import { type NextRequest, NextResponse } from 'next/server'
+import { db } from '@/lib/firebaseAdmin'
 
 /**
  * Contact form submission — internal API route.
  *
  * Validates and sanitizes input server-side.
- * Stores the submission in-memory for now (plug in your DB/email service here).
+ * Stores the submission in Firestore.
  *
  * POST /api/contact
  */
 
 // ---------------------------------------------------------------------------
-// Types — plug your DB schema into ContactSubmission
+// Types
 // ---------------------------------------------------------------------------
 
 export type ContactSubmission = {
 	id: string           // generated UUID
 	name: string
 	email: string
-	service: string
-	companySize: string
-	preference: string
 	message: string
+	segment: {
+		service: string
+		companySize: string
+		preference: string
+	}
 	/** e.g. IP address, user-agent — omit if privacy-sensitive */
 	meta?: {
 		userAgent?: string
+		ipAddress?: string
+		country?: string
+		city?: string
 	}
 }
 
@@ -58,29 +64,6 @@ function validate(payload: ContactFormPayload): string | null {
 }
 
 // ---------------------------------------------------------------------------
-// In-memory store (replace with DB call — see comment below)
-// ---------------------------------------------------------------------------
-
-/**
- * TO CONNECT YOUR DATABASE:
- *
- * Replace the `submissions.push(entry)` line below with your preferred
- * storage call, for example:
- *
- *   // Prisma
- *   await prisma.contactSubmission.create({ data: entry })
- *
- *   // Supabase
- *   await supabase.from('contact_submissions').insert(entry)
- *
- *   // Resend / email
- *   await resend.emails.send({ to: 'sales@sabako.id', ... })
- *
- * The `ContactSubmission` type above mirrors the expected schema.
- */
-const submissions: ContactSubmission[] = []
-
-// ---------------------------------------------------------------------------
 // Route handler
 // ---------------------------------------------------------------------------
 
@@ -108,26 +91,38 @@ export async function POST(req: NextRequest) {
 		return NextResponse.json({ error: validationError }, { status: 422 })
 	}
 
+	const ip = req.headers.get('cf-connecting-ip') ?? (req.headers.get('x-forwarded-for') ?? '127.0.0.1').split(',')[0].trim()
+
 	const entry: ContactSubmission = {
 		id: crypto.randomUUID(),
 		name: payload.name,
 		email: payload.email,
-		service: payload.service ?? '',
-		companySize: payload.companySize ?? '',
-		preference: payload.preference ?? '',
 		message: payload.message,
+		segment: {
+			service: payload.service ?? '',
+			companySize: payload.companySize ?? '',
+			preference: payload.preference ?? '',
+		},
 		meta: {
-			userAgent: req.headers.get('user-agent') ?? undefined,
+			userAgent: req.headers.get('user-agent') ?? '',
+			ipAddress: ip,
+			country: req.headers.get('x-vercel-ip-country') ?? '',
+			city: req.headers.get('x-vercel-ip-city') ?? '',
 		},
 	}
 
-	// ---- Plug your DB/email service call here ----
-	submissions.push(entry)
-	// -----------------------------------------------
-
-	// Dev: log to console
-	if (process.env.NODE_ENV === 'development') {
-		console.log('[contact] New submission:', entry)
+	try {
+		// Save submission to Firestore
+		await db.collection('contact_submissions').doc(entry.id).set({
+			...entry,
+			createdAt: new Date()
+		})
+	} catch (error) {
+		console.error('Failed to save to Firestore:', error)
+		return NextResponse.json(
+			{ error: 'Failed to submit form. Please try again later.' },
+			{ status: 500 }
+		)
 	}
 
 	return NextResponse.json(
