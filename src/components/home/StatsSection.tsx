@@ -3,10 +3,10 @@
 import { Reveal } from '@/components/ui/Reveal'
 
 const stats = [
-	{ value: '7+', label: 'Years in Operation', description: 'Est. 2018' },
-	{ value: '100+', label: 'Projects Delivered', description: 'Across industries' },
+	{ value: '7+', label: 'Years in Operation', description: 'Established in 2018' },
+	{ value: '100+', label: 'Projects Delivered', description: 'Across multiple industries' },
 	{ value: '20+', label: 'Enterprise Clients', description: 'Including government' },
-	{ value: '100%', label: 'Satisfaction Rate', description: 'Client-first approach' },
+	{ value: '99.99%', label: 'Target Reliability', description: 'For SLA-backed infrastructure projects' },
 ]
 
 export function StatsSection() {
