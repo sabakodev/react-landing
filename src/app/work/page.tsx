@@ -13,6 +13,8 @@ export const metadata: Metadata = {
 	openGraph: { title: 'Work & Portfolio — SABAKO', description: 'Selected projects from SABAKO.' },
 }
 
+export const revalidate = 3600
+
 const PAGE_SIZE = 9
 
 export default async function WorkPage() {

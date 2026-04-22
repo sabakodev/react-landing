@@ -12,6 +12,8 @@ export async function generateStaticParams() {
 	return works.map((w) => ({ slug: w.slug }))
 }
 
+export const revalidate = 3600
+
 export async function generateMetadata(props: Props): Promise<Metadata> {
 	const params = await props.params
 	const work = await getWork(params.slug)

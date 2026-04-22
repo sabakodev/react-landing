@@ -5,7 +5,7 @@ import { ArrowLeft, Calendar, Clock, ArrowRight } from 'lucide-react'
 import { BlogPost, getPost, getPosts } from '@/lib/graphql/adapters/posts'
 
 // Allow images from WP CMS domain
-export const revalidate = 60
+export const revalidate = 600
 
 function formatDate(iso: string) {
 	return new Date(iso).toLocaleDateString('en-US', {

@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 	openGraph: { title: 'Blog & Insights — SABAKO', description: 'Technical articles and case studies from SABAKO.' },
 }
 
-export const revalidate = 10
+export const revalidate = 60
 
 const PAGE_SIZE = 6
 
