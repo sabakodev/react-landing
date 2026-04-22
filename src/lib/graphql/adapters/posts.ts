@@ -5,7 +5,7 @@
  * No mock data — if the endpoint is unavailable, an empty array / null is returned.
  */
 
-import { wpClient, hasWpEndpoint } from '@/lib/graphql/client'
+import { wpClient } from '@/lib/graphql/client'
 import { GET_POSTS, GET_POST_BY_SLUG } from '@/lib/graphql/queries/posts'
 import type {
 	PostsQueryResponse,
