@@ -26,6 +26,7 @@ export type WPImage = {
 export type WPSeo = {
 	title: string
 	metaDesc: string
+	focuskw?: string
 	canonical: string
 	opengraphTitle: string
 	opengraphDescription: string

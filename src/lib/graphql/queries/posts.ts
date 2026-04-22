@@ -39,7 +39,7 @@ export const GET_POSTS = gql`
 /** Fetch a single post by slug — full content */
 export const GET_POST_BY_SLUG = gql`
   query GetPostBySlug($slug: String!) {
-    postBy(slug: $slug) {
+    post(id: $slug, idType: SLUG) {
       id
       databaseId
       title
@@ -70,6 +70,10 @@ export const GET_POST_BY_SLUG = gql`
       tags {
         nodes { id databaseId name slug }
       }
+	  seo {
+	    metaDesc
+	    focuskw
+	  }
     }
   }
 `

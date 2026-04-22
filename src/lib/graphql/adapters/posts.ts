@@ -5,7 +5,7 @@
  * No mock data — if the endpoint is unavailable, an empty array / null is returned.
  */
 
-import { wpClient, hasWpEndpoint } from '@/lib/graphql/client'
+import { wpClient } from '@/lib/graphql/client'
 import { GET_POSTS, GET_POST_BY_SLUG } from '@/lib/graphql/queries/posts'
 import type {
 	PostsQueryResponse,
@@ -21,6 +21,7 @@ import type {
 export type BlogPost = {
 	slug: string
 	title: string
+	keyword: string[]
 	/** Plain-text excerpt (HTML tags stripped) */
 	excerpt: string
 	/** Full HTML content — rendered by WP, use dangerouslySetInnerHTML */
@@ -64,7 +65,8 @@ function normalizeWpPost(post: WPPost | WPPostCard): BlogPost {
 		readTime: rawContent ? estimateReadTime(rawContent) : '5 min read',
 		author: full.author?.node?.name ?? 'SABAKO Team',
 		tags: full.tags?.nodes?.map((t) => t.name) ?? [],
-		excerpt: (full.excerpt ?? '').replace(/<[^>]+>/g, '').trim(),
+		excerpt: full.seo?.metaDesc ?? (full.excerpt ?? '').replace(/<[^>]+>/g, '').trim(),
+		keyword: ['sabako', full.seo?.focuskw ?? 'blog'],
 		content: rawContent,
 		coverImage: post.featuredImage?.node?.sourceUrl,
 		coverImageAlt: post.featuredImage?.node?.altText ?? post.title,
