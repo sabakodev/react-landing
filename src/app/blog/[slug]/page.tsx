@@ -29,6 +29,10 @@ export async function generateMetadata(props: { params: Promise<{ slug: string }
 			publishedTime: post.date,
 			...(post.coverImage ? { images: [{ url: post.coverImage, alt: post.coverImageAlt }] } : {}),
 		},
+		category: post.category,
+		publisher: 'SABAKO',
+		authors: [{ name: post.author }],
+		keywords: post.keyword,
 	}
 }
 
