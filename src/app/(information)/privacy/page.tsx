@@ -58,7 +58,7 @@ export default function AboutPage() {
 					<div>
 						<h2 className="text-2xl font-bold text-(--text) mb-6">Who we are</h2>
 						<div className="space-y-4 text-(--text-muted) leading-relaxed">
-							<p className="text-xs font-mono text-(--text-subtle)">Last Updated: 2026-02-20</p>
+							<p className="text-xs font-mono text-(--text-subtle)">Last Updated: 2026-11-13</p>
 							<p>
 								This Privacy Policy explains how PT. SABAKO KREATIV DIGITAL (“we,” “us,” “our”) collects, uses, discloses, and protects personal information when you visit or use sabako.id (the “Site”).
 							</p>
@@ -109,6 +109,19 @@ export default function AboutPage() {
 								<li>Non-discrimination for exercising your rights</li>
 							</ul>
 							<p>We do not sell personal information for money. However, California law defines “sharing” broadly and may include disclosure of identifiers (like IP address or cookie IDs) to third-party analytics/advertising partners for cross-context behavioral advertising.</p>
+							<h3 id="uu-pdp" className="text-xl font-bold text-(--text) mb-2">Indonesian privacy rights (UU PDP)</h3>
+							<p>If you are in Indonesia, under Law No. 27 of 2022 on Personal Data Protection (UU PDP) you have the right to:</p>
+							<ul className="list-disc list-outside">
+								<li>Get information about who processes your personal data, why, and on what legal basis</li>
+								<li>Access and get a copy of your personal data</li>
+								<li>Complete, update and correct inaccurate personal data</li>
+								<li>Stop processing, and have your personal data deleted or destroyed</li>
+								<li>Withdraw consent you have given</li>
+								<li>Object to decisions based solely on automated processing, including profiling</li>
+								<li>Delay or restrict processing</li>
+								<li>Receive your personal data in a commonly used format and have it sent to another controller</li>
+								<li>Claim compensation for violations of how your personal data is processed</li>
+							</ul>
 							<h3 className="text-xl font-bold text-(--text) mb-2">How to excercise your rights</h3>
 							<p>You can contact us at <a href="mailto:privacy@sabako.id">privacy@sabako.id</a> to exercise your rights. We may need to verify your identity before completing certain requests. Authorized agents may submit requests where permitted by law.</p>
 							<h3 className="text-xl font-bold text-(--text) mb-2">Children&apos;s Privacy</h3>
@@ -120,6 +133,9 @@ export default function AboutPage() {
 								<li>Maintain records and comply with legal obligations</li>
 								<li>Retention periods depend on the type of data, purpose, and legal requirements.</li>
 							</ul>
+							<h3 id="crawlers" className="text-xl font-bold text-(--text) mb-2">Our crawlers</h3>
+							<p>Separately from this Site, our search, content and brand-protection services use automated agents called <strong>sabakobot</strong> and <strong>sabako-user</strong> to fetch publicly available web pages, which can sometimes contain personal data. What these agents collect, how we use it, and how website owners can block them or opt out of AI training is explained in our <Link href="/bot" className="text-(--brand) hover-underline">Crawler Policy</Link>.</p>
+							<p>To ask us to remove content about you from our index, email <a href="mailto:privacy@sabako.id">privacy@sabako.id</a>.</p>
 							<h3 className="text-xl font-bold text-(--text) mb-2">Changes to this Privacy Policy</h3>
 							<p>We may update this Policy from time to time. We will post the updated version on this page and update the “Last Updated” date.</p>
 							<h3 className="text-xl font-bold text-(--text) mb-2">Contact Us</h3>

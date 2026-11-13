@@ -31,7 +31,7 @@ export default function TermsPage() {
 			<section className="py-20 border-b border-(--border)">
 				<div className="mx-auto max-w-7xl px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
 					<div className="space-y-6 text-(--text-muted) leading-relaxed">
-						<p className="text-xs font-mono text-(--text-subtle)">Last Updated: 2026-02-20</p>
+						<p className="text-xs font-mono text-(--text-subtle)">Last Updated: 2026-11-13</p>
 
 						<h2 className="text-2xl font-bold text-(--text)">1. Acceptance of Terms</h2>
 						<p>
@@ -58,6 +58,9 @@ export default function TermsPage() {
 						<h2 className="text-2xl font-bold text-(--text)">4. Services</h2>
 						<p>
 							Information about our services on the Site is for general informational purposes only. Any engagement for services will be governed by a separate agreement between SABAKO and the client. We reserve the right to modify, suspend, or discontinue any aspect of our services at any time without notice.
+						</p>
+						<p>
+							Some of our services use automated agents (sabakobot and sabako-user) that fetch publicly available web pages. How they behave, how we use what they collect, and how website owners can block them or opt out of AI training is described in our <Link href="/bot" className="text-(--brand) hover-underline">Crawler Policy</Link>.
 						</p>
 
 						<h2 className="text-2xl font-bold text-(--text)">5. User Submissions</h2>
