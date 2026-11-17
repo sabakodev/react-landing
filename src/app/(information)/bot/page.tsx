@@ -25,7 +25,7 @@ const agents = [
 	{
 		token: 'sabako-user',
 		does: 'Fetches a page only when a person, or an AI agent acting for a person, asks for it in real time.',
-		robots: 'No (user-directed, like a browser). It never crawls on its own or follows links beyond the request.',
+		robots: 'Only rules that name sabako-user. General rules (User-agent: *) do not apply, because each fetch is requested by a person, like a browser visit. It never crawls on its own or follows links beyond the request.',
 	},
 	{
 		token: 'sabako-extended',
@@ -65,9 +65,12 @@ Disallow: /`
 const blockTraining = `User-agent: sabako-extended
 Disallow: /`
 
+const blockUser = `User-agent: sabako-user
+Disallow: /`
+
 const keyPoints = [
 	{ icon: Bot, title: 'Results, not data', description: 'We sell search results and insights. We never sell or license raw copies of your pages.' },
-	{ icon: Ban, title: 'Easy to block', description: 'Block sabakobot, or only opt out of AI training with sabako-extended, in your robots.txt.' },
+	{ icon: Ban, title: 'Easy to block', description: 'Block sabakobot, sabako-user, or only AI training with sabako-extended, in your robots.txt.' },
 	{ icon: ShieldCheck, title: 'Public pages only', description: 'No logins, no paywalls, no CAPTCHA solving, no private systems.' },
 	{ icon: Mail, title: 'Talk to a human', description: 'bot@sabako.id for crawl issues, abuse@sabako.id if you were flagged by mistake.' },
 ]
@@ -171,6 +174,12 @@ export default function BotPage() {
 					<code className={code}>{blockAll}</code>
 					<h3 className={h3}>Allow search indexing, opt out of AI training</h3>
 					<code className={code}>{blockTraining}</code>
+					<h3 className={h3}>Block fetches made for our customers</h3>
+					<code className={code}>{blockUser}</code>
+					<p>
+						sabako-user only follows rules that name it. A <code className="font-mono text-(--text)">User-agent: *</code> rule
+						does not apply to it, the same way it does not apply to a person visiting your site in a browser.
+					</p>
 					<p>We also honour these AI-training opt-outs:</p>
 					<ul className="list-disc list-outside pl-5">
 						<li>
@@ -250,6 +259,7 @@ export default function BotPage() {
 							(<code className="font-mono text-(--text)">If-Modified-Since</code> / ETag) to avoid refetching unchanged pages.
 						</li>
 						<li>sabakobot fetches from our own servers, not through residential proxies.</li>
+						<li>sabako-user fetches exactly one page per request, never follows links, and is rate limited per site and per end user.</li>
 					</ul>
 
 					<h2 id="verify" className="text-2xl font-bold text-(--text) pt-8">8. Verify it&apos;s really us</h2>
