@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 	},
 }
 
-const LAST_UPDATED = '2026-11-13'
+const LAST_UPDATED = '2026-11-19'
 
 const agents = [
 	{
@@ -264,9 +264,26 @@ export default function BotPage() {
 
 					<h2 id="verify" className="text-2xl font-bold text-(--text) pt-8">8. Verify it&apos;s really us</h2>
 					<p>
-						We are preparing a published list of sabakobot IP ranges and reverse DNS under{' '}
-						<code className="font-mono text-(--text)">*.crawl.sabako.id</code>. Until it is live, if you see traffic
-						claiming to be sabakobot or sabako-user and want to confirm it, email{' '}
+						Check the source IP of a request against our published lists:
+					</p>
+					<ul className="list-disc list-outside pl-5">
+						<li>
+							sabakobot:{' '}
+							<a href="/sabakobot.json" className="font-mono text-(--text) underline">sabako.id/sabakobot.json</a>
+						</li>
+						<li>
+							sabako-user:{' '}
+							<a href="/sabako-user.json" className="font-mono text-(--text) underline">sabako.id/sabako-user.json</a>
+						</li>
+					</ul>
+					<p>
+						Both agents currently share the same IP address, so use the User-Agent to tell them apart. Traffic that
+						claims to be sabakobot or sabako-user from an IP not on these lists is not from us. We update the lists
+						before adding new addresses, and the <code className="font-mono text-(--text)">creationTime</code> field
+						shows when they last changed.
+					</p>
+					<p>
+						Not sure? Email{' '}
 						<a href="mailto:bot@sabako.id" className="text-(--text) underline">bot@sabako.id</a> with the IP address and
 						timestamp and we will check it for you.
 					</p>
