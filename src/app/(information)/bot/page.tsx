@@ -72,7 +72,7 @@ const keyPoints = [
 	{ icon: Bot, title: 'Results, not data', description: 'We sell search results and insights. We never sell or license raw copies of your pages.' },
 	{ icon: Ban, title: 'Easy to block', description: 'Block sabakobot, sabako-user, or only AI training with sabako-extended, in your robots.txt.' },
 	{ icon: ShieldCheck, title: 'Public pages only', description: 'No logins, no paywalls, no CAPTCHA solving, no private systems.' },
-	{ icon: Mail, title: 'Talk to a human', description: 'bot@sabako.id for crawl issues, abuse@sabako.id if you were flagged by mistake.' },
+	{ icon: Mail, title: 'Talk to a human', description: 'bot@sabako.id for crawl issues, abuse-report@sabako.id if you were flagged by mistake.' },
 ]
 
 const th = 'py-2 px-3 border border-(--border) font-mono text-(--text-subtle) uppercase text-left'
@@ -225,7 +225,7 @@ export default function BotPage() {
 					</ul>
 					<p>
 						If you believe your site was flagged by mistake, contact{' '}
-						<a href="mailto:abuse@sabako.id" className="text-(--text) underline">abuse@sabako.id</a> and we will review it.
+						<a href="mailto:abuse-report@sabako.id" className="text-(--text) underline">abuse-report@sabako.id</a> and we will review it.
 					</p>
 
 					<h2 id="personal-data" className="text-2xl font-bold text-(--text) pt-8">6. Personal data</h2>
@@ -297,7 +297,7 @@ export default function BotPage() {
 						</li>
 						<li>
 							Wrongly flagged as fraud:{' '}
-							<a href="mailto:abuse@sabako.id" className="text-(--text) underline">abuse@sabako.id</a>
+							<a href="mailto:abuse-report@sabako.id" className="text-(--text) underline">abuse-report@sabako.id</a>
 						</li>
 						<li>
 							Personal data requests:{' '}
