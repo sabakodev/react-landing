@@ -12,7 +12,7 @@ import { getFeaturedAnnouncement } from '@/lib/api/announcements'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { organization, website, SITE_DESCRIPTION } from '@/lib/seo/jsonld'
 import { serviceSummaries } from '@/lib/services'
-import { baseOpenGraph } from '@/lib/seo/metadata'
+import { baseOpenGraph, HOME_TITLE, twitterCard } from '@/lib/seo/metadata'
 
 const inter = Inter({
 	subsets: ['latin'],
@@ -59,16 +59,12 @@ export const metadata: Metadata = {
 		},
 	},
 	openGraph: baseOpenGraph,
-	twitter: {
-		card: 'summary_large_image',
-		title: 'SABAKO — Evolution of Digital Experiences',
-		description: SITE_DESCRIPTION,
-		images: ['https://sabako.id/sky.jpg'],
-	},
+	twitter: twitterCard(HOME_TITLE, SITE_DESCRIPTION),
+	// A config `icons` replaces file-based icons, so the PNG app/apple-icon route is named here (iOS ignores SVG)
 	icons: {
 		icon: '/sabako-bimi.svg',
 		shortcut: '/sabako-bimi.svg',
-		apple: '/sabako-bimi.svg',
+		apple: { url: '/apple-icon', sizes: '180x180', type: 'image/png' },
 	},
 }
 

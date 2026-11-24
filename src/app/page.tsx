@@ -8,12 +8,12 @@ import { CtaSection } from '@/components/home/CtaSection'
 import { ProductSpotlightBanner } from '@/components/home/ProductSpotlight'
 import { getFeaturedAnnouncement } from '@/lib/api/announcements'
 import { SITE_DESCRIPTION } from '@/lib/seo/jsonld'
-import { localeAlternates } from '@/lib/seo/metadata'
+import { HOME_TITLE, localeAlternates, pageMetadata } from '@/lib/seo/metadata'
 import { serviceSummaries } from '@/lib/services'
 
 export const metadata: Metadata = {
-	title: 'SABAKO — Rewrite your business.',
-	description: SITE_DESCRIPTION,
+	// absolute: the title already names the brand, so the "| SABAKO" template is skipped
+	...pageMetadata({ title: { absolute: HOME_TITLE }, description: SITE_DESCRIPTION, path: '' }),
 	alternates: localeAlternates('en', '', '/id'),
 }
 

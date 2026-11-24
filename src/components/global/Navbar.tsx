@@ -8,6 +8,7 @@ import { Menu, X, ChevronDown } from 'lucide-react'
 import clsx from 'clsx'
 import { useButtonTracking } from '@/lib/analytics/useButtonTracking'
 import { serviceIcons } from '@/components/services/serviceIcons'
+import { LocaleSwitcher } from '@/components/global/LocaleSwitcher'
 import type { ServiceSummary } from '@/lib/services'
 
 type ServiceItem = {
@@ -211,6 +212,7 @@ export function Navbar({ serviceSummaries }: { serviceSummaries: ServiceSummary[
 
 					{/* Desktop CTA */}
 					<div className="hidden lg:flex items-center gap-4">
+						<LocaleSwitcher section="navbar-language" />
 						<Link
 							href="/contact"
 							id="nav-cta-button"
@@ -319,7 +321,8 @@ export function Navbar({ serviceSummaries }: { serviceSummaries: ServiceSummary[
 							)}
 						</ul>
 					</nav>
-					<div className="px-6 py-6 border-t border-(--border)">
+					<div className="px-6 py-6 border-t border-(--border) space-y-4">
+						<LocaleSwitcher section="mobile-navbar-language" className="justify-center" />
 						<Link
 							href="/contact"
 							onClick={track('Start a Project', 'mobile-navbar-cta')}

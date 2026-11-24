@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { pageMetadata } from '@/lib/seo/metadata'
 import { Mail, Phone, MapPin, Clock, ArrowRight } from 'lucide-react'
 import OfficeMap from '@/components/contact/OfficeMap'
 import { Suspense } from 'react'
@@ -6,16 +7,12 @@ import ContactForm from '@/components/contact/ContactForm'
 import { TrackedLink } from '@/components/analytics/TrackedLink'
 import { serviceSummaries } from '@/lib/services'
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
 	title: 'Contact',
 	description:
 		'Get in touch with SABAKO for business inquiries, project consultations, or partnerships. Reach us via WhatsApp, email, or visit our Jakarta office.',
-	alternates: { canonical: 'https://sabako.id/contact' },
-	openGraph: {
-		title: 'Contact SABAKO',
-		description: 'Start a project or inquiry — reach our team directly.',
-	},
-}
+	path: '/contact',
+})
 
 const contacts = [
 	{ label: 'WhatsApp', value: '+62 857-6061-6555', href: 'https://wa.me/6285760616555', icon: Phone },
@@ -26,7 +23,7 @@ const contacts = [
 
 export default function ContactPage() {
 	return (
-		<main className="min-h-screen">
+		<div className="min-h-screen">
 			<div className="min-h-screen grid grid-cols-1 lg:grid-cols-2">
 
 				{/* RIGHT — Form (DOM first for mobile tab order) */}
@@ -117,6 +114,6 @@ export default function ContactPage() {
 				</section>
 
 			</div>
-		</main>
+		</div>
 	)
 }

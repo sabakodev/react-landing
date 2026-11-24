@@ -9,7 +9,7 @@ import { getWorks } from '@/lib/graphql/adapters/works'
 import type { Work } from '@/lib/graphql/adapters/works'
 import { breadcrumb, faqPage, service as serviceJsonLd } from '@/lib/seo/jsonld'
 import { SITE_URL } from '@/lib/seo/jsonld'
-import { baseOpenGraph, localeAlternates } from '@/lib/seo/metadata'
+import { baseOpenGraph, localeAlternates, twitterCard } from '@/lib/seo/metadata'
 import { serviceIcons } from '@/components/services/serviceIcons'
 import { localePrefix, pageCopy } from '@/lib/pageCopy'
 import type { Locale } from '@/lib/pageCopy'
@@ -31,7 +31,12 @@ export function serviceMetadata(service: Service, locale: Locale): Metadata {
 			url,
 			title: s.metaTitle,
 			description: s.metaDescription,
+			// English service pages have their own app/services/[slug]/opengraph-image
+			...(locale === 'en'
+				? { images: [{ url: `${serviceHref(s, 'en')}/opengraph-image`, width: 1200, height: 630, alt: s.name }] }
+				: {}),
 		},
+		twitter: twitterCard(s.metaTitle, s.metaDescription),
 	}
 }
 

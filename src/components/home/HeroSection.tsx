@@ -10,9 +10,11 @@ import type { ServiceSummary } from '@/lib/services'
 /** `services` comes from the server (serviceSummaries) so the catalog never ships in client JS. */
 export function HeroSection({ services }: { services: ServiceSummary[] }) {
 	const words = useMemo(() => services.map((s) => s.navLabel), [services])
-	const headline = `SABAKO is a Jakarta-based IT agency offering ${new Intl.ListFormat('en', { type: 'conjunction' }).format(
-		services.map((s) => s.name),
-	)}.`
+	// The visible typewriter sentence, with every word spelled out: "We build digital experiences, …, and applied AI for ambitious businesses."
+	// Capitalised words are lowercased; acronyms such as "AI" are kept.
+	const headline = `We build ${new Intl.ListFormat('en', { type: 'conjunction' }).format(
+		words.map((w) => w.replace(/\b[A-Z][a-z]+\b/g, (m) => m.toLowerCase())),
+	)} for ambitious businesses.`
 	const track = useButtonTracking()
 	const [wordIndex, setWordIndex] = useState(0)
 	const [displayed, setDisplayed] = useState('')
