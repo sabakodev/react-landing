@@ -12,6 +12,7 @@ const buildFooterLinks = (services: ServiceSummary[]) => ({
 	Company: [
 		{ label: 'Home', href: '/' },
 		{ label: 'About', href: '/about' },
+		{ label: 'Products', href: '/products' },
 		{ label: 'Work', href: '/work' },
 		{ label: 'Blog', href: '/blog' },
 		{ label: 'Contact', href: '/contact' },
@@ -91,7 +92,7 @@ export function Footer({ serviceSummaries }: { serviceSummaries: ServiceSummary[
 							</span>
 						</Link>
 						<p className="text-sm text-(--text-muted) leading-relaxed max-w-xs">
-							IT Agency & Consulting — building Digital Experiences, Mobile Products, Connected Systems and Applied AI for businesses worldwide.
+							Software engineering partner — building Digital Experiences, Mobile Products, Connected Systems and Applied AI for enterprises across Southeast Asia and beyond.
 						</p>
 						<p className="text-sm font-mono font-semibold text-(--brand)">
 							&ldquo;Beyond the Horizon&rdquo;

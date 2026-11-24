@@ -6,6 +6,8 @@ import { StatsSection } from '@/components/home/StatsSection'
 import { TestimonialsSection } from '@/components/home/TestimonialsSection'
 import { CtaSection } from '@/components/home/CtaSection'
 import { ProductSpotlightBanner } from '@/components/home/ProductSpotlight'
+import { ProductsStrip } from '@/components/home/ProductsStrip'
+import { ClientLogoStrip } from '@/components/work/ClientLogoStrip'
 import { getFeaturedAnnouncement } from '@/lib/api/announcements'
 import { SITE_DESCRIPTION } from '@/lib/seo/jsonld'
 import { HOME_TITLE, localeAlternates, pageMetadata } from '@/lib/seo/metadata'
@@ -24,9 +26,11 @@ export default async function HomePage() {
 	return (
 		<>
 			<HeroSection services={services} />
+			<ClientLogoStrip label="Trusted by teams at" />
 			{announcement && <ProductSpotlightBanner announcement={announcement} />}
 			<StatsSection />
 			<ServicesSection services={services} />
+			<ProductsStrip />
 			<WorkSection />
 			{/* <TestimonialsSection /> */}
 			<CtaSection />

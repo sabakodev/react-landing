@@ -7,5 +7,5 @@ export const contentType = 'image/png'
 
 /** Default share image for every route without its own opengraph-image or explicit og:image. */
 export default function OpengraphImage() {
-	return new ImageResponse(<OgCard eyebrow="IT Agency & Consulting — Jakarta" headline="Rewrite your business." />, size)
+	return new ImageResponse(<OgCard eyebrow="Software engineering partner — Jakarta" headline="Rewrite your business." />, size)
 }

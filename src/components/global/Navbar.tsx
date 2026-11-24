@@ -29,6 +29,7 @@ function buildNavItems(services: ServiceItem[]): NavItem[] {
 		{ label: 'Home', href: '/' },
 		{ label: 'About', href: '/about' },
 		{ label: 'Services', children: services },
+		{ label: 'Products', href: '/products' },
 		{ label: 'Work', href: '/work' },
 		{ label: 'Blog', href: '/blog' },
 		{ label: 'Contact', href: '/contact' },

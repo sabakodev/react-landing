@@ -3,7 +3,7 @@ import { SITE_DESCRIPTION } from '@/lib/seo/jsonld'
 
 export default function manifest(): MetadataRoute.Manifest {
 	return {
-		name: 'SABAKO — IT Agency & Consulting',
+		name: 'SABAKO — Software Engineering Partner',
 		short_name: 'SABAKO',
 		description: SITE_DESCRIPTION,
 		start_url: '/',
