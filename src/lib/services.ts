@@ -21,6 +21,7 @@ export type ServiceFaq = {
 
 /** Localized copy (Phase 3). Every field is optional so English-only entries compile. */
 export type ServiceLocaleCopy = Partial<{
+	engagementNote: string
 	name: string
 	navLabel: string
 	tagline: string
@@ -76,6 +77,8 @@ export type Service = {
 	metaDescription: string
 	/** Show the web pricing tiers (English pages only) */
 	showPricing?: boolean
+	/** Shown in place of related work when no case study can be published (e.g. NDA engagements) */
+	engagementNote?: string
 	/** Bahasa Indonesia copy (Phase 3) */
 	id?: ServiceLocaleCopy
 }
@@ -337,13 +340,13 @@ export const services: Service[] = [
 				'Jasa IoT dari SABAKO di Jakarta: riset, pembuatan prototipe, proof-of-concept firmware, desain protokol, dan konsultasi arsitektur sistem terhubung.',
 		},
 	},
-	// DRAFT — owner review required
+	// Published on owner request (2026-11-24). Client work is under NDA, so engagementNote stands in for case studies.
 	{
 		slug: 'ai',
 		name: 'AI & Machine Learning Engineering',
 		navLabel: 'Applied AI',
 		tagline: 'AI Features, ML Pipelines & LLM Integration',
-		published: false,
+		published: true,
 		icon: 'brain',
 		summary:
 			'SABAKO builds AI and machine-learning features into business software — LLM integrations, retrieval over company documents, and data pipelines for prediction and classification.',
@@ -387,11 +390,13 @@ export const services: Service[] = [
 					'Not always. Many use cases start with an existing language model plus your documents. Custom training is recommended only when evaluation shows it is needed.',
 			},
 		],
+		engagementNote:
+			'We have delivered AI and machine-learning projects for several clients under non-disclosure agreements, so their names and details are not published here. We are glad to walk you through relevant engagements, anonymised, on a call.',
 		wpCategory: 'ai',
 		contactValue: 'ai',
 		contactLabel: 'Applied AI (AI/ML)',
 		ctaLabel: 'Discuss an AI Project',
-		workLinkLabel: 'See Our AI Work',
+		workLinkLabel: 'Our AI Engagements',
 		metaTitle: 'Applied AI — AI & Machine Learning Engineering',
 		metaDescription:
 			'SABAKO builds AI and machine-learning features: LLM integration, retrieval over company documents, classification and prediction pipelines, with evaluation built in.',
