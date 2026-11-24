@@ -34,8 +34,32 @@ export type ServicePartner = {
 	href?: string
 }
 
+/** A titled one-liner: an outcome card or a process step. */
+export type ServicePoint = {
+	title: string
+	description: string
+}
+
+/** One side of the mobile "Native or cross-platform?" chooser. */
+export type PlatformOption = {
+	/** Analytics key, sent as `platform_<key>` */
+	key: 'native' | 'cross_platform'
+	name: string
+	chooseWhen: string[]
+	tradeOff: string
+}
+
+export type PlatformChoice = {
+	heading: string
+	intro: string
+	options: PlatformOption[]
+}
+
 /** Localized copy (Phase 3). Every field is optional so English-only entries compile. */
 export type ServiceLocaleCopy = Partial<{
+	outcomes: ServicePoint[]
+	processSteps: ServicePoint[]
+	platformChoice: PlatformChoice
 	engagementNote: string
 	name: string
 	navLabel: string
@@ -99,6 +123,18 @@ export type Service = {
 	/** Named work shown on the service page, independent of CMS case studies */
 	showcase?: ServiceShowcaseItem[]
 	partners?: ServicePartner[]
+	/** Three buyer-facing outcomes; when set, the page leads with outcomes + process steps and moves capabilities behind a disclosure */
+	outcomes?: ServicePoint[]
+	/** Four numbered steps (the `process` field keeps the "Our Approach" paragraphs) */
+	processSteps?: ServicePoint[]
+	/** Device visual on the right of the hero */
+	heroVisual?: 'phones'
+	/** Client logo strip under the hero */
+	showLogos?: boolean
+	/** Fixed-scope / dedicated team / retainer cards */
+	showEngagementModels?: boolean
+	/** Mobile "Native or cross-platform?" chooser, shown after the process steps */
+	platformChoice?: PlatformChoice
 	/** Bahasa Indonesia copy (Phase 3) */
 	id?: ServiceLocaleCopy
 }
@@ -141,12 +177,47 @@ export const services: Service[] = [
 			'We design the key pages first and agree on them with you, then build on a stack chosen for the job — a static site for a company profile, a full application stack for a platform.',
 			'Before launch we test speed on mobile data, accessibility and search basics. After launch you own the code, the domain and the accounts, with documentation your team or another vendor can pick up.',
 		],
-		faqs: [
+		outcomes: [
 			{
-				question: 'Why not just use Wix or an AI site builder?',
-				answer:
-					'For a simple page, you can — our Starter tier competes on price with them. Choose us when the site has to be fast on mobile, rank on search, connect to your systems, or be maintained by someone accountable for it.',
+				title: 'Launch fast, stay fast',
+				description:
+					'Sites that pass Core Web Vitals, tested for speed on mobile data, accessibility and search basics before launch.',
 			},
+			{
+				title: 'Built to grow with you',
+				description:
+					'From a company site to a multi-tenant SaaS platform, on a stack chosen for the job and built for traffic spikes from campaigns and launches.',
+			},
+			{
+				title: 'Yours to run',
+				description:
+					'Your team edits content without calling us, and you own the code, the domain and the accounts.',
+			},
+		],
+		processSteps: [
+			{
+				title: 'Discover',
+				description:
+					'A short discovery of who visits, what they should do and what the site must connect to, ending in a written scope and a fixed quote.',
+			},
+			{
+				title: 'Design & Build',
+				description:
+					'We agree the key pages with you first, then build on a stack chosen for the job.',
+			},
+			{
+				title: 'Launch',
+				description: 'We test speed on mobile data, accessibility and search basics before going live.',
+			},
+			{
+				title: 'Handover & Support',
+				description:
+					'You own the code, the domain and the accounts, with documentation your team or another vendor can pick up.',
+			},
+		],
+		showLogos: true,
+		showEngagementModels: true,
+		faqs: [
 			{
 				question: 'Who owns the website afterwards?',
 				answer:
@@ -190,6 +261,44 @@ export const services: Service[] = [
 				'Minggu pertama adalah discovery singkat: siapa pengunjungnya, apa yang harus mereka lakukan, dan sistem apa yang perlu terhubung. Dari situ Anda mendapat ruang lingkup tertulis dan penawaran harga tetap.',
 				'Kami mendesain halaman-halaman utama lebih dulu dan menyepakatinya bersama Anda, lalu membangunnya dengan teknologi yang sesuai — situs statis untuk company profile, stack aplikasi lengkap untuk platform.',
 				'Sebelum rilis kami menguji kecepatan di jaringan seluler, aksesibilitas, dan dasar-dasar SEO. Setelah rilis, kode, domain, dan akun menjadi milik Anda, lengkap dengan dokumentasi yang bisa dilanjutkan tim Anda atau vendor lain.',
+			],
+			outcomes: [
+				{
+					title: 'Cepat saat rilis, tetap cepat',
+					description:
+						'Situs yang lolos Core Web Vitals, diuji kecepatannya di jaringan seluler, aksesibilitasnya, dan dasar-dasar SEO-nya sebelum rilis.',
+				},
+				{
+					title: 'Tumbuh bersama bisnis Anda',
+					description:
+						'Dari website perusahaan hingga platform SaaS multi-tenant, dengan teknologi yang sesuai kebutuhan dan siap menghadapi lonjakan trafik saat kampanye dan peluncuran.',
+				},
+				{
+					title: 'Sepenuhnya milik Anda',
+					description:
+						'Tim Anda bisa mengedit konten tanpa perlu menghubungi kami, dan kode, domain, serta akun menjadi milik Anda.',
+				},
+			],
+			processSteps: [
+				{
+					title: 'Discovery',
+					description:
+						'Discovery singkat tentang siapa pengunjungnya, apa yang harus mereka lakukan, dan sistem apa yang perlu terhubung, diakhiri ruang lingkup tertulis dan penawaran harga tetap.',
+				},
+				{
+					title: 'Desain & Pengembangan',
+					description:
+						'Kami menyepakati halaman-halaman utama bersama Anda lebih dulu, lalu membangunnya dengan teknologi yang sesuai.',
+				},
+				{
+					title: 'Rilis',
+					description: 'Kami menguji kecepatan di jaringan seluler, aksesibilitas, dan dasar-dasar SEO sebelum situs tayang.',
+				},
+				{
+					title: 'Serah Terima & Dukungan',
+					description:
+						'Kode, domain, dan akun menjadi milik Anda, lengkap dengan dokumentasi yang bisa dilanjutkan tim Anda atau vendor lain.',
+				},
 			],
 			faqs: [
 				{
@@ -247,7 +356,87 @@ export const services: Service[] = [
 			'Mobile UX is a discipline of its own. Our designers follow platform-specific guidelines (HIG and Material Design) while maintaining your brand identity throughout the product.',
 			'We handle the full release cycle — from App Store Connect setup to review submission and post-launch monitoring.',
 		],
-		faqs: [],
+		outcomes: [
+			{
+				title: 'One team, both stores',
+				description:
+					'iOS and Android, native or cross-platform, from design through App Store and Play Store submission.',
+			},
+			{
+				title: 'Works where your users are',
+				description:
+					'Push notifications, offline mode and interfaces that follow each platform’s own design guidelines.',
+			},
+			{
+				title: 'Supported after launch',
+				description: 'Release management, post-launch monitoring, maintenance and updates.',
+			},
+		],
+		processSteps: [
+			{
+				title: 'Discover',
+				description: 'We weigh native against cross-platform for your project; there is no one-size-fits-all answer.',
+			},
+			{
+				title: 'Design & Build',
+				description:
+					'Designs follow HIG and Material Design in your brand, built natively or with React Native or Flutter.',
+			},
+			{
+				title: 'Launch',
+				description: 'We set up App Store Connect and handle store review submission.',
+			},
+			{
+				title: 'Handover & Support',
+				description: 'Post-launch monitoring, maintenance and updates as the app evolves.',
+			},
+		],
+		platformChoice: {
+			heading: 'Native or cross-platform?',
+			intro: 'We decide this per project. These are the signals we look for.',
+			options: [
+				{
+					key: 'native',
+					name: 'Native',
+					chooseWhen: [
+						'The app leans heavily on device hardware and platform APIs',
+						'Performance or graphics are central to the experience',
+						'Each platform should look and behave the way its users expect',
+					],
+					tradeOff: 'Two codebases, Swift and Kotlin, to build and maintain.',
+				},
+				{
+					key: 'cross_platform',
+					name: 'Cross-platform',
+					chooseWhen: [
+						'One codebase should serve both iOS and Android',
+						'Reaching both stores quickly matters most',
+						'One shared team should own the whole app',
+					],
+					tradeOff: 'Deep device features or heavy graphics may need native modules alongside the shared code.',
+				},
+			],
+		},
+		heroVisual: 'phones',
+		showLogos: true,
+		showEngagementModels: true,
+		faqs: [
+			{
+				question: 'Native or cross-platform?',
+				answer:
+					'It depends on the project, so we evaluate it each time. For maximum device integration and performance we go native; for faster delivery across both platforms we use React Native or Flutter.',
+			},
+			{
+				question: 'Who owns the app and the store accounts?',
+				answer:
+					'You do. The code and the App Store and Play Store accounts are registered to your company, and we hand over access and documentation at launch.',
+			},
+			{
+				question: 'Do you handle App Store and Play Store submission?',
+				answer:
+					'Yes. We handle the full release cycle, from store account setup to review submission and post-launch monitoring.',
+			},
+		],
 		wpCategory: 'mobile',
 		contactValue: 'mobile',
 		contactLabel: 'Mobile Products (App)',
@@ -284,6 +473,84 @@ export const services: Service[] = [
 				'Kami menilai pilihan native atau cross-platform untuk setiap proyek — tidak ada satu jawaban untuk semua. Untuk integrasi perangkat dan performa maksimal, kami memilih native. Untuk rilis lebih cepat di kedua platform, kami memakai React Native atau Flutter.',
 				'UX mobile adalah disiplin tersendiri. Desainer kami mengikuti panduan masing-masing platform (HIG dan Material Design) sambil tetap menjaga identitas brand Anda.',
 				'Kami menangani seluruh siklus rilis — dari penyiapan App Store Connect, pengajuan review, hingga pemantauan setelah aplikasi diluncurkan.',
+			],
+			outcomes: [
+				{
+					title: 'Satu tim, dua store',
+					description:
+						'iOS dan Android, native atau cross-platform, dari desain hingga publikasi ke App Store dan Play Store.',
+				},
+				{
+					title: 'Berfungsi di mana pun pengguna Anda berada',
+					description:
+						'Push notification, mode offline, dan antarmuka yang mengikuti panduan desain masing-masing platform.',
+				},
+				{
+					title: 'Didukung setelah rilis',
+					description: 'Manajemen rilis, pemantauan setelah peluncuran, pemeliharaan, dan pembaruan.',
+				},
+			],
+			processSteps: [
+				{
+					title: 'Discovery',
+					description: 'Kami menimbang native atau cross-platform untuk proyek Anda; tidak ada satu jawaban untuk semua.',
+				},
+				{
+					title: 'Desain & Pengembangan',
+					description:
+						'Desain mengikuti HIG dan Material Design dengan identitas brand Anda, dibangun secara native atau dengan React Native atau Flutter.',
+				},
+				{
+					title: 'Rilis',
+					description: 'Kami menyiapkan App Store Connect dan menangani pengajuan review ke store.',
+				},
+				{
+					title: 'Serah Terima & Dukungan',
+					description: 'Pemantauan setelah peluncuran, pemeliharaan, dan pembaruan seiring aplikasi berkembang.',
+				},
+			],
+			platformChoice: {
+				heading: 'Native atau cross-platform?',
+				intro: 'Kami menentukannya per proyek. Inilah tanda-tanda yang kami perhatikan.',
+				options: [
+					{
+						key: 'native',
+						name: 'Native',
+						chooseWhen: [
+							'Aplikasi sangat bergantung pada hardware perangkat dan API platform',
+							'Performa atau grafis menjadi inti pengalaman pengguna',
+							'Setiap platform harus terlihat dan berperilaku sesuai harapan penggunanya',
+						],
+						tradeOff: 'Dua codebase, Swift dan Kotlin, yang harus dibangun dan dirawat.',
+					},
+					{
+						key: 'cross_platform',
+						name: 'Cross-platform',
+						chooseWhen: [
+							'Satu codebase untuk iOS dan Android sekaligus',
+							'Rilis cepat di kedua store adalah prioritas utama',
+							'Satu tim bersama memegang seluruh aplikasi',
+						],
+						tradeOff: 'Fitur perangkat yang mendalam atau grafis berat mungkin butuh modul native di samping kode bersama.',
+					},
+				],
+			},
+			faqs: [
+				{
+					question: 'Native atau cross-platform?',
+					answer:
+						'Tergantung proyeknya, jadi kami selalu menilainya satu per satu. Untuk integrasi perangkat dan performa maksimal kami memilih native; untuk rilis lebih cepat di kedua platform kami memakai React Native atau Flutter.',
+				},
+				{
+					question: 'Siapa pemilik aplikasi dan akun store-nya?',
+					answer:
+						'Anda. Kode serta akun App Store dan Play Store terdaftar atas nama perusahaan Anda, dan kami menyerahkan akses serta dokumentasi saat rilis.',
+				},
+				{
+					question: 'Apakah Anda menangani publikasi ke App Store dan Play Store?',
+					answer:
+						'Ya. Kami menangani seluruh siklus rilis, dari penyiapan akun store, pengajuan review, hingga pemantauan setelah aplikasi diluncurkan.',
+				},
 			],
 			ctaLabel: 'Mulai Proyek Aplikasi',
 			workLinkLabel: 'Lihat Portofolio Aplikasi',
