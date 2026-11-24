@@ -58,7 +58,7 @@ export default function AboutPage() {
 					<div>
 						<h2 className="text-2xl font-bold text-(--text) mb-6">Who we are</h2>
 						<div className="space-y-4 text-(--text-muted) leading-relaxed">
-							<p className="text-xs font-mono text-(--text-subtle)">Last Updated: 2026-11-13</p>
+							<p className="text-xs font-mono text-(--text-subtle)">Last Updated: 2026-11-24</p>
 							<p>
 								This Privacy Policy explains how PT. SABAKO KREATIV DIGITAL (“we,” “us,” “our”) collects, uses, discloses, and protects personal information when you visit or use sabako.id (the “Site”).
 							</p>
@@ -180,7 +180,7 @@ export default function AboutPage() {
 							<li>Improving user experience</li>
 						</ul>
 						<h3 id="cookies" className="text-xl font-bold text-(--text) mb-2">Analytics &amp; Cookies</h3>
-						<p>We use two analytics systems with different consent requirements:</p>
+						<p>Non-essential cookies are opt-in: nothing beyond the essential category below uses cookies until you choose to allow it in the cookie banner or <strong>Cookie Settings</strong>. We use three services with different consent requirements:</p>
 						<div className="space-y-3 my-2">
 							<div className="border border-(--border) p-4">
 								<p className="text-sm font-bold text-(--text) mb-1">Cloudflare Web Analytics — Essential</p>
@@ -188,7 +188,11 @@ export default function AboutPage() {
 							</div>
 							<div className="border border-(--border) p-4">
 								<p className="text-sm font-bold text-(--text) mb-1">Google Analytics 4 — Analytics (Consent Required)</p>
-								<p className="text-xs text-(--text-muted) leading-relaxed">Tracks page views and events using cookies. Only loaded after consent. Legal basis: consent.</p>
+								<p className="text-xs text-(--text-muted) leading-relaxed">Measures page views and events. We use Google Consent Mode: until you allow analytics, Google Analytics sets no cookies and receives only cookieless pings (no client identifier), which Google uses for aggregate modelling. After consent it uses the cookies listed below. Legal basis: consent.</p>
+							</div>
+							<div className="border border-(--border) p-4">
+								<p className="text-sm font-bold text-(--text) mb-1">Meta Pixel — Marketing (Consent Required)</p>
+								<p className="text-xs text-(--text-muted) leading-relaxed">Measures the performance of our ads on Facebook and Instagram (page views, contact clicks and enquiries). The pixel is not loaded at all unless you allow marketing cookies. Legal basis: consent.</p>
 							</div>
 						</div>
 						<p className="font-bold text-(--text) text-sm mt-4">Cookie Table</p>
@@ -205,11 +209,12 @@ export default function AboutPage() {
 								<tbody>
 									<tr><td className="py-2 px-3 border border-(--border) font-mono text-(--text)">_ga</td><td className="py-2 px-3 border border-(--border) text-(--text-muted)">Google Analytics 4</td><td className="py-2 px-3 border border-(--border) text-(--text-muted)">Distinguishes users</td><td className="py-2 px-3 border border-(--border) text-(--text-muted)">2 years</td></tr>
 									<tr><td className="py-2 px-3 border border-(--border) font-mono text-(--text)">_ga_*</td><td className="py-2 px-3 border border-(--border) text-(--text-muted)">Google Analytics 4</td><td className="py-2 px-3 border border-(--border) text-(--text-muted)">Persists GA4 session state</td><td className="py-2 px-3 border border-(--border) text-(--text-muted)">2 years</td></tr>
-									<tr><td className="py-2 px-3 border border-(--border) font-mono text-(--text)">sabako_consent</td><td className="py-2 px-3 border border-(--border) text-(--text-muted)">SABAKO</td><td className="py-2 px-3 border border-(--border) text-(--text-muted)">Stores analytics consent preference</td><td className="py-2 px-3 border border-(--border) text-(--text-muted)">localStorage</td></tr>
+									<tr><td className="py-2 px-3 border border-(--border) font-mono text-(--text)">_fbp</td><td className="py-2 px-3 border border-(--border) text-(--text-muted)">Meta Pixel</td><td className="py-2 px-3 border border-(--border) text-(--text-muted)">Identifies browsers for ad measurement (marketing consent only)</td><td className="py-2 px-3 border border-(--border) text-(--text-muted)">90 days</td></tr>
+									<tr><td className="py-2 px-3 border border-(--border) font-mono text-(--text)">sabako_consent</td><td className="py-2 px-3 border border-(--border) text-(--text-muted)">SABAKO</td><td className="py-2 px-3 border border-(--border) text-(--text-muted)">Stores your analytics and marketing consent choice</td><td className="py-2 px-3 border border-(--border) text-(--text-muted)">localStorage</td></tr>
 								</tbody>
 							</table>
 						</div>
-						<p className="border-l-2 border-(--brand) pl-4 text-(--text) font-medium">Change your cookie preferences at any time using <strong>Cookie Settings</strong> in the footer.</p>
+						<p className="border-l-2 border-(--brand) pl-4 text-(--text) font-medium">Change your cookie preferences at any time using <strong>Cookie Settings</strong> in the footer. If you withdraw consent, we delete the related cookies from your browser.</p>
 						<h3 className="text-xl font-bold text-(--text) mb-2">How your data would be processed</h3>
 						<p>We may use personal information to:</p>
 						<ul className="list-disc list-outside">
@@ -224,6 +229,7 @@ export default function AboutPage() {
 						<ul className="list-disc list-outside">
 							<li>Cloudflare RUM</li>
 							<li>Google Analytics</li>
+							<li>Meta Pixel (only with marketing consent)</li>
 						</ul>
 						<p>These providers may process data on our behalf or as independent controllers, depending on the service and configuration.</p>
 						<p>We may share personal information with vendors that help us operate the Site (e.g., hosting, email delivery, security). They are permitted to use personal information only to provide services to us.</p>

@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { ArrowRight, Mail } from 'lucide-react'
 import { Reveal } from '@/components/ui/Reveal'
 import { useJargon } from '@/lib/analytics/useJargon'
+import { TrackedLink } from '@/components/analytics/TrackedLink'
 
 const JARGON_SET = [
 	"Let's turn your idea into reality.",
@@ -62,14 +63,16 @@ export function CtaSection() {
 							Start a Project
 							<ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
 						</Link>
-						<Link
+						<TrackedLink
 							href="mailto:sales@sabako.id"
+							label="sales@sabako.id"
+							section="homepage-cta"
 							id="cta-email"
 							className="w-52 inline-flex items-center gap-2 px-8 py-4 border border-(--border) text-(--text) text-sm font-medium hover:bg-(--bg) transition-colors"
 						>
 							<Mail size={16} />
 							sales@sabako.id
-						</Link>
+						</TrackedLink>
 					</div>
 
 					{/* Office hours */}

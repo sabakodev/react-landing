@@ -15,7 +15,6 @@
  */
 
 import { useEffect, useMemo, useState } from 'react'
-import { useConsent } from '@/lib/consent'
 import { trackEvent } from '@/lib/analytics/trackEvent'
 
 type UseJargonOptions = {
@@ -37,7 +36,6 @@ type UseJargonReturn = {
 }
 
 export function useJargon({ set, setId, section }: UseJargonOptions): UseJargonReturn {
-	const { analyticsEnabled } = useConsent()
 	const [clicked, setClicked] = useState(false)
 
 	const [text, setText] = useState<string>('')
@@ -59,7 +57,6 @@ export function useJargon({ set, setId, section }: UseJargonOptions): UseJargonR
 				jargon_set_id: setId,
 				page_section: section,
 			},
-			analyticsEnabled,
 		)
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [text])
@@ -74,7 +71,6 @@ export function useJargon({ set, setId, section }: UseJargonOptions): UseJargonR
 				page_section: section,
 				converted: true,
 			},
-			analyticsEnabled,
 		)
 	}
 

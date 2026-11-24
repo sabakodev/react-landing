@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
+import { TrackedLink } from '@/components/analytics/TrackedLink'
 import { ArrowLeft, Calendar, Clock, ArrowRight } from 'lucide-react'
 import { BlogPost, getPost, getPosts } from '@/lib/graphql/adapters/posts'
 import { JsonLd } from '@/components/seo/JsonLd'
@@ -88,13 +89,15 @@ export default async function BlogPostPage(props: { params: Promise<{ slug: stri
 						<ArrowLeft size={14} className="group-hover:-translate-x-1 transition-transform" />
 						All Articles
 					</Link>
-					<Link
+					<TrackedLink
 						href="/contact"
+						label="Start a Project"
+						section="blog-post-cta"
 						className="inline-flex items-center gap-2 px-6 py-3 bg-(--text) text-(--bg) text-sm font-medium hover:opacity-80 transition-opacity group"
 					>
 						Start a Project
 						<ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
-					</Link>
+					</TrackedLink>
 				</div>
 			</section>
 		</article>

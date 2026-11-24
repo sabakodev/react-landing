@@ -18,6 +18,9 @@ declare namespace NodeJS {
 		/** Google Analytics 4 Measurement ID (G-XXXXXXXXXX). */
 		NEXT_PUBLIC_GA_ID?: string
 
+		/** Meta Pixel ID. The pixel loads only after marketing consent. */
+		NEXT_PUBLIC_META_PIXEL_ID?: string
+
 		NODE_ENV: 'development' | 'production' | 'test'
 
 		/** Firebase Admin credentials */

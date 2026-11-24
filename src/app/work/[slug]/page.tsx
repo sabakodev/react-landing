@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { TrackedLink } from '@/components/analytics/TrackedLink'
 import { ArrowRight, ArrowLeft, Globe, Smartphone, Cpu } from 'lucide-react'
 import { getWork, getWorks } from '@/lib/graphql/adapters/works'
 import { notFound } from 'next/navigation'
@@ -185,13 +186,15 @@ export default async function WorkCaseStudyPage(props: Props) {
 						</p>
 					</div>
 					<div className="flex flex-wrap gap-3">
-						<Link
+						<TrackedLink
 							href="/contact"
+							label="Get in Touch"
+							section="work-detail-cta"
 							className="inline-flex items-center gap-2 px-6 py-3 bg-(--text) text-(--bg) text-sm font-medium hover:opacity-80 transition-opacity group"
 						>
 							Get in Touch
 							<ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
-						</Link>
+						</TrackedLink>
 						<Link
 							href="/work"
 							className="inline-flex items-center gap-2 px-6 py-3 border border-(--border) text-(--text) text-sm font-medium hover:bg-(--bg) transition-colors"

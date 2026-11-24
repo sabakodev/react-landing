@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { TrackedLink } from '@/components/analytics/TrackedLink'
 import { ArrowRight } from 'lucide-react'
 import { getWorks } from '@/lib/graphql/adapters/works'
 import type { Work } from '@/lib/graphql/adapters/works'
@@ -64,13 +65,15 @@ export default async function WorkPage() {
 			<section className="border-t border-(--border) bg-(--bg-subtle) py-16" aria-label="Start a project">
 				<div className="mx-auto max-w-7xl px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-6">
 					<p className="text-2xl font-bold text-(--text)">Have a project in mind?</p>
-					<Link
+					<TrackedLink
 						href="/contact"
+						label="Let's Discuss"
+						section="work-index-cta"
 						className="inline-flex items-center gap-2 px-6 py-3 bg-(--text) text-(--bg) text-sm font-medium hover:opacity-80 transition-opacity group"
 					>
 						Let&apos;s Discuss
 						<ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
-					</Link>
+					</TrackedLink>
 				</div>
 			</section>
 		</article>

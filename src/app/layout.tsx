@@ -5,6 +5,7 @@ import { Navbar } from '@/components/global/Navbar'
 import { Footer } from '@/components/global/Footer'
 import { CloudflareAnalytics } from '@/components/analytics/CloudflareAnalytics'
 import { GoogleAnalytics } from '@/components/analytics/GoogleAnalytics'
+import { MetaPixel } from '@/components/analytics/MetaPixel'
 import { CookieConsentBanner } from '@/components/analytics/CookieConsentBanner'
 import { ProductSpotlightPill } from '@/components/home/ProductSpotlight'
 import { getFeaturedAnnouncement } from '@/lib/api/announcements'
@@ -93,6 +94,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 				<main className="flex-1">{children}</main>
 				<Footer serviceSummaries={services} />
 				<GoogleAnalytics />
+				<MetaPixel />
 				<CookieConsentBanner />
 			</body>
 		</html>
