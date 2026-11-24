@@ -3,7 +3,7 @@ import { pageMetadata } from '@/lib/seo/metadata'
 import { Mail, Phone, MapPin, Clock, ArrowRight } from 'lucide-react'
 import OfficeMap from '@/components/contact/OfficeMap'
 import { Suspense } from 'react'
-import ContactForm from '@/components/contact/ContactForm'
+import ContactForm, { ContactFormHeading } from '@/components/contact/ContactForm'
 import { TrackedLink } from '@/components/analytics/TrackedLink'
 import { serviceSummaries } from '@/lib/services'
 
@@ -32,12 +32,21 @@ export default function ContactPage() {
 					aria-labelledby="inquiry-form-heading"
 				>
 					<div className="w-full max-w-md">
-						<p className="text-xs font-mono uppercase tracking-widest text-(--brand) mb-2">
-							Start a Project
-						</p>
-						<h1 id="inquiry-form-heading" className="text-3xl font-bold text-(--text) mb-8 leading-snug">
-							Let&apos;s build something.
-						</h1>
+						{/* Heading reads ?intent=meeting; the fallback is the default copy so the static HTML keeps an h1 */}
+						<Suspense
+							fallback={
+								<>
+									<p className="text-xs font-mono uppercase tracking-widest text-(--brand) mb-2">
+										Start a Project
+									</p>
+									<h1 id="inquiry-form-heading" className="text-3xl font-bold text-(--text) mb-8 leading-snug">
+										Let&apos;s build something.
+									</h1>
+								</>
+							}
+						>
+							<ContactFormHeading />
+						</Suspense>
 						{/* useSearchParams needs a Suspense boundary, or the whole page renders client-side only */}
 						<Suspense fallback={null}>
 							<ContactForm services={serviceSummaries()} />

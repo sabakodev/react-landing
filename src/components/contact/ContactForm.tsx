@@ -15,6 +15,28 @@ const JARGON_SET = [
 
 type FormState = 'idle' | 'loading' | 'success' | 'error'
 
+/** Today's date in the visitor's time zone, as YYYY-MM-DD for `<input type="date" min>`. */
+function todayLocal(): string {
+	const now = new Date()
+	const pad = (n: number) => String(n).padStart(2, '0')
+	return `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`
+}
+
+/** Eyebrow + heading for the contact page; switches to meeting copy for `?intent=meeting`. */
+export function ContactFormHeading() {
+	const isMeeting = useSearchParams().get('intent') === 'meeting'
+	return (
+		<>
+			<p className="text-xs font-mono uppercase tracking-widest text-(--brand) mb-2">
+				{isMeeting ? 'Talk to Us' : 'Start a Project'}
+			</p>
+			<h1 id="inquiry-form-heading" className="text-3xl font-bold text-(--text) mb-8 leading-snug">
+				{isMeeting ? 'Request a meeting.' : "Let's build something."}
+			</h1>
+		</>
+	)
+}
+
 /** `services` comes from the server (serviceSummaries) so the catalog never ships in client JS. */
 export default function ContactForm({ services }: { services: ServiceSummary[] }) {
 	const [formState, setFormState] = useState<FormState>('idle')
@@ -26,6 +48,7 @@ export default function ContactForm({ services }: { services: ServiceSummary[] }
 	const preferredPackage = searchParams.get('tier') || ''
 	const preferredModel = searchParams.get('model') || ''
 	const preferredProduct = searchParams.get('product') || ''
+	const isMeeting = searchParams.get('intent') === 'meeting'
 
 	const { onCtaClick } = useJargon({
 		set: JARGON_SET,
@@ -46,6 +69,7 @@ export default function ContactForm({ services }: { services: ServiceSummary[] }
 			companySize: data.get('companySize') as string,
 			preference: data.get('preference') as string,
 			message: data.get('message') as string,
+			meetingDate: (data.get('meetingDate') as string) || undefined,
 			tier: preferredPackage,
 			model: preferredModel,
 			product: preferredProduct,
@@ -73,6 +97,7 @@ export default function ContactForm({ services }: { services: ServiceSummary[] }
 				tier: preferredPackage || 'unspecified',
 				model: preferredModel || 'unspecified',
 				product: preferredProduct || 'unspecified',
+				...(isMeeting && { intent: 'meeting' }),
 			})
 			setFormState('success')
 			formRef.current?.reset()
@@ -105,6 +130,26 @@ export default function ContactForm({ services }: { services: ServiceSummary[] }
 	}
 
 	const isLoading = formState === 'loading'
+
+	const meetingDateField = (
+		<div>
+			<label
+				htmlFor="contact-meeting-date"
+				className="block text-[10px] font-mono uppercase tracking-widest text-(--text-subtle) mb-1.5"
+			>
+				Preferred Meeting Date{!isMeeting && ' (optional)'}
+			</label>
+			<input
+				id="contact-meeting-date"
+				name="meetingDate"
+				type="date"
+				min={todayLocal()}
+				disabled={isLoading}
+				suppressHydrationWarning
+				className="w-full border border-(--border) bg-(--bg) text-(--text) px-3 py-2.5 text-sm focus:outline-hidden focus:border-(--brand) transition-colors disabled:opacity-50"
+			/>
+		</div>
+	)
 
 	return (
 		<form
@@ -195,9 +240,13 @@ export default function ContactForm({ services }: { services: ServiceSummary[] }
 				</select>
 			</div>
 
+			{!isMeeting && meetingDateField}
+
 			<div>
 				<input type="hidden" name="package" value={preferredPackage ?? ''} />
 			</div>
+
+			{isMeeting && meetingDateField}
 
 			<div>
 				<label
