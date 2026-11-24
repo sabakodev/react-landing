@@ -3,6 +3,7 @@ import { Mail, Phone, MapPin, Clock, ArrowRight } from 'lucide-react'
 import OfficeMap from '@/components/contact/OfficeMap'
 import { Suspense } from 'react'
 import ContactForm from '@/components/contact/ContactForm'
+import { serviceSummaries } from '@/lib/services'
 
 export const metadata: Metadata = {
 	title: 'Contact',
@@ -39,7 +40,10 @@ export default function ContactPage() {
 						<h1 id="inquiry-form-heading" className="text-3xl font-bold text-(--text) mb-8 leading-snug">
 							Let&apos;s build something.
 						</h1>
-						<ContactForm />
+						{/* useSearchParams needs a Suspense boundary, or the whole page renders client-side only */}
+						<Suspense fallback={null}>
+							<ContactForm services={serviceSummaries()} />
+						</Suspense>
 					</div>
 				</section>
 

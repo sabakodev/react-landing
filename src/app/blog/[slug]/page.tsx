@@ -3,6 +3,8 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowLeft, Calendar, Clock, ArrowRight } from 'lucide-react'
 import { BlogPost, getPost, getPosts } from '@/lib/graphql/adapters/posts'
+import { JsonLd } from '@/components/seo/JsonLd'
+import { blogPosting } from '@/lib/seo/jsonld'
 
 // Allow images from WP CMS domain
 export const revalidate = 600
@@ -27,6 +29,7 @@ export async function generateMetadata(props: { params: Promise<{ slug: string }
 			description: post.excerpt,
 			type: 'article',
 			publishedTime: post.date,
+			...(post.modified ? { modifiedTime: post.modified } : {}),
 			...(post.coverImage ? { images: [{ url: post.coverImage, alt: post.coverImageAlt }] } : {}),
 		},
 		category: post.category,
@@ -51,6 +54,7 @@ export default async function BlogPostPage(props: { params: Promise<{ slug: stri
 
 	return (
 		<article>
+			{post && <JsonLd data={blogPosting(post)} />}
 			{/* Header */}
 			<header className="border-b border-(--border) pt-32 pb-16">
 				<div className="mx-auto max-w-3xl px-6 lg:px-8">

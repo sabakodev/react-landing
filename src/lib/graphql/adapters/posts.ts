@@ -28,6 +28,8 @@ export type BlogPost = {
 	content: string
 	/** ISO date string, YYYY-MM-DD */
 	date: string
+	/** ISO date-time of the last WordPress edit */
+	modified?: string
 	/** First category name */
 	category: string
 	/** Estimated read time (computed locally) */
@@ -61,6 +63,7 @@ function normalizeWpPost(post: WPPost | WPPostCard): BlogPost {
 		slug: post.slug,
 		title: post.title,
 		date: post.date?.split('T')[0] ?? '',
+		modified: post.modified || undefined,
 		category: post.categories?.nodes?.[0]?.name ?? 'General',
 		readTime: rawContent ? estimateReadTime(rawContent) : '5 min read',
 		author: full.author?.node?.name ?? 'SABAKO Team',
@@ -77,10 +80,23 @@ function normalizeWpPost(post: WPPost | WPPostCard): BlogPost {
 // Public API
 // ---------------------------------------------------------------------------
 
+const PAGE_SIZE = 100
+/** Safety cap: at most PAGE_SIZE * MAX_PAGES posts are fetched */
+const MAX_PAGES = 20
+
 export async function getPosts(): Promise<BlogPost[]> {
 	try {
-		const data = await wpClient.request<PostsQueryResponse>(GET_POSTS, { first: 100 })
-		return data.posts.nodes.map(normalizeWpPost)
+		const posts: BlogPost[] = []
+		let after: string | null = null
+		for (let page = 0; page < MAX_PAGES; page++) {
+			const data: PostsQueryResponse = await wpClient.request<PostsQueryResponse>(GET_POSTS, { first: PAGE_SIZE, after })
+			posts.push(...data.posts.nodes.map(normalizeWpPost))
+			const { hasNextPage, endCursor } = data.posts.pageInfo
+			// Stop on a missing or repeated cursor so a misbehaving API cannot loop
+			if (!hasNextPage || !endCursor || endCursor === after) break
+			after = endCursor
+		}
+		return posts
 	} catch {
 		return []
 	}

@@ -1,8 +1,10 @@
 /**
  * WordPress GraphQL API adapter — Works / Portfolio.
  *
- * Wraps mock data and live WPGraphQL.
- * Set NEXT_PUBLIC_WP_GRAPHQL_URL in .env.local to switch to live.
+ * Live data comes from WPGraphQL (NEXT_PUBLIC_WP_GRAPHQL_URL).
+ * Mock data is used only outside production (local dev without a CMS).
+ * In production, CMS/transport errors are re-thrown so ISR keeps serving the
+ * last good page instead of caching an empty list or a 404.
  */
 
 import { wpClient, hasWpEndpoint } from '@/lib/graphql/client'
@@ -18,10 +20,20 @@ import type {
 // Normalized shape — matches the existing Work type from @/lib/api/works
 // ---------------------------------------------------------------------------
 
+export type EngagementKind = 'client' | 'client-confidential' | 'research' | 'advisory'
+
+const ENGAGEMENT_KINDS: EngagementKind[] = ['client', 'client-confidential', 'research', 'advisory']
+
+const ENGAGEMENT_LABELS: Partial<Record<EngagementKind, string>> = {
+	research: 'Research & prototype',
+	advisory: 'Advisory engagement',
+}
+
 export type Work = {
 	id: string
 	slug: string
 	title: string
+	/** Client name — or, for confidential work, the anonymized descriptor (never the real name) */
 	client: string
 	year: string
 	type: 'web' | 'mobile' | 'iot'
@@ -33,13 +45,22 @@ export type Work = {
 	tags: string[]
 	featured: boolean
 	coverImage?: string
+	/** Rendered HTML body from WordPress (detail query only) */
+	content?: string
+	/** WordPress categories — used to link works to catalog services */
+	categories: { name: string; slug: string }[]
+	/** ISO date of the last WordPress edit */
+	modified?: string
+	engagementKind: EngagementKind
+	/** Visible label for research / advisory works */
+	engagementLabel?: string
 }
 
 // ---------------------------------------------------------------------------
 // Mock data
 // ---------------------------------------------------------------------------
 
-const mockWorks: Work[] = [
+const mockWorks: Work[] = ([
 	{
 		id: 'enterprise-erp',
 		slug: 'enterprise-erp',
@@ -121,19 +142,36 @@ const mockWorks: Work[] = [
 		tags: ['Arduino', 'MQTT', 'InfluxDB', 'React'],
 		featured: false,
 	},
-]
+] satisfies Omit<Work, 'categories' | 'engagementKind'>[]).map((w) => ({ ...w, categories: [], engagementKind: 'client' }))
 
 // ---------------------------------------------------------------------------
 // Adapter helpers
 // ---------------------------------------------------------------------------
 
+/** Mock works are a local-dev convenience only; never served in production. */
+const allowMock = process.env.NODE_ENV !== 'production'
+
+const PAGE_SIZE = 100
+/** Safety cap: at most PAGE_SIZE * MAX_PAGES works are fetched */
+const MAX_PAGES = 20
+
+function toEngagementKind(raw: string | string[] | undefined): EngagementKind {
+	const value = Array.isArray(raw) ? raw[0] : raw
+	return ENGAGEMENT_KINDS.includes(value as EngagementKind) ? (value as EngagementKind) : 'client'
+}
+
 function normalizeWpWork(w: WPWork | WPWorkCard): Work {
 	const f = w.workFields
+	const engagementKind = toEngagementKind(f?.engagementKind)
+	const client =
+		engagementKind === 'client-confidential'
+			? f?.clientDescriptor || 'Confidential client'
+			: f?.client ?? ''
 	return {
 		id: String(w.databaseId),
 		slug: w.slug,
 		title: w.title,
-		client: f?.client ?? '',
+		client,
 		year: f?.year ?? w.date?.split('-')[0] ?? '',
 		type: (f?.type as Work['type']) ?? 'web',
 		category: f?.category ?? '',
@@ -144,25 +182,48 @@ function normalizeWpWork(w: WPWork | WPWorkCard): Work {
 		tags: f?.tags ?? [],
 		featured: f?.featured ?? false,
 		coverImage: w.featuredImage?.node?.sourceUrl,
+		content: (w as WPWork).content || undefined,
+		categories: w.categories?.nodes?.map((c) => ({ name: c.name, slug: c.slug })) ?? [],
+		modified: w.modified,
+		engagementKind,
+		engagementLabel: ENGAGEMENT_LABELS[engagementKind],
 	}
+}
+
+async function fetchAllWorks(): Promise<Work[]> {
+	const works: Work[] = []
+	let after: string | null = null
+	for (let page = 0; page < MAX_PAGES; page++) {
+		const data: WorksQueryResponse = await wpClient.request<WorksQueryResponse>(GET_WORKS, { first: PAGE_SIZE, after })
+		works.push(...data.works.nodes.map(normalizeWpWork))
+		const { hasNextPage, endCursor } = data.works.pageInfo
+		// Stop on a missing or repeated cursor so a misbehaving API cannot loop
+		if (!hasNextPage || !endCursor || endCursor === after) break
+		after = endCursor
+	}
+	return works
 }
 
 // ---------------------------------------------------------------------------
 // Public API — mirrors existing @/lib/api/works interface
 // ---------------------------------------------------------------------------
 
+/**
+ * Production: returns [] when no endpoint is configured and throws on CMS or
+ * transport errors. Development: falls back to mock data in both cases.
+ */
 export async function getWorks(opts?: { featured?: boolean; limit?: number }): Promise<Work[]> {
 	let works: Work[]
-	if (hasWpEndpoint()) {
+	if (!hasWpEndpoint()) {
+		works = allowMock ? mockWorks : []
+	} else {
 		try {
-			const data = await wpClient.request<WorksQueryResponse>(GET_WORKS, { first: 10 })
-			works = data.works.nodes.map(normalizeWpWork)
-		} catch {
-			// Live query failed (CPT/ACF not yet configured) — use mock fallback
+			works = await fetchAllWorks()
+		} catch (error) {
+			if (!allowMock) throw error
+			// Dev only: live query failed (CPT/ACF not yet configured) — use mock fallback
 			works = mockWorks
 		}
-	} else {
-		works = mockWorks
 	}
 
 	let result = works
@@ -171,13 +232,18 @@ export async function getWorks(opts?: { featured?: boolean; limit?: number }): P
 	return result
 }
 
+/**
+ * Returns null only when the CMS has no work with this slug.
+ * In production, CMS and transport errors are re-thrown (never a 404).
+ */
 export async function getWork(slug: string): Promise<Work | null> {
-	if (!hasWpEndpoint()) return mockWorks.find((w) => w.slug === slug) ?? null
+	if (!hasWpEndpoint()) return allowMock ? mockWorks.find((w) => w.slug === slug) ?? null : null
 	try {
 		const data = await wpClient.request<WorkBySlugQueryResponse>(GET_WORK_BY_SLUG, { slug })
 		if (!data.workBy) return null
 		return normalizeWpWork(data.workBy)
-	} catch {
+	} catch (error) {
+		if (!allowMock) throw error
 		return mockWorks.find((w) => w.slug === slug) ?? null
 	}
 }

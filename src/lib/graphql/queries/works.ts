@@ -24,6 +24,7 @@ export const GET_WORKS = gql`
         title
         slug
         date
+        modified
         featuredImage {
           node {
             sourceUrl
@@ -31,6 +32,9 @@ export const GET_WORKS = gql`
             mediaDetails { width height }
           }
         }
+        # engagementKind and clientDescriptor (see WPWork type) must be added to the workFields
+        # block of both GET_WORKS and GET_WORK_BY_SLUG in the same deploy that creates those
+        # ACF fields; requesting them earlier makes WPGraphQL reject the whole query.
         workFields {
           client
           year
@@ -60,6 +64,7 @@ export const GET_WORK_BY_SLUG = gql`
       title
       slug
       date
+      modified
 	  content(format: RENDERED)
       featuredImage {
         node {

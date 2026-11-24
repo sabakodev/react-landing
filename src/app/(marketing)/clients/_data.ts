@@ -13,47 +13,47 @@ import ImageBJB from '@/components/assets/clients/bjb.png'
 
 export const clients = [
 	{
-		label: 'otabyte.png',
+		label: 'Otabyte',
 		image: ImageOTABYTE,
 	},
 	{
-		label: 'unilever.png',
+		label: 'Unilever',
 		image: ImageUNILEVER,
 	},
 	{
-		label: 'sorogan.png',
+		label: 'Sorogan',
 		image: ImageSOROGAN,
 	},
 	{
-		label: 'datacore.png',
+		label: 'Datacore',
 		image: ImageDATACORE,
 	},
 	{
-		label: 'digitalbank.png',
+		label: 'Digital Bank',
 		image: ImageDIGITALBANK,
 	},
 	{
-		label: 'lotte.png',
+		label: 'Lotte',
 		image: ImageLOTTE,
 	},
 	{
-		label: 'jakartajive.png',
+		label: 'Jakarta Jive',
 		image: ImageJAKARTAJIVE,
 	},
 	{
-		label: 'kpk.png',
+		label: 'KPK',
 		image: ImageKPK,
 	},
 	{
-		label: 'parentsguide.png',
+		label: 'Parents Guide',
 		image: ImagePARENTSGUIDE,
 	},
 	{
-		label: 'novonordisk.png',
+		label: 'Novo Nordisk',
 		image: ImageNOVONORDISK,
 	},
 	{
-		label: 'bjb.png',
+		label: 'Bank BJB',
 		image: ImageBJB,
 	},
 ]

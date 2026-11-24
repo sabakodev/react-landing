@@ -1,14 +1,18 @@
 'use client'
 
 import Link from 'next/link'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { ArrowRight, MouseIcon, Sparkles } from 'lucide-react'
 import { HeroSphere } from './HeroSphere'
 import { useButtonTracking } from '@/lib/analytics/useButtonTracking'
+import type { ServiceSummary } from '@/lib/services'
 
-const words = ['Digital Experiences', 'Mobile Products', 'Connected System']
-
-export function HeroSection() {
+/** `services` comes from the server (serviceSummaries) so the catalog never ships in client JS. */
+export function HeroSection({ services }: { services: ServiceSummary[] }) {
+	const words = useMemo(() => services.map((s) => s.navLabel), [services])
+	const headline = `SABAKO is a Jakarta-based IT agency offering ${new Intl.ListFormat('en', { type: 'conjunction' }).format(
+		services.map((s) => s.name),
+	)}.`
 	const track = useButtonTracking()
 	const [wordIndex, setWordIndex] = useState(0)
 	const [displayed, setDisplayed] = useState('')
@@ -38,7 +42,7 @@ export function HeroSection() {
 		return () => {
 			if (timeoutRef.current) clearTimeout(timeoutRef.current)
 		}
-	}, [displayed, isDeleting, wordIndex])
+	}, [displayed, isDeleting, wordIndex, words])
 
 	return (
 		<section
@@ -82,17 +86,21 @@ export function HeroSection() {
 					className="text-[clamp(2.25rem,7vw,4.5rem)] font-bold leading-[1.05] tracking-tight text-(--text) max-w-4xl animate-fade-up"
 					style={{ animationDelay: '0.2s', opacity: 0 }}
 				>
-					We build{' '}<br />
-					<span className="relative">
-						<span className="text-(--brand)">
-							{displayed}
-							<span className="animate-blink text-(--brand)">|</span>
+					<span className="sr-only">{headline}</span>
+					{/* Decorative typewriter — the accessible, crawlable headline is the sr-only text above */}
+					<span aria-hidden="true">
+						We build{' '}<br />
+						<span className="relative">
+							<span className="text-(--brand)">
+								{displayed}
+								<span className="animate-blink text-(--brand)">|</span>
+							</span>
 						</span>
+						<br />
+						for ambitious
+						<br />
+						businesses.
 					</span>
-					<br />
-					for ambitious
-					<br />
-					businesses.
 				</h1>
 
 				{/* Description */}

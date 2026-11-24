@@ -1,6 +1,12 @@
+import type { Metadata } from 'next'
 import Image from 'next/image'
 import { clients } from './_data'
 import Link from 'next/link'
+
+export const metadata: Metadata = {
+	title: 'Clients',
+	alternates: { canonical: 'https://sabako.id/clients' },
+}
 
 export default function Home() {
 	return (

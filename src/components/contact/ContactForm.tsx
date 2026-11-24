@@ -6,6 +6,7 @@ import { useJargon } from '@/lib/analytics/useJargon'
 import { trackEvent } from '@/lib/analytics/trackEvent'
 import { useConsent } from '@/lib/consent'
 import { useSearchParams } from 'next/navigation'
+import type { ServiceSummary } from '@/lib/services'
 
 const JARGON_SET = [
 	"Let's talk about your next project.",
@@ -15,7 +16,8 @@ const JARGON_SET = [
 
 type FormState = 'idle' | 'loading' | 'success' | 'error'
 
-export default function ContactForm() {
+/** `services` comes from the server (serviceSummaries) so the catalog never ships in client JS. */
+export default function ContactForm({ services }: { services: ServiceSummary[] }) {
 	const [formState, setFormState] = useState<FormState>('idle')
 	const [errorMsg, setErrorMsg] = useState('')
 	const formRef = useRef<HTMLFormElement>(null)
@@ -164,10 +166,9 @@ export default function ContactForm() {
 					className="w-full border border-(--border) bg-(--bg) text-(--text) px-3 py-2.5 text-sm focus:outline-hidden focus:border-(--brand) transition-colors appearance-none cursor-pointer disabled:opacity-50"
 				>
 					<option value="">Select a service…</option>
-					<option value="web">Digital Experiences (Web)</option>
-					<option value="mobile">Mobile Products (App)</option>
-					<option value="iot">Connected Systems (IoT)</option>
-					<option value="consulting">Consulting</option>
+					{services.map((service) => (
+						<option key={service.slug} value={service.contactValue}>{service.contactLabel}</option>
+					))}
 					<option value="other">Other</option>
 				</select>
 			</div>

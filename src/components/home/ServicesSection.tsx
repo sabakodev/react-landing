@@ -1,58 +1,17 @@
 'use client'
 
 import Link from 'next/link'
-import { Globe, Smartphone, Cpu, ArrowRight } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 import { Reveal } from '@/components/ui/Reveal'
+import { serviceIcons } from '@/components/services/serviceIcons'
+import { pageCopy } from '@/lib/pageCopy'
+import type { Locale } from '@/lib/pageCopy'
+import type { ServiceSummary } from '@/lib/services'
 
-const services = [
-	{
-		id: 'web',
-		icon: Globe,
-		label: 'Digital Experiences',
-		tagline: 'Websites, Web Apps & SaaS Platforms',
-		href: '/services/web',
-		description:
-			'We design and build high-performance digital products — from corporate websites to complex SaaS platforms and e-commerce solutions that convert.',
-		capabilities: [
-			'Corporate Websites',
-			'Web Applications',
-			'E-commerce & Marketplaces',
-			'SaaS Platforms',
-		],
-	},
-	{
-		id: 'mobile',
-		icon: Smartphone,
-		label: 'Mobile Products',
-		tagline: 'iOS, Android & Cross-platform Apps',
-		href: '/services/mobile',
-		description:
-			'We craft intuitive, performant mobile experiences for iOS and Android. Whether native or cross-platform, we build apps that users love.',
-		capabilities: [
-			'iOS Applications',
-			'Android Applications',
-			'React Native & Flutter',
-			'App Store Optimization',
-		],
-	},
-	{
-		id: 'iot',
-		icon: Cpu,
-		label: 'Connected Systems',
-		tagline: 'Smart Devices & Embedded Platforms',
-		href: '/services/iot',
-		description:
-			'We engineer smart connected solutions — from embedded firmware to IoT dashboards and cloud connectivity for devices that power industry.',
-		capabilities: [
-			'Embedded Systems',
-			'IoT Device Integration',
-			'Real-time Dashboards',
-			'Industrial Automation',
-		],
-	},
-]
+/** `services` comes from the server (serviceSummaries) so the catalog never ships in client JS. */
+export function ServicesSection({ services, locale = 'en' }: { services: ServiceSummary[]; locale?: Locale }) {
+	const copy = pageCopy[locale]
 
-export function ServicesSection() {
 	return (
 		<section
 			className="py-28"
@@ -63,13 +22,13 @@ export function ServicesSection() {
 				<Reveal>
 					<div className="mb-16">
 						<p className="text-xs font-mono uppercase tracking-widest text-(--brand) mb-3">
-							What We Do
+							{copy.servicesSectionEyebrow}
 						</p>
 						<h2
 							id="services-heading"
 							className="text-4xl font-bold text-(--text) max-w-lg leading-tight"
 						>
-							Services built for impact.
+							{copy.servicesSectionHeading}
 						</h2>
 					</div>
 				</Reveal>
@@ -77,12 +36,12 @@ export function ServicesSection() {
 				{/* Services grid */}
 				<div className="grid grid-cols-1 lg:grid-cols-3 gap-px bg-(--border)">
 					{services.map((service) => {
-						const Icon = service.icon
+						const Icon = serviceIcons[service.icon]
 						return (
 							<Link
-								key={service.id}
+								key={service.slug}
 								href={service.href}
-								aria-label={`Learn more about ${service.label}`}
+								aria-label={`${copy.learnMoreAbout} ${service.navLabel}`}
 								className="transition-all group bg-(--bg) p-8 hover:bg-(--bg-subtle) transition-colors"
 							>
 								<article
@@ -98,7 +57,7 @@ export function ServicesSection() {
 									</div>
 
 									<h3 className="text-2xl font-bold text-(--text) mb-4 group-hover:text-(--brand) transition-colors">
-										{service.label}
+										{service.navLabel}
 									</h3>
 
 									<p className="text-sm text-(--text-muted) leading-relaxed mb-8 flex-1">
@@ -106,7 +65,7 @@ export function ServicesSection() {
 									</p>
 
 									<ul className="space-y-2 mb-8" role="list">
-										{service.capabilities.map((cap) => (
+										{service.highlights.map((cap) => (
 											<li
 												key={cap}
 												className="flex items-center gap-2 text-xs text-(--text-muted)"
@@ -118,7 +77,7 @@ export function ServicesSection() {
 									</ul>
 
 									<span className="inline-flex items-center gap-1.5 text-xs font-mono text-(--brand) group-hover:gap-3">
-										Learn More
+										{copy.learnMore}
 										<ArrowRight size={12} className="group-hover:translate-x-1 transition-transform" />
 									</span>
 								</article>
