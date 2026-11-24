@@ -20,6 +20,7 @@ export const GET_POSTS = gql`
         title
         slug
         date
+        modified
         excerpt(format: RENDERED)
         featuredImage {
           node {

@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { ArrowRight, Globe, Smartphone, Cpu } from 'lucide-react'
-import { getWorks } from '@/lib/api/works'
+import { getWorks } from '@/lib/graphql/adapters/works'
+import type { Work } from '@/lib/graphql/adapters/works'
 import { Reveal } from '../ui/Reveal'
 
 const typeIcon: Record<string, React.ElementType> = {
@@ -21,7 +22,13 @@ const typeColorHover: Record<string, string> = {
 }
 
 export async function WorkSection() {
-	const projects = await getWorks({ featured: true, limit: 3 })
+	let projects: Work[] = []
+	try {
+		projects = await getWorks({ featured: true, limit: 3 })
+	} catch (error) {
+		console.error('Failed to fetch featured works:', error)
+	}
+	if (projects.length === 0) return null
 
 	return (
 		<section
@@ -66,7 +73,9 @@ export async function WorkSection() {
 										<h3 className="text-lg font-bold text-(--text) group-hover:text-(--brand) transition-colors leading-snug my-3">
 											{project.title}
 										</h3>
-										<p className="text-xs text-(--text-subtle) mb-4">{project.client}</p>
+										<p className="text-xs text-(--text-subtle) mb-4">
+											{[project.client, project.engagementLabel].filter(Boolean).join(' · ')}
+										</p>
 										<p className="text-sm text-(--text-muted) leading-relaxed">
 											{project.description}
 										</p>

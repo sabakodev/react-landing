@@ -54,7 +54,9 @@ function WorkCard({ project, onTrack }: { project: Work; onTrack: () => void }) 
 			<h2 className="text-lg font-bold text-[var(--text)] group-hover:text-[var(--brand)] transition-colors mb-2">
 				{project.title}
 			</h2>
-			<p className="text-xs text-[var(--text-subtle)] mb-4">{project.client}</p>
+			<p className="text-xs text-[var(--text-subtle)] mb-4">
+				{[project.client, project.engagementLabel].filter(Boolean).join(' · ')}
+			</p>
 			<p className="text-sm text-[var(--text-muted)] leading-relaxed flex-1 mb-6">
 				{project.description}
 			</p>

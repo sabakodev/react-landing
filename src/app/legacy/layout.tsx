@@ -9,6 +9,7 @@ import type { Metadata } from 'next'
 export const metadata: Metadata = {
 	title: 'SABAKO (Legacy)',
 	description: 'Creative Digital Agency — legacy pages.',
+	robots: { index: false },
 }
 
 export default function LegacyLayout({ children }: { children: React.ReactNode }) {

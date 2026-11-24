@@ -4,8 +4,9 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { Mail, MapPin, Phone } from 'lucide-react'
 import { useButtonTracking } from '@/lib/analytics/useButtonTracking'
+import type { ServiceSummary } from '@/lib/services'
 
-const footerLinks = {
+const buildFooterLinks = (services: ServiceSummary[]) => ({
 	Company: [
 		{ label: 'Home', href: '/' },
 		{ label: 'About', href: '/about' },
@@ -13,20 +14,18 @@ const footerLinks = {
 		{ label: 'Blog', href: '/blog' },
 		{ label: 'Contact', href: '/contact' },
 	],
-	Services: [
-		{ label: 'Digital Experiences', href: '/services/web' },
-		{ label: 'Mobile Products', href: '/services/mobile' },
-		{ label: 'Connected Systems', href: '/services/iot' },
-	],
+	Services: services.map((service) => ({ label: service.navLabel, href: service.href })),
 	Legal: [
 		{ label: 'Bot Policy', href: '/bot' },
 		{ label: 'Privacy Policy', href: '/privacy' },
 		{ label: 'Terms of Use', href: '/terms' },
 	],
-}
+})
 
-export function Footer() {
+/** `serviceSummaries` comes from the server so the catalog never ships in client JS. */
+export function Footer({ serviceSummaries }: { serviceSummaries: ServiceSummary[] }) {
 	const track = useButtonTracking()
+	const footerLinks = buildFooterLinks(serviceSummaries)
 
 	return (
 		<footer className="border-t border-(--border) bg-(--bg-subtle)" aria-label="Site footer">

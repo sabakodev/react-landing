@@ -4,9 +4,11 @@ import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
-import { Menu, X, ChevronDown, Globe, Smartphone, Cpu } from 'lucide-react'
+import { Menu, X, ChevronDown } from 'lucide-react'
 import clsx from 'clsx'
 import { useButtonTracking } from '@/lib/analytics/useButtonTracking'
+import { serviceIcons } from '@/components/services/serviceIcons'
+import type { ServiceSummary } from '@/lib/services'
 
 type ServiceItem = {
 	label: string
@@ -21,37 +23,29 @@ type NavItem = {
 	children?: ServiceItem[]
 }
 
-const services: ServiceItem[] = [
-	{
-		label: 'Digital Experiences',
-		href: '/services/web',
-		description: 'Websites, Web Apps & SaaS Platforms',
-		icon: <Globe size={16} />,
-	},
-	{
-		label: 'Mobile Products',
-		href: '/services/mobile',
-		description: 'iOS, Android & Cross-platform Apps',
-		icon: <Smartphone size={16} />,
-	},
-	{
-		label: 'Connected Systems',
-		href: '/services/iot',
-		description: 'Smart Devices & Embedded Systems',
-		icon: <Cpu size={16} />,
-	},
-]
+function buildNavItems(services: ServiceItem[]): NavItem[] {
+	return [
+		{ label: 'Home', href: '/' },
+		{ label: 'About', href: '/about' },
+		{ label: 'Services', children: services },
+		{ label: 'Work', href: '/work' },
+		{ label: 'Blog', href: '/blog' },
+		{ label: 'Contact', href: '/contact' },
+	]
+}
 
-const navItems: NavItem[] = [
-	{ label: 'Home', href: '/' },
-	{ label: 'About', href: '/about' },
-	{ label: 'Services', children: services },
-	{ label: 'Work', href: '/work' },
-	{ label: 'Blog', href: '/blog' },
-	{ label: 'Contact', href: '/contact' },
-]
-
-export function Navbar() {
+/** `serviceSummaries` comes from the server so the catalog never ships in client JS. */
+export function Navbar({ serviceSummaries }: { serviceSummaries: ServiceSummary[] }) {
+	const services: ServiceItem[] = serviceSummaries.map((service) => {
+		const Icon = serviceIcons[service.icon]
+		return {
+			label: service.navLabel,
+			href: service.href,
+			description: service.tagline,
+			icon: <Icon size={16} />,
+		}
+	})
+	const navItems = buildNavItems(services)
 	const [scrolled, setScrolled] = useState(false)
 	const [menuOpen, setMenuOpen] = useState(false)
 	const [dropdownOpen, setDropdownOpen] = useState(false)

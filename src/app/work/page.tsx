@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 import { getWorks } from '@/lib/graphql/adapters/works'
+import type { Work } from '@/lib/graphql/adapters/works'
 import { WorksGrid } from '@/components/work/WorksGrid'
 import { ClientLogoStrip } from '@/components/work/ClientLogoStrip'
 
@@ -19,7 +20,13 @@ const PAGE_SIZE = 9
 
 export default async function WorkPage() {
 	// First batch: server-rendered for SEO
-	const all = await getWorks()
+	// A CMS outage must not fail the build; the grid renders empty until the next revalidation.
+	let all: Work[] = []
+	try {
+		all = await getWorks()
+	} catch (error) {
+		console.error('Failed to fetch works:', error)
+	}
 	const initialItems = all.slice(0, PAGE_SIZE)
 	const initialCursor = initialItems.length ? initialItems[initialItems.length - 1].slug : null
 	const initialHasMore = all.length > PAGE_SIZE

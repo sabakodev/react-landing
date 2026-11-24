@@ -1,15 +1,23 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { ArrowRight, ArrowLeft, Globe, Smartphone, Cpu } from 'lucide-react'
-import { getWork, getWorks } from '@/lib/api/works'
+import { getWork, getWorks } from '@/lib/graphql/adapters/works'
 import { notFound } from 'next/navigation'
 import { OtherWorks } from '@/components/work/OtherWorks'
+import { JsonLd } from '@/components/seo/JsonLd'
+import { caseStudy } from '@/lib/seo/jsonld'
 
 type Props = { params: Promise<{ slug: string }> }
 
 export async function generateStaticParams() {
-	const works = await getWorks()
-	return works.map((w) => ({ slug: w.slug }))
+	// A CMS outage must not fail the build; unlisted slugs render on demand (dynamicParams).
+	try {
+		const works = await getWorks()
+		return works.map((w) => ({ slug: w.slug }))
+	} catch (error) {
+		console.error('Failed to fetch works for generateStaticParams:', error)
+		return []
+	}
 }
 
 export const revalidate = 3600
@@ -50,6 +58,7 @@ export default async function WorkCaseStudyPage(props: Props) {
 
 	return (
 		<article>
+			<JsonLd data={caseStudy(work)} />
 			{/* Header */}
 			<header className="border-b border-(--border) pt-32 pb-16">
 				<div className="mx-auto max-w-7xl px-6 lg:px-8">
@@ -69,17 +78,21 @@ export default async function WorkCaseStudyPage(props: Props) {
 							{work.category}
 						</span>
 						<span className="text-xs font-mono text-(--text-subtle)">· {work.year}</span>
+						{work.engagementLabel && (
+							<span className="px-2 py-0.5 text-xs font-mono border border-(--border) text-(--text-muted)">
+								{work.engagementLabel}
+							</span>
+						)}
 					</div>
 
 					<h1 className="text-5xl font-bold text-(--text) max-w-3xl leading-tight">
 						{work.title}
 					</h1>
-					<p className="mt-4 text-base text-(--text-muted) font-medium">
-						{work.client}
-					</p>
-					<p className="mt-4 text-base text-(--text-muted) font-medium">
-						{work.client}
-					</p>
+					{work.client && (
+						<p className="mt-4 text-base text-(--text-muted) font-medium">
+							{work.client}
+						</p>
+					)}
 
 					<div className="flex flex-wrap gap-2 mt-8">
 						{work.tags.map((tag) => (
@@ -103,6 +116,18 @@ export default async function WorkCaseStudyPage(props: Props) {
 					</div>
 				</div>
 			</section>
+
+			{/* Body — WP HTML rendered */}
+			{work.content && (
+				<section className="py-16 border-b border-(--border)" aria-label="Project details">
+					<div className="mx-auto max-w-7xl px-6 lg:px-8">
+						<div
+							className="wp-content prose prose-neutral dark:prose-invert max-w-3xl text-(--text-muted) leading-relaxed"
+							dangerouslySetInnerHTML={{ __html: work.content }}
+						/>
+					</div>
+				</section>
+			)}
 
 			{/* Challenge / Solution / Outcome */}
 			{(work.challenge || work.solution || work.outcome) && (

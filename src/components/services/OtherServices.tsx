@@ -1,31 +1,14 @@
 import Link from 'next/link'
-import { Globe, Smartphone, Cpu, ArrowRight } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
+import { serviceIcons } from '@/components/services/serviceIcons'
+import { pageCopy } from '@/lib/pageCopy'
+import type { Locale } from '@/lib/pageCopy'
+import { localizeService, publishedServices, publishedServicesId, serviceHref } from '@/lib/services'
 
-type ServiceKey = 'web' | 'mobile' | 'iot'
-
-const services: Record<ServiceKey, { label: string; description: string; href: string; icon: React.ElementType }> = {
-	web: {
-		label: 'Digital Experiences',
-		description: 'Websites, web apps, SaaS platforms, and e-commerce.',
-		href: '/services/web',
-		icon: Globe,
-	},
-	mobile: {
-		label: 'Mobile Products',
-		description: 'iOS, Android, and cross-platform apps.',
-		href: '/services/mobile',
-		icon: Smartphone,
-	},
-	iot: {
-		label: 'Connected Systems',
-		description: 'IoT platforms, firmware, and real-time dashboards.',
-		href: '/services/iot',
-		icon: Cpu,
-	},
-}
-
-export function OtherServices({ current }: { current: ServiceKey }) {
-	const others = (Object.keys(services) as ServiceKey[]).filter((k) => k !== current)
+export function OtherServices({ current, locale = 'en' }: { current: string; locale?: Locale }) {
+	const others = (locale === 'id' ? publishedServicesId() : publishedServices())
+		.filter((s) => s.slug !== current)
+		.map((s) => localizeService(s, locale))
 
 	return (
 		<section
@@ -37,16 +20,15 @@ export function OtherServices({ current }: { current: ServiceKey }) {
 					id="other-services-heading"
 					className="text-xs font-mono uppercase tracking-widest text-(--text-subtle) mb-8"
 				>
-					Explore Other Services
+					{pageCopy[locale].otherServices}
 				</p>
 				<div className="grid grid-cols-1 sm:grid-cols-2 gap-px bg-(--border)">
-					{others.map((key) => {
-						const s = services[key]
-						const Icon = s.icon
+					{others.map((s) => {
+						const Icon = serviceIcons[s.icon]
 						return (
 							<Link
-								key={key}
-								href={s.href}
+								key={s.slug}
+								href={serviceHref(s, locale)}
 								className="bg-(--bg) p-6 flex items-start gap-4 group hover:bg-(--bg-subtle) transition-colors"
 							>
 								<div className="p-2 border border-(--border) text-(--brand) shrink-0 group-hover:border-(--brand) transition-colors">
@@ -54,9 +36,9 @@ export function OtherServices({ current }: { current: ServiceKey }) {
 								</div>
 								<div className="flex-1 min-w-0">
 									<p className="text-sm font-bold text-(--text) group-hover:text-(--brand) transition-colors mb-1">
-										{s.label}
+										{s.navLabel}
 									</p>
-									<p className="text-xs text-(--text-subtle) leading-relaxed">{s.description}</p>
+									<p className="text-xs text-(--text-subtle) leading-relaxed">{s.shortDescription}</p>
 								</div>
 								<ArrowRight
 									size={14}

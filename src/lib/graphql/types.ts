@@ -79,7 +79,7 @@ export type WPPost = WPNode & {
 }
 
 /** Minimal card shape for list views */
-export type WPPostCard = Pick<WPPost, 'id' | 'databaseId' | 'title' | 'slug' | 'date' | 'excerpt' | 'featuredImage' | 'categories'>
+export type WPPostCard = Pick<WPPost, 'id' | 'databaseId' | 'title' | 'slug' | 'date' | 'modified' | 'excerpt' | 'featuredImage' | 'categories'>
 
 // ---------------------------------------------------------------------------
 // Works / Portfolio (CPT: "work")
@@ -89,6 +89,8 @@ export type WPWork = WPNode & {
 	title: string
 	slug: string
 	date: string
+	modified?: string
+	content?: string
 	/** ACF or custom fields – adapt field names to match your WP setup */
 	workFields?: {
 		client?: string
@@ -101,13 +103,21 @@ export type WPWork = WPNode & {
 		outcome?: string
 		tags?: string[]
 		featured?: boolean
+		/**
+		 * Evidence kind: client | client-confidential | research | advisory.
+		 * Not yet created in ACF and not yet requested by the queries; ACF select
+		 * fields may come back as a string or a one-item array.
+		 */
+		engagementKind?: string | string[]
+		/** Anonymized client descriptor shown instead of the client name for confidential work */
+		clientDescriptor?: string
 	}
 	featuredImage?: { node: WPImage }
 	categories?: { nodes: WPCategory[] }
 	tags?: { nodes: WPTag[] }
 }
 
-export type WPWorkCard = Pick<WPWork, 'id' | 'databaseId' | 'title' | 'slug' | 'date' | 'featuredImage' | 'categories' | 'tags' | 'workFields'>
+export type WPWorkCard = Pick<WPWork, 'id' | 'databaseId' | 'title' | 'slug' | 'date' | 'modified' | 'featuredImage' | 'categories' | 'tags' | 'workFields'>
 
 // --------------------------------------------------------------------------
 // GraphQL connection wrappers
