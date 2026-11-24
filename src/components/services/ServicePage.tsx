@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { ArrowRight, CheckCircle } from 'lucide-react'
+import { ArrowRight, ArrowUpRight, CheckCircle } from 'lucide-react'
 import { OtherServices } from '@/components/services/OtherServices'
 import { PricingCatalog } from '@/components/services/PricingCatalog'
 import { JsonLd } from '@/components/seo/JsonLd'
@@ -51,6 +51,10 @@ export async function ServicePage({ service: baseService, locale }: { service: S
 	const Icon = serviceIcons[service.icon]
 	const relatedWorks = await getRelatedWorks(service)
 	const showEngagementNote = relatedWorks.length === 0 && Boolean(service.engagementNote)
+	const showcase = service.showcase ?? []
+	const partners = service.partners ?? []
+	const hasShowcase = showcase.length > 0 || partners.length > 0
+	const workLinkHref = hasShowcase ? '#showcase' : showEngagementNote ? '#client-engagements' : '/work'
 
 	return (
 		<article lang={locale === 'id' ? 'id' : undefined}>
@@ -85,7 +89,7 @@ export async function ServicePage({ service: baseService, locale }: { service: S
 						<Link href={`/contact?service=${service.contactValue}`} className="inline-flex items-center gap-2 px-6 py-3 bg-(--text) text-(--bg) text-sm font-medium hover:opacity-80 transition-opacity group">
 							{service.ctaLabel} <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
 						</Link>
-						<Link href={showEngagementNote ? '#client-engagements' : '/work'} className="inline-flex items-center gap-2 px-6 py-3 border border-(--border) text-(--text) text-sm font-medium hover:bg-(--bg-subtle) transition-colors">
+						<Link href={workLinkHref} className="inline-flex items-center gap-2 px-6 py-3 border border-(--border) text-(--text) text-sm font-medium hover:bg-(--bg-subtle) transition-colors">
 							{service.workLinkLabel}
 						</Link>
 					</div>
@@ -168,6 +172,70 @@ export async function ServicePage({ service: baseService, locale }: { service: S
 				</section>
 			)}
 
+			{hasShowcase && (
+				<section id="showcase" className="border-t border-(--border) py-16" aria-label={showcase.length > 0 ? copy.showcaseHeading : copy.partnersHeading}>
+					<div className="mx-auto max-w-7xl px-6 lg:px-8">
+						{showcase.length > 0 && (
+							<>
+								<h2
+									id="showcase-heading"
+									className="text-xs font-mono uppercase tracking-widest text-(--text-subtle) mb-8"
+								>
+									{copy.showcaseHeading}
+								</h2>
+								<ul className="grid grid-cols-1 md:grid-cols-3 gap-px bg-(--border) border border-(--border)" role="list">
+									{showcase.map((item) => (
+										<li key={item.name} className="bg-(--bg)">
+											<ShowcaseBody
+												href={item.href}
+												externalLabel={copy.externalLinkLabel}
+												className="h-full p-8 flex flex-col gap-4"
+											>
+												<span className="self-start px-2 py-1 text-[10px] font-mono uppercase tracking-widest border border-(--border) text-(--brand)">
+													{item.role}
+												</span>
+												<span className="flex items-center gap-2 text-xl font-bold text-(--text) group-hover:text-(--brand) transition-colors">
+													{item.name}
+													{item.href && <ArrowUpRight size={16} aria-hidden="true" className="text-(--text-subtle) group-hover:text-(--brand) transition-colors" />}
+												</span>
+												<span className="text-sm text-(--text-muted) leading-relaxed">{item.blurb}</span>
+											</ShowcaseBody>
+										</li>
+									))}
+								</ul>
+							</>
+						)}
+
+						{partners.length > 0 && (
+							<div className={showcase.length > 0 ? 'mt-12' : undefined}>
+								<h3 className="text-xs font-mono uppercase tracking-widest text-(--text-subtle) mb-6">
+									{copy.partnersHeading}
+								</h3>
+								<ul className="grid grid-cols-1 sm:grid-cols-2 gap-px bg-(--border) border border-(--border)" role="list">
+									{partners.map((partner) => (
+										<li key={partner.name} className="bg-(--bg)">
+											<ShowcaseBody
+												href={partner.href}
+												externalLabel={copy.externalLinkLabel}
+												className="h-full p-6 flex items-start justify-between gap-4"
+											>
+												<span>
+													<span className="block text-base font-bold text-(--text) group-hover:text-(--brand) transition-colors">
+														{partner.name}
+													</span>
+													<span className="mt-1 block text-xs text-(--text-subtle) leading-relaxed">{partner.blurb}</span>
+												</span>
+												{partner.href && <ArrowUpRight size={14} aria-hidden="true" className="shrink-0 mt-1 text-(--text-subtle) group-hover:text-(--brand) transition-colors" />}
+											</ShowcaseBody>
+										</li>
+									))}
+								</ul>
+							</div>
+						)}
+					</div>
+				</section>
+			)}
+
 			{showEngagementNote && (
 				<section
 					id="client-engagements"
@@ -212,5 +280,31 @@ export async function ServicePage({ service: baseService, locale }: { service: S
 			{service.showPricing && locale === 'en' && <PricingCatalog />}
 			<OtherServices current={service.slug} locale={locale} />
 		</article>
+	)
+}
+
+/** Outbound link when an href exists, plain block otherwise. */
+function ShowcaseBody({
+	href,
+	externalLabel,
+	className,
+	children,
+}: {
+	href?: string
+	externalLabel: string
+	className: string
+	children: React.ReactNode
+}) {
+	if (!href) return <div className={className}>{children}</div>
+	return (
+		<a
+			href={href}
+			target="_blank"
+			rel="noopener"
+			className={`${className} group hover:bg-(--bg-subtle) transition-colors`}
+		>
+			{children}
+			<span className="sr-only">({externalLabel})</span>
+		</a>
 	)
 }

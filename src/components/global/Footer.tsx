@@ -57,7 +57,7 @@ export function Footer({ serviceSummaries }: { serviceSummaries: ServiceSummary[
 							</span>
 						</Link>
 						<p className="text-sm text-(--text-muted) leading-relaxed max-w-xs">
-							IT Agency & Consulting — building Digital Experiences, Mobile Products, and Connected Systems for businesses worldwide.
+							IT Agency & Consulting — building Digital Experiences, Mobile Products, Connected Systems and Applied AI for businesses worldwide.
 						</p>
 						<p className="text-sm font-mono font-semibold text-(--brand)">
 							&ldquo;Beyond the Horizon&rdquo;

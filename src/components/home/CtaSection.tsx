@@ -49,7 +49,7 @@ export function CtaSection() {
 						{jargon}
 					</h2>
 					<p className="text-lg text-(--text-muted) mb-12">
-						Whether you need a web app, mobile product, or IoT solution — our team is ready to consult, architect, and deliver.
+						Whether you need a web app, mobile product, IoT solution or an AI feature — our team is ready to consult, architect, and deliver.
 					</p>
 
 					<div className="flex flex-wrap gap-4">

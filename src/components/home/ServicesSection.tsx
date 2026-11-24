@@ -4,6 +4,8 @@ import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 import { Reveal } from '@/components/ui/Reveal'
 import { serviceIcons } from '@/components/services/serviceIcons'
+import { bentoSpans } from '@/components/ui/gridSpans'
+import { IdeaCard } from '@/components/home/IdeaCard'
 import { pageCopy } from '@/lib/pageCopy'
 import type { Locale } from '@/lib/pageCopy'
 import type { ServiceSummary } from '@/lib/services'
@@ -11,6 +13,7 @@ import type { ServiceSummary } from '@/lib/services'
 /** `services` comes from the server (serviceSummaries) so the catalog never ships in client JS. */
 export function ServicesSection({ services, locale = 'en' }: { services: ServiceSummary[]; locale?: Locale }) {
 	const copy = pageCopy[locale]
+	const spans = bentoSpans(services.length, { withCta: true })
 
 	return (
 		<section
@@ -34,18 +37,18 @@ export function ServicesSection({ services, locale = 'en' }: { services: Service
 				</Reveal>
 
 				{/* Services grid */}
-				<div className="grid grid-cols-1 lg:grid-cols-3 gap-px bg-(--border)">
-					{services.map((service) => {
+				<div className="grid grid-cols-1 lg:grid-cols-12 gap-px bg-(--border) border border-(--border)">
+					{services.map((service, i) => {
 						const Icon = serviceIcons[service.icon]
 						return (
 							<Link
 								key={service.slug}
 								href={service.href}
 								aria-label={`${copy.learnMoreAbout} ${service.navLabel}`}
-								className="transition-all group bg-(--bg) p-8 hover:bg-(--bg-subtle) transition-colors"
+								className={`${spans.items[i]} group bg-(--bg) p-8 hover:bg-(--bg-subtle) transition-colors`}
 							>
 								<article
-									className="flex flex-col"
+									className="flex h-full flex-col"
 								>
 									<div className="flex items-center gap-3 mb-6">
 										<div className="p-2 border border-(--border) text-(--brand) bg-(--bg-subtle)">
@@ -65,7 +68,7 @@ export function ServicesSection({ services, locale = 'en' }: { services: Service
 									</p>
 
 									<ul className="space-y-2 mb-8" role="list">
-										{service.highlights.map((cap) => (
+										{service.highlights.slice(0, 3).map((cap) => (
 											<li
 												key={cap}
 												className="flex items-center gap-2 text-xs text-(--text-muted)"
@@ -84,6 +87,7 @@ export function ServicesSection({ services, locale = 'en' }: { services: Service
 							</Link>
 						)
 					})}
+					<IdeaCard className={spans.cta} locale={locale} />
 				</div>
 			</div>
 		</section>

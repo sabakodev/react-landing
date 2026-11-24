@@ -108,7 +108,7 @@ export function HeroSection({ services }: { services: ServiceSummary[] }) {
 					className="mt-8 text-lg text-(--text-muted) max-w-xl leading-relaxed animate-fade-up"
 					style={{ animationDelay: '0.35s', opacity: 0 }}
 				>
-					From enterprise web platforms to cross-platform mobile apps and IoT-connected systems — SABAKO delivers technology that scales.
+					From enterprise web platforms and cross-platform mobile apps to IoT-connected systems and applied AI — SABAKO delivers technology that scales.
 				</p>
 
 				{/* CTAs */}

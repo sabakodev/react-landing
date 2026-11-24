@@ -3,11 +3,13 @@
 /**
  * PricingCatalog — Website Development pricing tiers.
  *
- * Three-column card layout (stacked on mobile).
+ * Four tiers: 4 columns on desktop, 2x2 on tablet, stacked on mobile.
+ * Starter keeps a low entry price; the highlighted Growth tier is the intended choice.
  * CTA labels can be randomized via jargonSet pattern.
  * Tracks tier CTA clicks via useButtonTracking.
  */
 
+import { useSyncExternalStore } from 'react'
 import Link from 'next/link'
 import { CheckCircle, ArrowRight, Sparkles, Rocket } from 'lucide-react'
 import { useButtonTracking } from '@/lib/analytics/useButtonTracking'
@@ -23,42 +25,60 @@ type Tier = {
 	cta: string
 	ctaHref: string
 	popular?: boolean
+	/** Under the price; hosting is bundled only in the packaged tiers */
+	billingNote?: string
 }
 
 const TIERS: Tier[] = [
 	{
-		id: 'essential',
-		name: 'Essential',
+		id: 'starter',
+		name: 'Starter',
 		price: 'IDR 2.499.000',
 		priceLabel: 'Starting from',
-		description: 'The right foundation for businesses making their first digital move.',
+		description: 'A one-page launch site on our tuned template — for when you would otherwise reach for a site builder.',
 		features: [
-			'Company profile / landing page',
-			'Up to 5 pages',
-			'Contact form integration',
-			'Fully responsive design',
-			'Basic SEO setup',
-			'2 revision rounds',
-			'Basic hosting',
+			'One-page launch site',
+			'Our performance-tuned template',
+			'Contact form & WhatsApp button',
+			'You own the domain and the code',
+			'1 revision round',
 		],
+		billingNote: 'one-time · includes first-year hosting',
+		cta: 'Start Small',
+		ctaHref: '/contact?service=web&tier=starter',
+	},
+	{
+		id: 'essential',
+		name: 'Essential',
+		price: 'IDR 5.000.000',
+		priceLabel: 'Starting from',
+		description: 'A custom-designed company site that looks like your brand, not a template.',
+		features: [
+			'Custom design, up to 5 pages',
+			'Fast on mobile data (passes Core Web Vitals)',
+			'Google-ready: metadata, sitemap, structured data',
+			'Bilingual EN / ID ready',
+			'2 revision rounds',
+		],
+		billingNote: 'one-time · includes first-year hosting',
 		cta: 'Get Started',
 		ctaHref: '/contact?service=web&tier=essential',
 	},
 	{
 		id: 'growth',
 		name: 'Growth',
-		price: 'IDR 5.699.000',
+		price: 'IDR 12.000.000',
 		priceLabel: 'Starting from',
-		description: 'For businesses ready to scale with content and commerce capabilities.',
+		description: 'For businesses that publish, sell and measure — a site your team runs without calling us.',
 		features: [
 			'Everything in Essential',
-			'Free domain for first year',
-			'Multi-page architecture',
-			'Blog / CMS integration',
-			'Basic e-commerce functionality',
-			'Performance optimization',
-			'3 months post-launch support',
+			'CMS your team can edit',
+			'Blog and landing pages for campaigns',
+			'Online store with local payment gateways',
+			'Analytics & conversion tracking set up',
+			'A named engineer for 3 months after launch',
 		],
+		billingNote: 'one-time · includes first-year hosting',
 		cta: 'Get Started',
 		ctaHref: '/contact?service=web&tier=growth',
 		popular: true,
@@ -66,31 +86,33 @@ const TIERS: Tier[] = [
 	{
 		id: 'custom',
 		name: 'Custom Solution',
-		price: null,
-		priceLabel: "Let's talk",
-		description: 'Complex, fully tailored projects — enterprise apps, SaaS platforms, and custom integrations.',
+		price: 'IDR 35.000.000',
+		priceLabel: 'From',
+		description: 'Web apps, SaaS platforms and integrations, scoped and quoted for your requirements.',
 		features: [
 			'Everything in Growth',
-			'Custom feature development',
+			'Custom features and dashboards',
 			'Third-party API integrations',
 			'Multi-tenant / SaaS architecture',
-			'Enterprise-grade security',
+			'Security review before launch',
 			'Dedicated project manager',
 		],
+		billingNote: 'quoted per scope',
 		cta: 'Contact Us',
 		ctaHref: '/contact?service=web&tier=custom',
 	},
 ]
 
+const subscribeNoop = () => () => {}
+const readTimeZone = () => Intl.DateTimeFormat().resolvedOptions().timeZone
+
 export function PricingCatalog() {
 	const track = useButtonTracking()
 
 	// Timezone check: only show IDR pricing for SE Asian visitors.
-	// Reading at render time is fine — Intl is always available.
-	// During SSR this returns '' so the section is hidden server-side (safe hydration).
-	const tz = typeof window !== 'undefined'
-		? Intl.DateTimeFormat().resolvedOptions().timeZone
-		: ''
+	// The server snapshot is '' so SSR and the first client render match (no hydration error);
+	// the real timezone is applied right after hydration.
+	const tz = useSyncExternalStore(subscribeNoop, readTimeZone, () => '')
 
 	return tz.startsWith('Asia') && (
 		<section className="py-20 border-t border-(--border)" aria-labelledby="pricing-heading">
@@ -102,10 +124,10 @@ export function PricingCatalog() {
 					Transparent starting prices.
 				</h2>
 				<p className="text-(--text-muted) mb-14 max-w-xl text-sm leading-relaxed">
-					Every project is unique — these are starting points. Final pricing depends on scope, timeline, and integrations required. We always provide a detailed quote before work begins.
+					Site builders and AI generators are cheaper — until you need speed, ownership, or someone accountable. Packaged tiers include the build and your first year of hosting; we send a detailed quote before work begins.
 				</p>
 
-				<div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-(--border)">
+				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-px bg-(--border)">
 					{TIERS.map((tier) => (
 						<div
 							key={tier.id}
@@ -133,7 +155,9 @@ export function PricingCatalog() {
 											<p className="text-[10px] font-mono text-(--text-subtle) mb-1">{tier.priceLabel}</p>
 											<p className="text-2xl font-bold text-(--text)">
 												{tier.price}
-												<span className="text-xs font-mono font-normal text-(--text-subtle) ml-1.5">/ year</span>
+												{tier.billingNote && (
+													<span className="block mt-1 text-[10px] font-mono font-normal text-(--text-subtle)">{tier.billingNote}</span>
+												)}
 											</p>
 										</>
 									) : (
@@ -174,7 +198,7 @@ export function PricingCatalog() {
 				</div>
 
 				<p className="text-[10px] font-mono text-(--text-subtle) mt-6">
-					Prices in IDR and exclude VAT (PPN 11%). International projects quoted in USD.
+					Prices in IDR and exclude VAT (PPN 11%). Hosting renews yearly after the first year. International projects quoted in USD.
 				</p>
 			</div>
 		</section>

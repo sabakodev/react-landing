@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 import { serviceIcons } from '@/components/services/serviceIcons'
+import { bentoSpans } from '@/components/ui/gridSpans'
 import { pageCopy } from '@/lib/pageCopy'
 import type { Locale } from '@/lib/pageCopy'
 import { localizeService, publishedServices, publishedServicesId, serviceHref } from '@/lib/services'
@@ -9,6 +10,7 @@ export function OtherServices({ current, locale = 'en' }: { current: string; loc
 	const others = (locale === 'id' ? publishedServicesId() : publishedServices())
 		.filter((s) => s.slug !== current)
 		.map((s) => localizeService(s, locale))
+	const spans = bentoSpans(others.length)
 
 	return (
 		<section
@@ -22,14 +24,14 @@ export function OtherServices({ current, locale = 'en' }: { current: string; loc
 				>
 					{pageCopy[locale].otherServices}
 				</p>
-				<div className="grid grid-cols-1 sm:grid-cols-2 gap-px bg-(--border)">
-					{others.map((s) => {
+				<div className="grid grid-cols-1 lg:grid-cols-12 gap-px bg-(--border)">
+					{others.map((s, i) => {
 						const Icon = serviceIcons[s.icon]
 						return (
 							<Link
 								key={s.slug}
 								href={serviceHref(s, locale)}
-								className="bg-(--bg) p-6 flex items-start gap-4 group hover:bg-(--bg-subtle) transition-colors"
+								className={`${spans.items[i]} bg-(--bg) p-6 flex items-start gap-4 group hover:bg-(--bg-subtle) transition-colors`}
 							>
 								<div className="p-2 border border-(--border) text-(--brand) shrink-0 group-hover:border-(--brand) transition-colors">
 									<Icon size={16} aria-hidden="true" />
