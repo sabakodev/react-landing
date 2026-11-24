@@ -23,7 +23,7 @@ export const pageCopy = {
 			'From early-stage consulting to production-ready products — we cover the full spectrum of digital development.',
 		servicesMetaTitle: 'Services',
 		servicesMetaDescription:
-			"Explore SABAKO's services — Digital Experiences (Web), Mobile Products (App), and Connected Systems (IoT). End-to-end technology consulting.",
+			"Explore SABAKO's services — Digital Experiences (Web), Mobile Products (App), Connected Systems (IoT), and Applied AI (AI/ML). End-to-end technology consulting.",
 		explore: 'Explore',
 		consultHeading: 'Not sure which service you need?',
 		consultBody:
@@ -36,6 +36,7 @@ export const pageCopy = {
 		techStack: 'Technology Stack',
 		faqHeading: 'Frequently Asked Questions',
 		relatedWork: 'Related Work',
+		clientEngagements: 'Client Engagements',
 		otherServices: 'Explore Other Services',
 	},
 	// DRAFT — owner review required (Bahasa Indonesia copy)
@@ -70,6 +71,7 @@ export const pageCopy = {
 		techStack: 'Teknologi',
 		faqHeading: 'Pertanyaan yang Sering Diajukan',
 		relatedWork: 'Portofolio Terkait',
+		clientEngagements: 'Proyek Klien',
 		otherServices: 'Layanan Lainnya',
 	},
 } satisfies Record<Locale, Record<string, string>>

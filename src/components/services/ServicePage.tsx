@@ -50,6 +50,7 @@ export async function ServicePage({ service: baseService, locale }: { service: S
 	const copy = pageCopy[locale]
 	const Icon = serviceIcons[service.icon]
 	const relatedWorks = await getRelatedWorks(service)
+	const showEngagementNote = relatedWorks.length === 0 && Boolean(service.engagementNote)
 
 	return (
 		<article lang={locale === 'id' ? 'id' : undefined}>
@@ -84,7 +85,7 @@ export async function ServicePage({ service: baseService, locale }: { service: S
 						<Link href={`/contact?service=${service.contactValue}`} className="inline-flex items-center gap-2 px-6 py-3 bg-(--text) text-(--bg) text-sm font-medium hover:opacity-80 transition-opacity group">
 							{service.ctaLabel} <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
 						</Link>
-						<Link href="/work" className="inline-flex items-center gap-2 px-6 py-3 border border-(--border) text-(--text) text-sm font-medium hover:bg-(--bg-subtle) transition-colors">
+						<Link href={showEngagementNote ? '#client-engagements' : '/work'} className="inline-flex items-center gap-2 px-6 py-3 border border-(--border) text-(--text) text-sm font-medium hover:bg-(--bg-subtle) transition-colors">
 							{service.workLinkLabel}
 						</Link>
 					</div>
@@ -163,6 +164,30 @@ export async function ServicePage({ service: baseService, locale }: { service: S
 								</Link>
 							))}
 						</div>
+					</div>
+				</section>
+			)}
+
+			{showEngagementNote && (
+				<section
+					id="client-engagements"
+					className="border-t border-(--border) py-16"
+					aria-labelledby="client-engagements-heading"
+				>
+					<div className="mx-auto max-w-7xl px-6 lg:px-8">
+						<p
+							id="client-engagements-heading"
+							className="text-xs font-mono uppercase tracking-widest text-(--text-subtle) mb-8"
+						>
+							{copy.clientEngagements}
+						</p>
+						<p className="max-w-3xl text-base text-(--text-muted) leading-relaxed">{service.engagementNote}</p>
+						<Link
+							href={`/contact?service=${service.contactValue}`}
+							className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-(--text) hover:text-(--brand) transition-colors group"
+						>
+							{service.ctaLabel} <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
+						</Link>
 					</div>
 				</section>
 			)}
