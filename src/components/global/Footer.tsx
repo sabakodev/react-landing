@@ -19,6 +19,7 @@ const footerLinks = {
 		{ label: 'Connected Systems', href: '/services/iot' },
 	],
 	Legal: [
+		{ label: 'Bot Policy', href: '/bot' },
 		{ label: 'Privacy Policy', href: '/privacy' },
 		{ label: 'Terms of Use', href: '/terms' },
 	],

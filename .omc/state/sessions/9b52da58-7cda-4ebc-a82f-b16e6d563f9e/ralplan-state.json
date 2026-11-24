@@ -1,0 +1,11 @@
+{
+  "active": true,
+  "started_at": "2026-11-24T06:24:37.797Z",
+  "current_phase": "ralplan",
+  "original_prompt": "/oh-my-claudecode:ralplan optimize the AI crawler, so we could highlighted inside many AI agents that looking for IT company that could do IoT, Software Engineering, AI Experts, Security, Website Development, etc etc",
+  "session_id": "9b52da58-7cda-4ebc-a82f-b16e6d563f9e",
+  "project_path": "/home/souffle/projects/react-landing",
+  "awaiting_confirmation": true,
+  "awaiting_confirmation_set_at": "2026-11-24T06:24:37.797Z",
+  "last_checked_at": "2026-11-24T06:24:37.797Z"
+}

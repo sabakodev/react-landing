@@ -35,8 +35,8 @@ const agents = [
 ]
 
 const userAgents = `Mozilla/5.0 (compatible; sabakobot/1.0; +https://sabako.id/bot)
-Mozilla/5.0 AppleWebKit/537.36 (KHTML, like Gecko; compatible; sabakobot/1.0; +https://sabako.id/bot) Chrome/{version} Safari/537.36
-Mozilla/5.0 (compatible; sabako-user/1.0; +https://sabako.id/bot)
+Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/{version} Safari/537.36 sabakobot/1.0 (+https://sabako.id/bot)
+sabako-user/1.0 (+https://sabako.id/bot)
 Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/{version} Safari/537.36 sabako-user/1.0 (+https://sabako.id/bot)`
 
 const never = [
