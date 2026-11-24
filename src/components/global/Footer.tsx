@@ -76,11 +76,11 @@ export function Footer() {
 								href="https://wa.me/62859106681052"
 								target="_blank"
 								rel="noopener noreferrer"
-								onClick={track('WhatsApp', 'footer-contact', { external: true, href: 'https://wa.me/62859106681052' })}
+								onClick={track('WhatsApp', 'footer-contact', { external: true, href: 'https://wa.me/6285760616555' })}
 								className="flex items-center gap-2 hover:text-(--text) transition-colors hover-underline w-fit"
 							>
 								<Phone size={14} />
-								+62 857-6061-6555
+								+62 \857-6061-6555
 							</a>
 							<span className="flex items-start gap-2">
 								<MapPin size={14} className="mt-0.5 shrink-0" />
