@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 import { serviceIcons } from '@/components/services/serviceIcons'
+import { bentoSpans } from '@/components/ui/gridSpans'
 import { pageCopy } from '@/lib/pageCopy'
 import type { Locale } from '@/lib/pageCopy'
 import { localizeService, publishedServices, publishedServicesId, serviceHref } from '@/lib/services'
@@ -8,6 +9,7 @@ import { localizeService, publishedServices, publishedServicesId, serviceHref } 
 export function ServicesIndex({ locale }: { locale: Locale }) {
 	const copy = pageCopy[locale]
 	const services = (locale === 'id' ? publishedServicesId() : publishedServices()).map((s) => localizeService(s, locale))
+	const spans = bentoSpans(services.length, { preferPairs: true })
 	return (
 		<article>
 			<header className="border-b border-(--border) pt-32 pb-16">
@@ -26,14 +28,14 @@ export function ServicesIndex({ locale }: { locale: Locale }) {
 
 			<section className="py-20" aria-label="Our services">
 				<div className="mx-auto max-w-7xl px-6 lg:px-8">
-					<div className="grid grid-cols-1 lg:grid-cols-3 gap-px bg-(--border) border border-(--border)">
-						{services.map((service) => {
+					<div className="grid grid-cols-1 lg:grid-cols-12 gap-px bg-(--border) border border-(--border)">
+						{services.map((service, i) => {
 							const Icon = serviceIcons[service.icon]
 							return (
 								<Link
 									key={service.slug}
 									href={serviceHref(service, locale)}
-									className="bg-(--bg) p-10 flex flex-col group hover:bg-(--bg-subtle) transition-colors"
+									className={`${spans.items[i]} bg-(--bg) p-10 flex flex-col group hover:bg-(--bg-subtle) transition-colors`}
 								>
 									<div className="flex items-center gap-3 mb-8">
 										<div className="p-2.5 border border-(--border) text-(--brand) bg-(--bg-subtle)">

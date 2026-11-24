@@ -12,7 +12,7 @@ import type { Work } from '@/lib/graphql/adapters/works'
 export const SITE_URL = 'https://sabako.id'
 export const ORG_ID = `${SITE_URL}/#org`
 export const SITE_DESCRIPTION =
-	'SABAKO is a Jakarta-based IT agency. We build websites, web apps and mobile apps, and offer IoT research, prototyping and consulting for ambitious businesses.'
+	'SABAKO is a Jakarta-based IT agency. We build websites, web apps, mobile apps and AI features, and offer IoT research, prototyping and consulting for ambitious businesses.'
 
 type JsonLdNode = Record<string, unknown>
 

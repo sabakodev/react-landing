@@ -19,6 +19,21 @@ export type ServiceFaq = {
 	answer: string
 }
 
+/** Publicly nameable work shown on a service page (own products, joint projects, collaborations). */
+export type ServiceShowcaseItem = {
+	name: string
+	/** Relationship to SABAKO, e.g. "Our product", "Research collaboration" */
+	role: string
+	blurb: string
+	href?: string
+}
+
+export type ServicePartner = {
+	name: string
+	blurb: string
+	href?: string
+}
+
 /** Localized copy (Phase 3). Every field is optional so English-only entries compile. */
 export type ServiceLocaleCopy = Partial<{
 	engagementNote: string
@@ -34,6 +49,8 @@ export type ServiceLocaleCopy = Partial<{
 	capabilities: string[]
 	process: string[]
 	faqs: ServiceFaq[]
+	showcase: ServiceShowcaseItem[]
+	partners: ServicePartner[]
 	ctaLabel: string
 	workLinkLabel: string
 	metaTitle: string
@@ -79,6 +96,9 @@ export type Service = {
 	showPricing?: boolean
 	/** Shown in place of related work when no case study can be published (e.g. NDA engagements) */
 	engagementNote?: string
+	/** Named work shown on the service page, independent of CMS case studies */
+	showcase?: ServiceShowcaseItem[]
+	partners?: ServicePartner[]
 	/** Bahasa Indonesia copy (Phase 3) */
 	id?: ServiceLocaleCopy
 }
@@ -106,26 +126,33 @@ export const services: Service[] = [
 		intro:
 			'We design and engineer digital products that perform — from sleek corporate sites to complex multi-tenant SaaS platforms trusted by enterprise clients.',
 		capabilities: [
-			'Corporate & Marketing Websites',
-			'Web Application Development',
-			'E-commerce & Marketplaces',
-			'SaaS Platform Architecture',
-			'API Design & Integration',
-			'Performance Optimization',
-			'Accessibility (WCAG 2.1)',
-			'CMS Implementation',
-			'SEO Friendly',
-			'Cross-browser & Device Compatibility',
-			'High-Load Traffic',
-			'Customizable & Scalable',
+			'Company & marketing sites that pass Core Web Vitals',
+			'Web apps, portals & internal dashboards',
+			'E-commerce with local payment gateways',
+			'Multi-tenant SaaS architecture',
+			'API design & third-party integrations',
+			'Headless CMS your team can edit',
+			'Accessibility to WCAG 2.1 AA',
+			'Built for traffic spikes (campaigns, launches)',
 		],
 		techStack: ['Next.js', 'React', 'TypeScript', 'Node.js', 'PostgreSQL', 'Redis', 'AWS', 'Vercel', 'Stripe', 'Prisma'],
 		process: [
-			'We start every engagement with discovery — deeply understanding your users, business goals, and technical constraints before writing a single line of code.',
-			'Architecture decisions are made with scale and maintainability in mind. Whether you need a static marketing site or a real-time collaborative platform, we choose the right tools for the job.',
-			'Performance is a feature. We target Core Web Vitals from day one, ensuring your users get a fast, accessible experience on every device.',
+			'Week one is a short discovery: who visits, what they should do, and what the site must connect to. You get a written scope and a fixed quote from it.',
+			'We design the key pages first and agree on them with you, then build on a stack chosen for the job — a static site for a company profile, a full application stack for a platform.',
+			'Before launch we test speed on mobile data, accessibility and search basics. After launch you own the code, the domain and the accounts, with documentation your team or another vendor can pick up.',
 		],
-		faqs: [],
+		faqs: [
+			{
+				question: 'Why not just use Wix or an AI site builder?',
+				answer:
+					'For a simple page, you can — our Starter tier competes on price with them. Choose us when the site has to be fast on mobile, rank on search, connect to your systems, or be maintained by someone accountable for it.',
+			},
+			{
+				question: 'Who owns the website afterwards?',
+				answer:
+					'You do. The domain, the code and the hosting accounts are registered to your company, and we hand over access and documentation at launch.',
+			},
+		],
 		wpCategory: 'web',
 		contactValue: 'web',
 		contactLabel: 'Digital Experiences (Web)',
@@ -150,23 +177,31 @@ export const services: Service[] = [
 			intro:
 				'Kami merancang dan mengembangkan produk digital yang cepat dan andal — dari website company profile hingga platform SaaS multi-tenant untuk klien korporat.',
 			capabilities: [
-				'Website Company Profile & Pemasaran',
-				'Pengembangan Aplikasi Web',
-				'E-commerce & Marketplace',
-				'Arsitektur Platform SaaS',
-				'Desain & Integrasi API',
-				'Optimasi Performa',
-				'Aksesibilitas (WCAG 2.1)',
-				'Implementasi CMS',
-				'Ramah SEO',
-				'Kompatibel di Semua Browser & Perangkat',
-				'Siap Menangani Trafik Tinggi',
-				'Mudah Dikustomisasi & Dikembangkan',
+				'Website company profile & pemasaran yang lolos Core Web Vitals',
+				'Aplikasi web, portal & dashboard internal',
+				'E-commerce dengan payment gateway lokal',
+				'Arsitektur SaaS multi-tenant',
+				'Desain API & integrasi pihak ketiga',
+				'Headless CMS yang bisa diedit tim Anda',
+				'Aksesibilitas sesuai WCAG 2.1 AA',
+				'Siap menghadapi lonjakan trafik (kampanye, peluncuran)',
 			],
 			process: [
-				'Setiap proyek kami mulai dengan tahap discovery — memahami pengguna, tujuan bisnis, dan batasan teknis Anda sebelum menulis satu baris kode pun.',
-				'Keputusan arsitektur dibuat dengan mempertimbangkan skalabilitas dan kemudahan perawatan. Baik Anda membutuhkan website pemasaran statis maupun platform kolaborasi real-time, kami memilih teknologi yang tepat.',
-				'Performa adalah fitur. Kami menargetkan Core Web Vitals sejak hari pertama agar pengguna mendapatkan pengalaman yang cepat dan mudah diakses di semua perangkat.',
+				'Minggu pertama adalah discovery singkat: siapa pengunjungnya, apa yang harus mereka lakukan, dan sistem apa yang perlu terhubung. Dari situ Anda mendapat ruang lingkup tertulis dan penawaran harga tetap.',
+				'Kami mendesain halaman-halaman utama lebih dulu dan menyepakatinya bersama Anda, lalu membangunnya dengan teknologi yang sesuai — situs statis untuk company profile, stack aplikasi lengkap untuk platform.',
+				'Sebelum rilis kami menguji kecepatan di jaringan seluler, aksesibilitas, dan dasar-dasar SEO. Setelah rilis, kode, domain, dan akun menjadi milik Anda, lengkap dengan dokumentasi yang bisa dilanjutkan tim Anda atau vendor lain.',
+			],
+			faqs: [
+				{
+					question: 'Kenapa tidak pakai Wix atau AI website builder saja?',
+					answer:
+						'Untuk satu halaman sederhana, bisa saja — paket Starter kami bersaing harga dengan mereka. Pilih kami ketika situs harus cepat di ponsel, muncul di pencarian, terhubung ke sistem Anda, atau dirawat oleh pihak yang bertanggung jawab.',
+				},
+				{
+					question: 'Siapa pemilik website setelah selesai?',
+					answer:
+						'Anda. Domain, kode, dan akun hosting terdaftar atas nama perusahaan Anda, dan kami menyerahkan akses serta dokumentasi saat rilis.',
+				},
 			],
 			ctaLabel: 'Mulai Proyek Website',
 			workLinkLabel: 'Lihat Portofolio Web',
@@ -349,22 +384,26 @@ export const services: Service[] = [
 		published: true,
 		icon: 'brain',
 		summary:
-			'SABAKO builds AI and machine-learning features into business software — LLM integrations, retrieval over company documents, and data pipelines for prediction and classification.',
+			'SABAKO builds AI and machine-learning features into business software — LLM integrations, retrieval over company documents, visual AI for images and video, and data pipelines for prediction and classification.',
 		description:
-			'We turn AI from a demo into a dependable feature — integrating large language models, retrieval and machine-learning models into the products and workflows your team already uses.',
-		shortDescription: 'LLM integration, retrieval, and ML pipelines.',
+			'We turn AI from a demo into a dependable feature — integrating language models, retrieval, computer vision and machine-learning models into the products and workflows your team already uses.',
+		shortDescription: 'LLM integration, visual AI, and ML pipelines.',
 		highlights: [
 			'LLM Integration',
+			'Visual AI & Computer Vision',
 			'Retrieval over Company Data',
 			'ML Model Pipelines',
-			'AI Feature Evaluation',
 		],
 		h1: 'AI & Machine Learning, Built into Your Product.',
 		intro:
-			'We design, build and evaluate AI features that solve a specific business problem — with clear data boundaries, measurable quality, and costs you can predict.',
+			'We design, build and evaluate AI features that solve a specific business problem — from language models to visual AI — with clear data boundaries, measurable quality, and costs you can predict.',
 		capabilities: [
 			'LLM Integration (chat, summarization, extraction)',
 			'Retrieval-Augmented Generation over Internal Documents',
+			'Image & Video Recognition',
+			'OCR & Document Vision',
+			'People Analytics (detection, counting) with privacy controls',
+			'Multimodal LLM Apps (images, screenshots, forms)',
 			'Document & Data Classification',
 			'Forecasting & Prediction Models',
 			'Data Pipelines & Feature Engineering',
@@ -372,7 +411,7 @@ export const services: Service[] = [
 			'Prompt & Cost Optimization',
 			'Privacy-aware Deployment (cloud or on-premise)',
 		],
-		techStack: ['Python', 'PyTorch', 'scikit-learn', 'LangChain', 'PostgreSQL + pgvector', 'FastAPI', 'Node.js', 'Docker'],
+		techStack: ['Python', 'PyTorch', 'scikit-learn', 'OpenCV', 'YOLO', 'LangChain', 'PostgreSQL + pgvector', 'FastAPI', 'Node.js', 'Docker'],
 		process: [
 			'We start by defining the decision or task the model must support, and how we will measure whether it does — before choosing a model.',
 			'We build a small, testable slice first: a representative dataset, an evaluation set, and a working prototype your team can try with real inputs.',
@@ -389,9 +428,50 @@ export const services: Service[] = [
 				answer:
 					'Not always. Many use cases start with an existing language model plus your documents. Custom training is recommended only when evaluation shows it is needed.',
 			},
+			{
+				question: 'Do you work with images and video?',
+				answer:
+					'Yes. We build image and video recognition, OCR and document vision, people detection and counting, and multimodal apps where a language model reads images, screenshots or forms.',
+			},
+			{
+				question: 'How do you handle face and personal data?',
+				answer:
+					'We run models on-premise or in a cloud region in your country, so personal data never leaves your jurisdiction, and we set consent and retention rules per project. This supports compliance with Indonesia\'s PDP Law, GDPR and similar regulations.',
+			},
+		],
+		showcase: [
+			{
+				name: 'ExploiterID',
+				role: 'Our product',
+				blurb: 'Our own security platform: a CVE monitoring API and open security tools.',
+				href: 'https://exploiter.id/',
+			},
+			{
+				name: 'RoxyAI Router',
+				role: 'Joint project · ExploiterID × 99syn',
+				blurb: 'An LLM router that sends each request to the model that fits its cost, speed and quality budget.',
+			},
+			{
+				name: 'Dahono Labs',
+				role: 'Research collaboration',
+				blurb: 'An AI platform for contract and regulation analysis.',
+				href: 'https://labs.dahono.com/',
+			},
+		],
+		partners: [
+			{
+				name: 'Netra',
+				blurb: 'AI inference platform — fast, efficient model serving through one API.',
+				href: 'https://netra.sh/',
+			},
+			{
+				name: 'Perfect10',
+				blurb: 'AI consultancy building data-connected agents and workflow automation.',
+				href: 'https://perfect10.id/',
+			},
 		],
 		engagementNote:
-			'We have delivered AI and machine-learning projects for several clients under non-disclosure agreements, so their names and details are not published here. We are glad to walk you through relevant engagements, anonymised, on a call.',
+			'Beyond the work above, we have delivered AI and machine-learning projects for several clients under non-disclosure agreements, so their names and details are not published here. We are glad to walk you through relevant engagements, anonymised, on a call.',
 		wpCategory: 'ai',
 		contactValue: 'ai',
 		contactLabel: 'Applied AI (AI/ML)',
@@ -399,7 +479,101 @@ export const services: Service[] = [
 		workLinkLabel: 'Our AI Engagements',
 		metaTitle: 'Applied AI — AI & Machine Learning Engineering',
 		metaDescription:
-			'SABAKO builds AI and machine-learning features: LLM integration, retrieval over company documents, classification and prediction pipelines, with evaluation built in.',
+			'SABAKO builds AI and machine-learning features: LLM integration, retrieval over company documents, visual AI and computer vision, classification and prediction pipelines, with evaluation built in.',
+		// DRAFT — owner review required (Bahasa Indonesia copy)
+		id: {
+			name: 'Jasa Pengembangan AI & Machine Learning',
+			navLabel: 'AI Terapan',
+			tagline: 'Fitur AI, Pipeline ML & Integrasi LLM',
+			summary:
+				'SABAKO membangun fitur AI dan machine learning ke dalam software bisnis — integrasi LLM, pencarian atas dokumen perusahaan, AI visual untuk gambar dan video, serta pipeline data untuk prediksi dan klasifikasi.',
+			description:
+				'Kami mengubah AI dari sekadar demo menjadi fitur yang andal — mengintegrasikan model bahasa, retrieval, computer vision, dan model machine learning ke produk dan alur kerja yang sudah dipakai tim Anda.',
+			shortDescription: 'Integrasi LLM, AI visual, dan pipeline ML.',
+			highlights: ['Integrasi LLM', 'AI Visual & Computer Vision', 'Pencarian atas Data Perusahaan', 'Pipeline Model ML'],
+			h1: 'AI & Machine Learning, Langsung di Produk Anda.',
+			intro:
+				'Kami merancang, membangun, dan mengevaluasi fitur AI untuk masalah bisnis yang spesifik — dari model bahasa hingga AI visual — dengan batas data yang jelas, kualitas yang terukur, dan biaya yang bisa diprediksi.',
+			capabilities: [
+				'Integrasi LLM (chat, ringkasan, ekstraksi)',
+				'Retrieval-Augmented Generation atas Dokumen Internal',
+				'Pengenalan Gambar & Video',
+				'OCR & Document Vision',
+				'People Analytics (deteksi, penghitungan) dengan kontrol privasi',
+				'Aplikasi LLM Multimodal (gambar, tangkapan layar, formulir)',
+				'Klasifikasi Dokumen & Data',
+				'Model Prediksi & Forecasting',
+				'Pipeline Data & Feature Engineering',
+				'Set Evaluasi & Pemantauan Kualitas',
+				'Optimasi Prompt & Biaya',
+				'Deployment yang Menjaga Privasi (cloud atau on-premise)',
+			],
+			process: [
+				'Kami mulai dengan menentukan keputusan atau tugas yang harus didukung model, dan cara mengukur apakah model berhasil — sebelum memilih model.',
+				'Kami membangun potongan kecil yang bisa diuji lebih dulu: dataset yang representatif, set evaluasi, dan prototipe yang bisa dicoba tim Anda dengan input nyata.',
+				'Setelah standar kualitas tercapai, kami menyiapkan fitur untuk produksi — monitoring, fallback, kontrol akses, dan batas biaya — lalu menyerahkan dokumentasi yang bisa dirawat tim Anda.',
+			],
+			faqs: [
+				{
+					question: 'Apakah Anda bisa bekerja dengan data perusahaan yang rahasia?',
+					answer:
+						'Bisa. Kami menentukan akses data sejak awal, dapat men-deploy model di akun cloud Anda sendiri atau on-premise, dan bekerja di bawah NDA.',
+				},
+				{
+					question: 'Apakah kami perlu punya data training sendiri?',
+					answer:
+						'Tidak selalu. Banyak kasus bisa dimulai dengan model bahasa yang sudah ada ditambah dokumen Anda. Training khusus hanya kami sarankan jika hasil evaluasi menunjukkan perlu.',
+				},
+				{
+					question: 'Apakah Anda menangani gambar dan video?',
+					answer:
+						'Ya. Kami membangun pengenalan gambar dan video, OCR dan document vision, deteksi dan penghitungan orang, serta aplikasi multimodal di mana model bahasa membaca gambar, tangkapan layar, atau formulir.',
+				},
+				{
+					question: 'Bagaimana Anda menangani data wajah dan data pribadi?',
+					answer:
+						'Kami menjalankan model secara on-premise atau di region cloud di negara Anda, sehingga data pribadi tidak keluar dari yurisdiksi Anda, dan kami menetapkan aturan persetujuan serta retensi per proyek. Ini mendukung kepatuhan terhadap UU PDP, GDPR, dan regulasi serupa.',
+				},
+			],
+			showcase: [
+				{
+					name: 'ExploiterID',
+					role: 'Produk kami',
+					blurb: 'Platform keamanan milik kami: API pemantauan CVE dan open security tools.',
+					href: 'https://exploiter.id/',
+				},
+				{
+					name: 'RoxyAI Router',
+					role: 'Proyek bersama · ExploiterID × 99syn',
+					blurb: 'Router LLM yang mengarahkan setiap permintaan ke model yang sesuai dengan anggaran biaya, kecepatan, dan kualitasnya.',
+				},
+				{
+					name: 'Dahono Labs',
+					role: 'Kolaborasi riset',
+					blurb: 'Platform AI untuk analisis kontrak dan regulasi.',
+					href: 'https://labs.dahono.com/',
+				},
+			],
+			partners: [
+				{
+					name: 'Netra',
+					blurb: 'Platform inferensi AI — menjalankan model dengan cepat dan efisien lewat satu API.',
+					href: 'https://netra.sh/',
+				},
+				{
+					name: 'Perfect10',
+					blurb: 'Konsultan AI yang membangun agen berbasis data dan otomasi alur kerja.',
+					href: 'https://perfect10.id/',
+				},
+			],
+			engagementNote:
+				'Selain karya di atas, kami telah mengerjakan proyek AI dan machine learning untuk beberapa klien di bawah perjanjian kerahasiaan (NDA), sehingga nama dan detailnya tidak kami publikasikan. Kami dengan senang hati menjelaskan proyek yang relevan secara anonim lewat panggilan.',
+			ctaLabel: 'Diskusikan Proyek AI',
+			workLinkLabel: 'Proyek AI Kami',
+			metaTitle: 'AI Terapan — Jasa Pengembangan AI & Machine Learning',
+			metaDescription:
+				'SABAKO membangun fitur AI dan machine learning: integrasi LLM, pencarian atas dokumen perusahaan, AI visual dan computer vision, serta pipeline klasifikasi dan prediksi, dengan evaluasi bawaan.',
+		},
 	},
 	// DRAFT — owner review required
 	{
