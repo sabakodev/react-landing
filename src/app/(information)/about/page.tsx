@@ -1,19 +1,17 @@
 import type { Metadata } from 'next'
+import { pageMetadata } from '@/lib/seo/metadata'
 import Image from 'next/image'
 import Link from 'next/link'
 import { TrackedLink } from '@/components/analytics/TrackedLink'
 import { ArrowRight, MapPin, Clock, Shield, Users } from 'lucide-react'
 
-export const metadata: Metadata = {
-	title: 'About',
+export const metadata: Metadata = pageMetadata({
+	// absolute: the title already names the brand, so the "| SABAKO" template is skipped
+	title: { absolute: 'About SABAKO — Software Engineering Partner in Jakarta, Serving SEA' },
 	description:
-		'Learn about SABAKO — our story, mission, values, and the team behind our digital products. Established in 2018, based in Jakarta.',
-	alternates: { canonical: 'https://sabako.id/about' },
-	openGraph: {
-		title: 'About SABAKO — IT Agency & Consulting',
-		description: 'Our story, mission, and team. Based in Jakarta since 2018.',
-	},
-}
+		'SABAKO is a software engineering partner based in Jakarta since 2018, building web platforms, mobile apps, IoT and AI for businesses across Southeast Asia.',
+	path: '/about',
+})
 
 const values = [
 	{

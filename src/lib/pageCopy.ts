@@ -10,6 +10,21 @@ export function localePrefix(locale: Locale): string {
 	return locale === 'id' ? '/id' : ''
 }
 
+/**
+ * The current locale of a pathname and its English / Bahasa Indonesia counterparts.
+ * Indonesian pages exist only for /id, /id/services and /id/services/[slug], so any
+ * other English path maps to the /id landing.
+ */
+export function localeCounterparts(pathname: string): { current: Locale; paths: Record<Locale, string> } {
+	const isId = pathname === '/id' || pathname.startsWith('/id/')
+	const en = isId ? pathname.slice(3) || '/' : pathname
+	const hasId = en === '/' || en === '/services' || en.startsWith('/services/')
+	return {
+		current: isId ? 'id' : 'en',
+		paths: { en, id: hasId ? `/id${en === '/' ? '' : en}` : '/id' },
+	}
+}
+
 /** Shared page copy (home, /services, service template) per locale. The `home*` keys exist only for the /id landing. */
 export const pageCopy = {
 	en: {

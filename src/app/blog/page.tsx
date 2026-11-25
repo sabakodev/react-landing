@@ -1,16 +1,16 @@
 import type { Metadata } from 'next'
+import { pageMetadata } from '@/lib/seo/metadata'
 import Link from 'next/link'
 import { ArrowRight, Calendar, User } from 'lucide-react'
 import { getPosts } from '@/lib/graphql/adapters/posts'
 import { BlogGrid } from '@/components/blog/BlogGrid'
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
 	title: 'Blog & Insights',
 	description:
 		'Articles, case studies, and technical insights from the SABAKO team — covering web development, mobile, IoT, and software architecture.',
-	alternates: { canonical: 'https://sabako.id/blog' },
-	openGraph: { title: 'Blog & Insights — SABAKO', description: 'Technical articles and case studies from SABAKO.' },
-}
+	path: '/blog',
+})
 
 export const revalidate = 60
 

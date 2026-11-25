@@ -1,18 +1,14 @@
 import type { Metadata } from 'next'
+import { pageMetadata } from '@/lib/seo/metadata'
 import { MapPin, Users, BriefcaseBusiness, Timer } from 'lucide-react'
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
 	title: 'Privacy Policy',
-	description:
-		'Learn how we handle your data and protect your privacy.',
-	alternates: { canonical: 'https://sabako.id/privacy' },
-	openGraph: {
-		title: 'Privacy Policy SABAKO — IT Agency & Consulting',
-		description: 'Learn how we handle your data and protect your privacy.',
-	},
-}
+	description: 'Learn how we handle your data and protect your privacy.',
+	path: '/privacy',
+})
 
 const values = [
 	{

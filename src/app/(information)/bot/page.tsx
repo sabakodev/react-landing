@@ -1,18 +1,13 @@
 import type { Metadata } from 'next'
+import { pageMetadata } from '@/lib/seo/metadata'
 import Link from 'next/link'
 import { ArrowRight, Bot, ShieldCheck, Ban, Mail } from 'lucide-react'
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
 	title: 'sabakobot and sabako-user',
-	description:
-		'What SABAKO crawlers do, how we use what they collect, and how to control or block them.',
-	alternates: { canonical: 'https://sabako.id/bot' },
-	openGraph: {
-		title: 'SABAKO Crawlers: sabakobot and sabako-user',
-		description:
-			'What SABAKO crawlers do, how we use what they collect, and how to control or block them.',
-	},
-}
+	description: 'What SABAKO crawlers do, how we use what they collect, and how to control or block them.',
+	path: '/bot',
+})
 
 const LAST_UPDATED = '2026-11-19'
 

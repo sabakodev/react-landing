@@ -1,11 +1,16 @@
 #!/usr/bin/env node
 /**
  * Crawl-health check: fetch the sitemap from <baseUrl>, then request every URL
- * as GPTBot and assert that each returns 200 with an <h1>, at least one
- * JSON-LD block that parses, and exactly one #org Organization node.
+ * as GPTBot and assert that each returns 200 with:
+ *   - exactly one <h1>
+ *   - at least one JSON-LD block that parses, and exactly one #org Organization node
+ *   - a <link rel="canonical">
+ *   - exactly one og:image and at least one twitter:image
+ *   - a twitter:title matching the <title> (TITLE_RULE below)
  *
  * Usage: node scripts/check-sitemap.mjs http://localhost:3000
  *        node scripts/check-sitemap.mjs https://sabako.id
+ *        CHECK_BASE_URL=http://localhost:3111 node scripts/check-sitemap.mjs
  *
  * Node 20+, no dependencies. Exits 1 on any failure.
  */
@@ -15,9 +20,12 @@ const USER_AGENT = 'Mozilla/5.0 AppleWebKit/537.36 (KHTML, like Gecko; compatibl
 const CONCURRENCY = 5
 const TIMEOUT_MS = 30_000
 
-const baseUrl = (process.argv[2] ?? '').replace(/\/+$/, '')
+const TITLE_SUFFIX = ' | SABAKO'
+const TITLE_RULE = `twitter:title must equal <title>, or equal it once the "${TITLE_SUFFIX}" template suffix is removed`
+
+const baseUrl = (process.argv[2] ?? process.env.CHECK_BASE_URL ?? '').replace(/\/+$/, '')
 if (!baseUrl) {
-	console.error('Usage: node scripts/check-sitemap.mjs <baseUrl>')
+	console.error('Usage: node scripts/check-sitemap.mjs <baseUrl>  (or set CHECK_BASE_URL)')
 	process.exit(1)
 }
 
@@ -43,6 +51,45 @@ function countOrganizations(node) {
 	return n
 }
 
+function decodeEntities(text) {
+	return text
+		.replace(/&#x([0-9a-f]+);/gi, (_, hex) => String.fromCodePoint(parseInt(hex, 16)))
+		.replace(/&#(\d+);/g, (_, dec) => String.fromCodePoint(Number(dec)))
+		.replace(/&quot;/g, '"')
+		.replace(/&lt;/g, '<')
+		.replace(/&gt;/g, '>')
+		.replace(/&amp;/g, '&')
+}
+
+/** All <meta> tags in the HTML as attribute maps. */
+function metaTags(html) {
+	return [...html.matchAll(/<meta\s[^>]*>/gi)].map((m) =>
+		Object.fromEntries([...m[0].matchAll(/([\w:-]+)="([^"]*)"/g)].map((a) => [a[1].toLowerCase(), decodeEntities(a[2])])),
+	)
+}
+
+function checkHead(html) {
+	const errors = []
+	const metas = metaTags(html)
+	const byKey = (key) => metas.filter((m) => m.property === key || m.name === key).map((m) => m.content)
+
+	if (!/<link[^>]+rel="canonical"[^>]*>/i.test(html)) errors.push('no <link rel="canonical">')
+
+	const ogImages = byKey('og:image')
+	if (ogImages.length !== 1) errors.push(`expected 1 og:image, found ${ogImages.length}`)
+	if (byKey('twitter:image').length === 0) errors.push('no twitter:image')
+
+	const titleMatch = html.match(/<title[^>]*>([\s\S]*?)<\/title>/i)
+	const title = titleMatch ? decodeEntities(titleMatch[1]).trim() : null
+	const [twitterTitle] = byKey('twitter:title')
+	if (title === null) errors.push('no <title>')
+	else if (twitterTitle === undefined) errors.push('no twitter:title')
+	else if (twitterTitle !== title && `${twitterTitle}${TITLE_SUFFIX}` !== title) {
+		errors.push(`twitter:title "${twitterTitle}" does not match <title> "${title}"`)
+	}
+	return errors
+}
+
 async function checkPage(url) {
 	const errors = []
 	let res
@@ -57,7 +104,10 @@ async function checkPage(url) {
 	}
 	const html = await res.text()
 
-	if (!/<h1[\s>]/i.test(html)) errors.push('no <h1> in raw HTML')
+	const h1s = (html.match(/<h1[\s>]/gi) ?? []).length
+	if (h1s !== 1) errors.push(`expected exactly 1 <h1> in raw HTML, found ${h1s}`)
+
+	errors.push(...checkHead(html))
 
 	const blocks = [...html.matchAll(/<script[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi)].map((m) => m[1])
 	if (blocks.length === 0) errors.push('no JSON-LD block')
@@ -98,6 +148,7 @@ async function main() {
 	}
 
 	console.log(`Checking ${urls.length} URLs from ${sitemapUrl} as GPTBot…`)
+	console.log(`Title rule: ${TITLE_RULE}.`)
 
 	const failures = []
 	let next = 0

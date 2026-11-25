@@ -1,17 +1,22 @@
 import type { Metadata } from 'next'
+import { pageMetadata } from '@/lib/seo/metadata'
 import Image from 'next/image'
 import { clients } from './_data'
 import Link from 'next/link'
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
 	title: 'Clients',
-	alternates: { canonical: 'https://sabako.id/clients' },
-}
+	description:
+		'Companies and organisations SABAKO has worked with, from consumer brands and banks to public institutions.',
+	path: '/clients',
+})
 
 export default function Home() {
 	return (
-		<main className="relative place-items-center lg:max-w-5xl w-full mb-16">
+		// The root layout already renders <main>
+		<div className="relative place-items-center lg:max-w-5xl w-full mb-16">
 			<div className="relative place-items-center lg:max-w-5xl w-full mb-16">
+				<h1 className="sr-only">SABAKO clients</h1>
 				<Image
 					src="/sky.jpg"
 					alt="SABAKO"
@@ -34,6 +39,6 @@ export default function Home() {
 					}
 				</div>
 			</div>
-		</main>
+		</div>
 	)
 }

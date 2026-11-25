@@ -1,17 +1,13 @@
 import type { Metadata } from 'next'
+import { pageMetadata } from '@/lib/seo/metadata'
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
 	title: 'Terms of Use',
-	description:
-		'Terms and conditions for using the SABAKO website and services.',
-	alternates: { canonical: 'https://sabako.id/terms' },
-	openGraph: {
-		title: 'Terms of Use — SABAKO',
-		description: 'Terms and conditions for using the SABAKO website and services.',
-	},
-}
+	description: 'Terms and conditions for using the SABAKO website and services.',
+	path: '/terms',
+})
 
 export default function TermsPage() {
 	return (

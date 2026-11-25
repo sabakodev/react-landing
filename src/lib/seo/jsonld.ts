@@ -18,7 +18,20 @@ type JsonLdNode = Record<string, unknown>
 
 const orgRef = { '@id': ORG_ID }
 
-const areaServed = { '@type': 'Country', name: 'Indonesia' }
+const areaServed = [
+	{ '@type': 'Place', name: 'Southeast Asia' },
+	...['Indonesia', 'Singapore', 'Malaysia', 'Thailand', 'Vietnam', 'Philippines'].map((name) => ({
+		'@type': 'Country',
+		name,
+	})),
+]
+
+// Same three profiles are linked in components/global/Footer.tsx (a client component, so it cannot import this server module)
+const SOCIAL_PROFILES = [
+	'https://www.linkedin.com/company/sabako',
+	'https://www.instagram.com/sabako_digital/',
+	'https://www.facebook.com/sabako.dev',
+]
 
 function serviceId(service: Service, locale: Locale = 'en'): string {
 	return `${SITE_URL}${serviceHref(service, locale)}#service`
@@ -67,7 +80,7 @@ export function organization(): JsonLdNode {
 				},
 			})),
 		},
-		sameAs: [],
+		sameAs: SOCIAL_PROFILES,
 	}
 }
 

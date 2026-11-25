@@ -158,9 +158,9 @@ export const services: Service[] = [
 		contactLabel: 'Digital Experiences (Web)',
 		ctaLabel: 'Start a Web Project',
 		workLinkLabel: 'See Our Web Work',
-		metaTitle: 'Digital Experiences — Web Development',
+		metaTitle: 'Enterprise Web Development & SaaS Platforms — Digital Experiences',
 		metaDescription:
-			'SABAKO builds high-performance websites, web applications, SaaS platforms, and e-commerce solutions. Corporate sites to complex enterprise systems.',
+			'Enterprise web development in Jakarta: high-performance websites, web applications, SaaS platforms and e-commerce, from corporate sites to complex systems.',
 		showPricing: true,
 		// DRAFT — owner review required (Bahasa Indonesia copy)
 		id: {
@@ -253,9 +253,9 @@ export const services: Service[] = [
 		contactLabel: 'Mobile Products (App)',
 		ctaLabel: 'Start a Mobile Project',
 		workLinkLabel: 'See Our App Work',
-		metaTitle: 'Mobile Products — App Development',
+		metaTitle: 'iOS & Android App Development — Mobile Products',
 		metaDescription:
-			'SABAKO builds native and cross-platform mobile apps for iOS and Android. From consumer apps to enterprise mobile solutions.',
+			'iOS and Android app development in Jakarta: native and cross-platform mobile apps, from consumer apps to enterprise mobile solutions.',
 		// DRAFT — owner review required (Bahasa Indonesia copy)
 		id: {
 			name: 'Jasa Pembuatan Aplikasi Mobile',
@@ -336,9 +336,9 @@ export const services: Service[] = [
 		contactLabel: 'Connected Systems (IoT)',
 		ctaLabel: 'Discuss an IoT Idea',
 		workLinkLabel: 'See Our IoT Research',
-		metaTitle: 'Connected Systems — IoT Research & Prototyping',
+		metaTitle: 'IoT Research, Prototyping & Consulting — Connected Systems',
 		metaDescription:
-			'SABAKO offers IoT research, prototyping and architecture consulting — embedded firmware proofs-of-concept, protocol design, and connected-system advisory.',
+			'IoT research, prototyping and architecture consulting in Jakarta: embedded firmware proofs-of-concept, protocol design and connected-system advisory.',
 		// DRAFT — owner review required (Bahasa Indonesia copy)
 		id: {
 			name: 'Jasa IoT: Riset & Prototipe',
@@ -477,9 +477,9 @@ export const services: Service[] = [
 		contactLabel: 'Applied AI (AI/ML)',
 		ctaLabel: 'Discuss an AI Project',
 		workLinkLabel: 'Our AI Engagements',
-		metaTitle: 'Applied AI — AI & Machine Learning Engineering',
+		metaTitle: 'LLM Integration & Machine Learning Engineering — Applied AI',
 		metaDescription:
-			'SABAKO builds AI and machine-learning features: LLM integration, retrieval over company documents, visual AI and computer vision, classification and prediction pipelines, with evaluation built in.',
+			'AI and machine-learning engineering in Jakarta: LLM integration, retrieval over company documents, computer vision, and classification and prediction pipelines.',
 		// DRAFT — owner review required (Bahasa Indonesia copy)
 		id: {
 			name: 'Jasa Pengembangan AI & Machine Learning',
