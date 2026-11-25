@@ -47,6 +47,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 			alternates: languages('/services', '/id/services'),
 		},
 		{
+			url: `${baseUrl}/products`,
+			changeFrequency: 'monthly',
+			priority: 0.8,
+		},
+		{
+			url: `${baseUrl}/clients`,
+			changeFrequency: 'yearly',
+			priority: 0.5,
+		},
+		{
 			url: `${baseUrl}/privacy`,
 			changeFrequency: 'yearly',
 			priority: 0.5,

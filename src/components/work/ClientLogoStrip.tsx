@@ -19,7 +19,7 @@ function toAltLabel(raw: string) {
 		.replace(/\b\w/g, (c) => c.toUpperCase())
 }
 
-export function ClientLogoStrip() {
+export function ClientLogoStrip({ label = 'Trusted by leading organisations' }: { label?: string }) {
 	const trackRef = useRef<HTMLDivElement>(null)
 	const hoverRef = useRef(false)
 
@@ -66,7 +66,7 @@ export function ClientLogoStrip() {
 			className="py-12 border-t border-(--border) overflow-hidden"
 		>
 			<p className="text-xs font-mono uppercase tracking-widest text-(--text-subtle) text-center mb-8">
-				Trusted by leading organisations
+				{label}
 			</p>
 
 			<div

@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { pageMetadata } from '@/lib/seo/metadata'
 import Link from 'next/link'
 import { TrackedLink } from '@/components/analytics/TrackedLink'
 import { ArrowRight } from 'lucide-react'
@@ -7,13 +8,12 @@ import type { Work } from '@/lib/graphql/adapters/works'
 import { WorksGrid } from '@/components/work/WorksGrid'
 import { ClientLogoStrip } from '@/components/work/ClientLogoStrip'
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
 	title: 'Work',
 	description:
 		"Explore SABAKO's portfolio of enterprise web applications, mobile products, and IoT solutions delivered for clients across Indonesia.",
-	alternates: { canonical: 'https://sabako.id/work' },
-	openGraph: { title: 'Work & Portfolio — SABAKO', description: 'Selected projects from SABAKO.' },
-}
+	path: '/work',
+})
 
 export const revalidate = 3600
 

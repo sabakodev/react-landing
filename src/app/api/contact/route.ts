@@ -27,6 +27,8 @@ export type ContactSubmission = {
 		model?: string
 		product?: string
 	}
+	/** Preferred meeting date, YYYY-MM-DD */
+	meetingDate?: string
 	/** e.g. IP address, user-agent — omit if privacy-sensitive */
 	meta?: {
 		userAgent?: string
@@ -46,6 +48,7 @@ type ContactFormPayload = {
 	tier?: string
 	model?: string
 	product?: string
+	meetingDate?: string
 }
 
 // ---------------------------------------------------------------------------
@@ -70,6 +73,28 @@ function allowed(value: unknown, list: string[]): string | undefined {
 
 function isValidEmail(email: string): boolean {
 	return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+}
+
+const DAY_MS = 24 * 60 * 60 * 1000
+
+/**
+ * Validates an optional YYYY-MM-DD meeting date: a real calendar date, no earlier
+ * than yesterday (UTC, so visitors ahead of UTC can still pick their "today") and
+ * no more than 365 days ahead.
+ */
+function validateMeetingDate(value: string): string | null {
+	if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return 'Preferred meeting date must be a valid date.'
+	const [year, month, day] = value.split('-').map(Number)
+	const date = Date.UTC(year, month - 1, day)
+	const parsed = new Date(date)
+	if (parsed.getUTCFullYear() !== year || parsed.getUTCMonth() !== month - 1 || parsed.getUTCDate() !== day) {
+		return 'Preferred meeting date must be a valid date.'
+	}
+	const now = new Date()
+	const todayUtc = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate())
+	if (date < todayUtc - DAY_MS) return 'Preferred meeting date cannot be in the past.'
+	if (date > todayUtc + 365 * DAY_MS) return 'Preferred meeting date must be within the next year.'
+	return null
 }
 
 function validate(payload: ContactFormPayload): string | null {
@@ -99,6 +124,7 @@ async function sendDiscordWebhook(entry: ContactSubmission) {
 			...(entry.segment.tier ? [{ name: 'Tier', value: entry.segment.tier, inline: true }] : []),
 			...(entry.segment.model ? [{ name: 'Model', value: entry.segment.model, inline: true }] : []),
 			...(entry.segment.product ? [{ name: 'Product', value: entry.segment.product, inline: true }] : []),
+			...(entry.meetingDate ? [{ name: 'Meeting Date', value: entry.meetingDate, inline: true }] : []),
 			{ name: 'Location', value: `${entry.meta?.city || 'Unknown'}, ${entry.meta?.country || 'Unknown'}`, inline: true },
 			{ name: 'Message', value: entry.message || 'N/A' },
 		],
@@ -142,6 +168,7 @@ async function sendTelegramWebhook(entry: ContactSubmission) {
 		...(entry.segment.tier ? [{ label: 'Tier', content: entry.segment.tier }] : []),
 		...(entry.segment.model ? [{ label: 'Model', content: entry.segment.model }] : []),
 		...(entry.segment.product ? [{ label: 'Product', content: entry.segment.product }] : []),
+		...(entry.meetingDate ? [{ label: 'Meeting Date', content: entry.meetingDate }] : []),
 		{
 			label: 'Location',
 			content: `${entry.meta?.city || 'Unknown'}, ${entry.meta?.country || 'Unknown'}`
@@ -189,11 +216,19 @@ export async function POST(req: NextRequest) {
 		tier: allowed(raw.tier, TIERS),
 		model: allowed(raw.model, MODELS),
 		product: allowed(raw.product, PRODUCTS),
+		meetingDate: sanitize(raw.meetingDate) || undefined,
 	}
 
 	const validationError = validate(payload)
 	if (validationError) {
 		return NextResponse.json({ error: validationError }, { status: 422 })
+	}
+
+	if (payload.meetingDate) {
+		const meetingDateError = validateMeetingDate(payload.meetingDate)
+		if (meetingDateError) {
+			return NextResponse.json({ error: meetingDateError, field: 'meetingDate' }, { status: 422 })
+		}
 	}
 
 	const ip = req.headers.get('cf-connecting-ip') ?? (req.headers.get('x-forwarded-for') ?? '127.0.0.1').split(',')[0].trim()
@@ -211,6 +246,7 @@ export async function POST(req: NextRequest) {
 			...(payload.model && { model: payload.model }),
 			...(payload.product && { product: payload.product }),
 		},
+		...(payload.meetingDate && { meetingDate: payload.meetingDate }),
 		meta: {
 			userAgent: req.headers.get('user-agent') ?? '',
 			ipAddress: ip,

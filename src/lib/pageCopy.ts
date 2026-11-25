@@ -10,6 +10,21 @@ export function localePrefix(locale: Locale): string {
 	return locale === 'id' ? '/id' : ''
 }
 
+/**
+ * The current locale of a pathname and its English / Bahasa Indonesia counterparts.
+ * Indonesian pages exist only for /id, /id/services and /id/services/[slug], so any
+ * other English path maps to the /id landing.
+ */
+export function localeCounterparts(pathname: string): { current: Locale; paths: Record<Locale, string> } {
+	const isId = pathname === '/id' || pathname.startsWith('/id/')
+	const en = isId ? pathname.slice(3) || '/' : pathname
+	const hasId = en === '/' || en === '/services' || en.startsWith('/services/')
+	return {
+		current: isId ? 'id' : 'en',
+		paths: { en, id: hasId ? `/id${en === '/' ? '' : en}` : '/id' },
+	}
+}
+
 /** Shared page copy (home, /services, service template) per locale. The `home*` keys exist only for the /id landing. */
 export const pageCopy = {
 	en: {
@@ -41,6 +56,16 @@ export const pageCopy = {
 		showcaseHeading: 'Selected Work',
 		partnersHeading: 'Partners',
 		externalLinkLabel: 'opens in a new tab',
+		logoStripLabel: 'Trusted by teams at',
+		outcomesEyebrow: 'Outcomes',
+		outcomesHeading: 'What you get.',
+		processEyebrow: 'Process',
+		processHeading: 'How we work.',
+		platformEyebrow: 'Platform',
+		chooseWhen: 'Choose it when',
+		tradeOff: 'Trade-off',
+		technicalHeading: 'For your technical team',
+		technicalSummary: 'Full capability list and technology stack',
 		ideaEyebrow: '// Something unusual?',
 		ideaHeading: 'Any wild idea?',
 		ideaVerbs: 'Name it.|Dream it.|Sketch it.',
@@ -85,6 +110,16 @@ export const pageCopy = {
 		showcaseHeading: 'Karya Pilihan',
 		partnersHeading: 'Mitra',
 		externalLinkLabel: 'terbuka di tab baru',
+		logoStripLabel: 'Dipercaya oleh tim di',
+		outcomesEyebrow: 'Hasil',
+		outcomesHeading: 'Yang Anda dapatkan.',
+		processEyebrow: 'Proses',
+		processHeading: 'Cara kami bekerja.',
+		platformEyebrow: 'Platform',
+		chooseWhen: 'Pilih jika',
+		tradeOff: 'Konsekuensi',
+		technicalHeading: 'Untuk tim teknis Anda',
+		technicalSummary: 'Daftar kemampuan lengkap dan teknologi yang kami pakai',
 		ideaEyebrow: '// Sesuatu yang tidak biasa?',
 		ideaHeading: 'Punya ide gila?',
 		ideaVerbs: 'Sebutkan.|Impikan.|Coret-coret.',

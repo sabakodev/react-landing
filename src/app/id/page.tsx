@@ -3,7 +3,7 @@ import { TrackedLink } from '@/components/analytics/TrackedLink'
 import { ArrowRight, Mail, Sparkles } from 'lucide-react'
 import { ServicesSection } from '@/components/home/ServicesSection'
 import { SITE_URL } from '@/lib/seo/jsonld'
-import { baseOpenGraph, localeAlternates } from '@/lib/seo/metadata'
+import { baseOpenGraph, localeAlternates, twitterCard } from '@/lib/seo/metadata'
 import { pageCopy } from '@/lib/pageCopy'
 import { serviceSummaries } from '@/lib/services'
 
@@ -20,6 +20,7 @@ export const metadata: Metadata = {
 		title: copy.homeMetaTitle,
 		description: copy.homeIntro,
 	},
+	twitter: twitterCard(copy.homeMetaTitle, copy.homeIntro),
 }
 
 /** Focused Bahasa Indonesia landing: hero + services + consultation CTA. */

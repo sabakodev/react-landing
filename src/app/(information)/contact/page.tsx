@@ -1,21 +1,18 @@
 import type { Metadata } from 'next'
+import { pageMetadata } from '@/lib/seo/metadata'
 import { Mail, Phone, MapPin, Clock, ArrowRight } from 'lucide-react'
 import OfficeMap from '@/components/contact/OfficeMap'
 import { Suspense } from 'react'
-import ContactForm from '@/components/contact/ContactForm'
+import ContactForm, { ContactFormHeading } from '@/components/contact/ContactForm'
 import { TrackedLink } from '@/components/analytics/TrackedLink'
 import { serviceSummaries } from '@/lib/services'
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
 	title: 'Contact',
 	description:
 		'Get in touch with SABAKO for business inquiries, project consultations, or partnerships. Reach us via WhatsApp, email, or visit our Jakarta office.',
-	alternates: { canonical: 'https://sabako.id/contact' },
-	openGraph: {
-		title: 'Contact SABAKO',
-		description: 'Start a project or inquiry — reach our team directly.',
-	},
-}
+	path: '/contact',
+})
 
 const contacts = [
 	{ label: 'WhatsApp', value: '+62 857-6061-6555', href: 'https://wa.me/6285760616555', icon: Phone },
@@ -26,7 +23,7 @@ const contacts = [
 
 export default function ContactPage() {
 	return (
-		<main className="min-h-screen">
+		<div className="min-h-screen">
 			<div className="min-h-screen grid grid-cols-1 lg:grid-cols-2">
 
 				{/* RIGHT — Form (DOM first for mobile tab order) */}
@@ -35,12 +32,21 @@ export default function ContactPage() {
 					aria-labelledby="inquiry-form-heading"
 				>
 					<div className="w-full max-w-md">
-						<p className="text-xs font-mono uppercase tracking-widest text-(--brand) mb-2">
-							Start a Project
-						</p>
-						<h1 id="inquiry-form-heading" className="text-3xl font-bold text-(--text) mb-8 leading-snug">
-							Let&apos;s build something.
-						</h1>
+						{/* Heading reads ?intent=meeting; the fallback is the default copy so the static HTML keeps an h1 */}
+						<Suspense
+							fallback={
+								<>
+									<p className="text-xs font-mono uppercase tracking-widest text-(--brand) mb-2">
+										Start a Project
+									</p>
+									<h1 id="inquiry-form-heading" className="text-3xl font-bold text-(--text) mb-8 leading-snug">
+										Let&apos;s build something.
+									</h1>
+								</>
+							}
+						>
+							<ContactFormHeading />
+						</Suspense>
 						{/* useSearchParams needs a Suspense boundary, or the whole page renders client-side only */}
 						<Suspense fallback={null}>
 							<ContactForm services={serviceSummaries()} />
@@ -117,6 +123,6 @@ export default function ContactPage() {
 				</section>
 
 			</div>
-		</main>
+		</div>
 	)
 }

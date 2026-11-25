@@ -5,7 +5,8 @@ import { TrackedLink } from '@/components/analytics/TrackedLink'
 import { ArrowLeft, Calendar, Clock, ArrowRight } from 'lucide-react'
 import { BlogPost, getPost, getPosts } from '@/lib/graphql/adapters/posts'
 import { JsonLd } from '@/components/seo/JsonLd'
-import { blogPosting } from '@/lib/seo/jsonld'
+import { blogPosting, breadcrumb } from '@/lib/seo/jsonld'
+import { pageMetadata } from '@/lib/seo/metadata'
 
 // Allow images from WP CMS domain
 export const revalidate = 600
@@ -21,16 +22,19 @@ export async function generateMetadata(props: { params: Promise<{ slug: string }
 	const post = await getPost(params.slug)
 	if (!post) return { title: 'Post Not Found' }
 
+	const meta = pageMetadata({ title: post.title, description: post.excerpt, path: `/blog/${params.slug}` })
 	return {
-		title: post.title,
-		description: post.excerpt,
-		alternates: { canonical: `https://sabako.id/blog/${params.slug}` },
+		...meta,
+		// Without a cover image, og:image and twitter:image fall back to app/opengraph-image
 		openGraph: {
-			title: `${post.title} — SABAKO Blog`,
-			description: post.excerpt,
+			...meta.openGraph,
 			type: 'article',
 			publishedTime: post.date,
 			...(post.modified ? { modifiedTime: post.modified } : {}),
+			...(post.coverImage ? { images: [{ url: post.coverImage, alt: post.coverImageAlt }] } : {}),
+		},
+		twitter: {
+			...meta.twitter,
 			...(post.coverImage ? { images: [{ url: post.coverImage, alt: post.coverImageAlt }] } : {}),
 		},
 		category: post.category,
@@ -55,7 +59,18 @@ export default async function BlogPostPage(props: { params: Promise<{ slug: stri
 
 	return (
 		<article>
-			{post && <JsonLd data={blogPosting(post)} />}
+			{post && (
+				<JsonLd
+					data={[
+						blogPosting(post),
+						breadcrumb([
+							{ name: 'Home', path: '/' },
+							{ name: 'Blog', path: '/blog' },
+							{ name: post.title, path: `/blog/${post.slug}` },
+						]),
+					]}
+				/>
+			)}
 			{/* Header */}
 			<header className="border-b border-(--border) pt-32 pb-16">
 				<div className="mx-auto max-w-3xl px-6 lg:px-8">

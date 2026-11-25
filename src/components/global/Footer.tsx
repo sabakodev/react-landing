@@ -4,12 +4,15 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { Mail, MapPin, Phone } from 'lucide-react'
 import { useButtonTracking } from '@/lib/analytics/useButtonTracking'
+import { TrackedLink } from '@/components/analytics/TrackedLink'
+import { LocaleSwitcher } from '@/components/global/LocaleSwitcher'
 import type { ServiceSummary } from '@/lib/services'
 
 const buildFooterLinks = (services: ServiceSummary[]) => ({
 	Company: [
 		{ label: 'Home', href: '/' },
 		{ label: 'About', href: '/about' },
+		{ label: 'Products', href: '/products' },
 		{ label: 'Work', href: '/work' },
 		{ label: 'Blog', href: '/blog' },
 		{ label: 'Contact', href: '/contact' },
@@ -21,6 +24,38 @@ const buildFooterLinks = (services: ServiceSummary[]) => ({
 		{ label: 'Terms of Use', href: '/terms' },
 	],
 })
+
+// Same profiles as `sameAs` in src/lib/seo/jsonld.ts. Lucide's brand icons are deprecated, so the
+// glyphs are inlined here (paths copied from lucide's linkedin/instagram/facebook icons).
+const socialLinks = [
+	{
+		label: 'LinkedIn',
+		href: 'https://www.linkedin.com/company/sabako',
+		icon: (
+			<>
+				<path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+				<rect width="4" height="12" x="2" y="9" />
+				<circle cx="4" cy="4" r="2" />
+			</>
+		),
+	},
+	{
+		label: 'Instagram',
+		href: 'https://www.instagram.com/sabako_digital/',
+		icon: (
+			<>
+				<rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+				<path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+				<line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
+			</>
+		),
+	},
+	{
+		label: 'Facebook',
+		href: 'https://www.facebook.com/sabako.dev',
+		icon: <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />,
+	},
+]
 
 /** `serviceSummaries` comes from the server so the catalog never ships in client JS. */
 export function Footer({ serviceSummaries }: { serviceSummaries: ServiceSummary[] }) {
@@ -57,7 +92,7 @@ export function Footer({ serviceSummaries }: { serviceSummaries: ServiceSummary[
 							</span>
 						</Link>
 						<p className="text-sm text-(--text-muted) leading-relaxed max-w-xs">
-							IT Agency & Consulting — building Digital Experiences, Mobile Products, Connected Systems and Applied AI for businesses worldwide.
+							Software engineering partner — building Digital Experiences, Mobile Products, Connected Systems and Applied AI for enterprises across Southeast Asia and beyond.
 						</p>
 						<p className="text-sm font-mono font-semibold text-(--brand)">
 							&ldquo;Beyond the Horizon&rdquo;
@@ -89,6 +124,36 @@ export function Footer({ serviceSummaries }: { serviceSummaries: ServiceSummary[
 								</span>
 							</span>
 						</div>
+						<ul className="flex items-center gap-2" role="list">
+							{socialLinks.map((social) => (
+								<li key={social.label}>
+									<TrackedLink
+										href={social.href}
+										label={social.label}
+										section="footer-social"
+										target="_blank"
+										rel="noopener noreferrer"
+										aria-label={`SABAKO on ${social.label} (opens in a new tab)`}
+										className="flex h-9 w-9 items-center justify-center border border-(--border) text-(--text-muted) hover:text-(--text) hover:border-(--border-strong) transition-colors"
+									>
+										<svg
+											xmlns="http://www.w3.org/2000/svg"
+											width={16}
+											height={16}
+											viewBox="0 0 24 24"
+											fill="none"
+											stroke="currentColor"
+											strokeWidth={2}
+											strokeLinecap="round"
+											strokeLinejoin="round"
+											aria-hidden="true"
+										>
+											{social.icon}
+										</svg>
+									</TrackedLink>
+								</li>
+							))}
+						</ul>
 					</div>
 
 					{/* Links */}
@@ -133,6 +198,7 @@ export function Footer({ serviceSummaries }: { serviceSummaries: ServiceSummary[
 					<p className="text-xs text-(--text-subtle) font-mono">
 						&copy; 2018 - {new Date().getFullYear()} All rights reserved.
 					</p>
+					<LocaleSwitcher section="footer-language" />
 					<p className="text-xs text-(--text-subtle)">
 						PT. SABAKO KREATIV DIGITAL is registered entity in Indonesia.
 					</p>

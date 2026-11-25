@@ -6,7 +6,8 @@ import { getWork, getWorks } from '@/lib/graphql/adapters/works'
 import { notFound } from 'next/navigation'
 import { OtherWorks } from '@/components/work/OtherWorks'
 import { JsonLd } from '@/components/seo/JsonLd'
-import { caseStudy } from '@/lib/seo/jsonld'
+import { breadcrumb, caseStudy } from '@/lib/seo/jsonld'
+import { pageMetadata } from '@/lib/seo/metadata'
 
 type Props = { params: Promise<{ slug: string }> }
 
@@ -27,15 +28,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
 	const params = await props.params
 	const work = await getWork(params.slug)
 	if (!work) return { title: 'Project Not Found' }
-	return {
-		title: `${work.title} — Case Study`,
-		description: work.description,
-		alternates: { canonical: `https://sabako.id/work/${work.slug}` },
-		openGraph: {
-			title: `${work.title} — SABAKO`,
-			description: work.description,
-		},
-	}
+	return pageMetadata({ title: `${work.title} — Case Study`, description: work.description, path: `/work/${work.slug}` })
 }
 
 const typeIcon: Record<string, React.ElementType> = {
@@ -59,7 +52,16 @@ export default async function WorkCaseStudyPage(props: Props) {
 
 	return (
 		<article>
-			<JsonLd data={caseStudy(work)} />
+			<JsonLd
+				data={[
+					caseStudy(work),
+					breadcrumb([
+						{ name: 'Home', path: '/' },
+						{ name: 'Work', path: '/work' },
+						{ name: work.title, path: `/work/${work.slug}` },
+					]),
+				]}
+			/>
 			{/* Header */}
 			<header className="border-b border-(--border) pt-32 pb-16">
 				<div className="mx-auto max-w-7xl px-6 lg:px-8">
