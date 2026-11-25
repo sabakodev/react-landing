@@ -53,6 +53,8 @@ export type PlatformChoice = {
 	heading: string
 	intro: string
 	options: PlatformOption[]
+	/** Closing line under the comparison, linked to the contact page */
+	closing: string
 }
 
 /** Localized copy (Phase 3). Every field is optional so English-only entries compile. */
@@ -416,6 +418,7 @@ export const services: Service[] = [
 					tradeOff: 'Deep device features or heavy graphics may need native modules alongside the shared code.',
 				},
 			],
+			closing: 'Not sure which fits? We recommend one after the scoping call.',
 		},
 		heroVisual: 'phones',
 		showLogos: true,
@@ -534,6 +537,7 @@ export const services: Service[] = [
 						tradeOff: 'Fitur perangkat yang mendalam atau grafis berat mungkin butuh modul native di samping kode bersama.',
 					},
 				],
+				closing: 'Belum yakin mana yang cocok? Kami merekomendasikan salah satunya setelah sesi penentuan ruang lingkup.',
 			},
 			faqs: [
 				{
