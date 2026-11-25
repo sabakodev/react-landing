@@ -2,7 +2,10 @@
 
 import { useState, useEffect } from 'react'
 import { useConsent } from '@/lib/consent'
-import { X, ChevronRight } from 'lucide-react'
+import { X } from 'lucide-react'
+
+const choiceButton =
+	'inline-flex items-center justify-center px-4 py-2 bg-(--text) text-(--bg) text-xs font-medium hover:opacity-80 transition-opacity'
 
 /**
  * Cookie consent banner — shown until user makes a choice.
@@ -10,7 +13,7 @@ import { X, ChevronRight } from 'lucide-react'
  * the Footer's "Cookie Settings" button can open the modal at any time.
  */
 export function CookieConsentBanner() {
-	const { loaded, hasChosen, acceptAll } = useConsent()
+	const { loaded, hasChosen, acceptAll, rejectAll } = useConsent()
 	const [dismissed, setDismissed] = useState(false)
 	const [showPrefs, setShowPrefs] = useState(false)
 
@@ -30,39 +33,49 @@ export function CookieConsentBanner() {
 			{showBanner && (
 				<div
 					role="dialog"
-					aria-label="Cookie preferences"
+					aria-labelledby="cookie-notice-title"
+					aria-describedby="cookie-notice-body"
 					aria-modal="false"
-					className="fixed bottom-0 left-0 right-0 z-50 border-t border-(--border) bg-(--bg-subtle) backdrop-blur-xs"
+					className="fixed z-50 inset-x-0 bottom-0 border-t border-(--border) bg-(--bg) shadow-2xl px-4 py-3 md:inset-x-auto md:right-4 md:bottom-4 md:max-w-[26rem] md:border md:p-5"
 				>
-					<div className="mx-auto max-w-7xl px-6 lg:px-8 py-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-						<div className="flex-1 min-w-0 pr-4">
-							<p className="text-xs font-mono uppercase tracking-widest text-(--text-subtle) mb-1">
+					<div className="flex items-start justify-between gap-3">
+						<div className="min-w-0">
+							<p
+								id="cookie-notice-title"
+								className="hidden md:block text-xs font-mono uppercase tracking-widest text-(--text-subtle) mb-1"
+							>
 								Cookie Notice
 							</p>
-							<p className="text-sm text-(--text-muted) leading-relaxed">
-								We use essential analytics (Cloudflare) and optional Google Analytics to improve your experience. You can manage or opt out at any time.
+							<p id="cookie-notice-body" className="text-xs md:text-sm text-(--text-muted) leading-snug md:leading-relaxed">
+								<span className="md:hidden">
+									Google Analytics and Meta Pixel run only if you accept.
+								</span>
+								<span className="hidden md:inline">
+									Cloudflare Web Analytics (cookieless) is always on. With your consent we also use Google Analytics for usage statistics and Meta Pixel for ad measurement.
+								</span>
 							</p>
 						</div>
-						<div className="flex items-center gap-3 shrink-0">
-							<button
-								onClick={() => setShowPrefs(true)}
-								className="text-xs font-mono text-(--text-subtle) hover:text-(--text) transition-colors underline underline-offset-2"
-							>
-								Manage Preferences
+						<button
+							onClick={() => setDismissed(true)}
+							aria-label="Dismiss cookie notice"
+							className="shrink-0 p-1 -m-1 text-(--text-subtle) hover:text-(--text) transition-colors"
+						>
+							<X size={16} />
+						</button>
+					</div>
+					<div className="mt-3 flex items-center justify-between gap-3">
+						<button
+							onClick={() => setShowPrefs(true)}
+							className="text-xs font-mono text-(--text-subtle) hover:text-(--text) transition-colors underline underline-offset-2"
+						>
+							Preferences
+						</button>
+						<div className="flex items-center gap-2">
+							<button id="cookie-reject-all" onClick={rejectAll} className={choiceButton}>
+								Reject
 							</button>
-							<button
-								id="cookie-accept-all"
-								onClick={acceptAll}
-								className="inline-flex items-center gap-1.5 px-5 py-2.5 bg-(--text) text-(--bg) text-xs font-medium hover:opacity-80 transition-opacity"
-							>
-								Accept All <ChevronRight size={12} />
-							</button>
-							<button
-								onClick={() => setDismissed(true)}
-								aria-label="Dismiss cookie notice"
-								className="p-1.5 text-(--text-subtle) hover:text-(--text) transition-colors"
-							>
-								<X size={16} />
+							<button id="cookie-accept-all" onClick={acceptAll} className={choiceButton}>
+								Accept All
 							</button>
 						</div>
 					</div>
@@ -76,12 +89,45 @@ export function CookieConsentBanner() {
 	)
 }
 
+function Switch({ id, labelledBy, checked, onChange }: {
+	id: string
+	labelledBy: string
+	checked: boolean
+	onChange: (value: boolean) => void
+}) {
+	return (
+		<button
+			role="switch"
+			aria-checked={checked}
+			aria-labelledby={labelledBy}
+			id={id}
+			onClick={() => onChange(!checked)}
+			className={`relative w-10 h-5 transition-colors focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-(--brand) ${checked ? 'bg-(--brand)' : 'bg-(--border)'
+				}`}
+		>
+			<span
+				className={`absolute top-0.5 left-0.5 w-4 h-4 bg-white transition-transform ${checked ? 'translate-x-5' : 'translate-x-0'
+					}`}
+			/>
+		</button>
+	)
+}
+
 function CookiePreferencesModal({ onClose }: { onClose: () => void }) {
-	const { analyticsEnabled, setAnalytics } = useConsent()
+	const { analyticsEnabled, marketingEnabled, save } = useConsent()
 	const [localAnalytics, setLocalAnalytics] = useState(analyticsEnabled)
+	const [localMarketing, setLocalMarketing] = useState(marketingEnabled)
+
+	useEffect(() => {
+		const onKey = (e: KeyboardEvent) => {
+			if (e.key === 'Escape') onClose()
+		}
+		window.addEventListener('keydown', onKey)
+		return () => window.removeEventListener('keydown', onKey)
+	}, [onClose])
 
 	const handleSave = () => {
-		setAnalytics(localAnalytics)
+		save({ analytics: localAnalytics, marketing: localMarketing })
 		onClose()
 	}
 
@@ -138,25 +184,38 @@ function CookiePreferencesModal({ onClose }: { onClose: () => void }) {
 					{/* Analytics */}
 					<div className="flex items-start justify-between gap-4">
 						<div className="flex-1">
-							<p className="text-sm font-bold text-(--text) mb-1">Analytics</p>
+							<p id="analytics-toggle-label" className="text-sm font-bold text-(--text) mb-1">Analytics</p>
 							<p className="text-xs text-(--text-muted) leading-relaxed">
-								Google Analytics 4 — tracks page views and interactions using cookies (<code className="font-mono">_ga</code>, <code className="font-mono">_ga_*</code>). No personal data is shared.
+								Google Analytics 4 — page views and interactions, stored in cookies (<code className="font-mono">_ga</code>, <code className="font-mono">_ga_*</code>). Without consent, Google receives only cookieless, anonymous pings.
 							</p>
 						</div>
 						<div className="shrink-0">
-							<button
-								role="switch"
-								aria-checked={localAnalytics}
+							<Switch
 								id="analytics-toggle"
-								onClick={() => setLocalAnalytics(!localAnalytics)}
-								className={`relative w-10 h-5 transition-colors focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-(--brand) ${localAnalytics ? 'bg-(--brand)' : 'bg-(--border)'
-									}`}
-							>
-								<span
-									className={`absolute top-0.5 left-0.5 w-4 h-4 bg-white transition-transform ${localAnalytics ? 'translate-x-5' : 'translate-x-0'
-										}`}
-								/>
-							</button>
+								labelledBy="analytics-toggle-label"
+								checked={localAnalytics}
+								onChange={setLocalAnalytics}
+							/>
+						</div>
+					</div>
+
+					<div className="border-t border-(--border)" />
+
+					{/* Marketing */}
+					<div className="flex items-start justify-between gap-4">
+						<div className="flex-1">
+							<p id="marketing-toggle-label" className="text-sm font-bold text-(--text) mb-1">Marketing</p>
+							<p className="text-xs text-(--text-muted) leading-relaxed">
+								Meta Pixel — measures our ads on Facebook and Instagram using a cookie (<code className="font-mono">_fbp</code>). Not loaded at all without consent.
+							</p>
+						</div>
+						<div className="shrink-0">
+							<Switch
+								id="marketing-toggle"
+								labelledBy="marketing-toggle-label"
+								checked={localMarketing}
+								onChange={setLocalMarketing}
+							/>
 						</div>
 					</div>
 				</div>

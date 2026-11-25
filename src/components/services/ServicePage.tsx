@@ -4,6 +4,7 @@ import { ArrowRight, ArrowUpRight, CheckCircle } from 'lucide-react'
 import { OtherServices } from '@/components/services/OtherServices'
 import { PricingCatalog } from '@/components/services/PricingCatalog'
 import { JsonLd } from '@/components/seo/JsonLd'
+import { TrackedLink } from '@/components/analytics/TrackedLink'
 import { getWorks } from '@/lib/graphql/adapters/works'
 import type { Work } from '@/lib/graphql/adapters/works'
 import { breadcrumb, faqPage, service as serviceJsonLd } from '@/lib/seo/jsonld'
@@ -54,6 +55,7 @@ export async function ServicePage({ service: baseService, locale }: { service: S
 	const showcase = service.showcase ?? []
 	const partners = service.partners ?? []
 	const hasShowcase = showcase.length > 0 || partners.length > 0
+	const sectionSuffix = locale === 'id' ? '-id' : ''
 	const workLinkHref = hasShowcase ? '#showcase' : showEngagementNote ? '#client-engagements' : '/work'
 
 	return (
@@ -86,12 +88,12 @@ export async function ServicePage({ service: baseService, locale }: { service: S
 						{service.intro}
 					</p>
 					<div className="mt-8 flex flex-wrap gap-4">
-						<Link href={`/contact?service=${service.contactValue}`} className="inline-flex items-center gap-2 px-6 py-3 bg-(--text) text-(--bg) text-sm font-medium hover:opacity-80 transition-opacity group">
+						<TrackedLink href={`/contact?service=${service.contactValue}`} label={service.ctaLabel} section={`service-${service.slug}-hero${sectionSuffix}`} className="inline-flex items-center gap-2 px-6 py-3 bg-(--text) text-(--bg) text-sm font-medium hover:opacity-80 transition-opacity group">
 							{service.ctaLabel} <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
-						</Link>
-						<Link href={workLinkHref} className="inline-flex items-center gap-2 px-6 py-3 border border-(--border) text-(--text) text-sm font-medium hover:bg-(--bg-subtle) transition-colors">
+						</TrackedLink>
+						<TrackedLink href={workLinkHref} label={service.workLinkLabel} section={`service-${service.slug}-hero${sectionSuffix}`} className="inline-flex items-center gap-2 px-6 py-3 border border-(--border) text-(--text) text-sm font-medium hover:bg-(--bg-subtle) transition-colors">
 							{service.workLinkLabel}
-						</Link>
+						</TrackedLink>
 					</div>
 				</div>
 			</header>
@@ -250,12 +252,14 @@ export async function ServicePage({ service: baseService, locale }: { service: S
 							{copy.clientEngagements}
 						</p>
 						<p className="max-w-3xl text-base text-(--text-muted) leading-relaxed">{service.engagementNote}</p>
-						<Link
+						<TrackedLink
 							href={`/contact?service=${service.contactValue}`}
+							label={service.ctaLabel}
+							section={`service-${service.slug}-engagements${sectionSuffix}`}
 							className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-(--text) hover:text-(--brand) transition-colors group"
 						>
 							{service.ctaLabel} <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
-						</Link>
+						</TrackedLink>
 					</div>
 				</section>
 			)}

@@ -3,6 +3,7 @@ import { Mail, Phone, MapPin, Clock, ArrowRight } from 'lucide-react'
 import OfficeMap from '@/components/contact/OfficeMap'
 import { Suspense } from 'react'
 import ContactForm from '@/components/contact/ContactForm'
+import { TrackedLink } from '@/components/analytics/TrackedLink'
 import { serviceSummaries } from '@/lib/services'
 
 export const metadata: Metadata = {
@@ -64,9 +65,11 @@ export default function ContactPage() {
 							{contacts.map((c) => {
 								const Icon = c.icon
 								return (
-									<a
+									<TrackedLink
 										key={c.href}
 										href={c.href}
+										label={c.label}
+										section="contact-info"
 										target={c.icon === Phone ? '_blank' : undefined}
 										rel={c.icon === Phone ? 'noopener noreferrer' : undefined}
 										className="flex items-center justify-between py-3 group hover:bg-(--bg) transition-colors px-3 -mx-3"
@@ -81,7 +84,7 @@ export default function ContactPage() {
 											</span>
 										</span>
 										<ArrowRight size={12} className="text-(--text-subtle) group-hover:translate-x-1 group-hover:text-(--brand) transition-all" />
-									</a>
+									</TrackedLink>
 								)
 							})}
 						</div>

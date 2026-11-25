@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { TrackedLink } from '@/components/analytics/TrackedLink'
 import { ArrowRight } from 'lucide-react'
 import { serviceIcons } from '@/components/services/serviceIcons'
 import { bentoSpans } from '@/components/ui/gridSpans'
@@ -73,13 +74,15 @@ export function ServicesIndex({ locale }: { locale: Locale }) {
 					<p className="text-(--text-muted) mb-8 max-w-md">
 						{copy.consultBody}
 					</p>
-					<Link
+					<TrackedLink
 						href="/contact"
+						label={copy.consultButton}
+						section={locale === 'id' ? 'services-index-cta-id' : 'services-index-cta'}
 						className="inline-flex items-center gap-2 px-6 py-3 bg-(--text) text-(--bg) text-sm font-medium hover:opacity-80 transition-opacity group"
 					>
 						{copy.consultButton}
 						<ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
-					</Link>
+					</TrackedLink>
 				</div>
 			</section>
 		</article>

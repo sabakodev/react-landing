@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
-import { useConsent } from '@/lib/consent'
 import { trackEvent } from '@/lib/analytics/trackEvent'
 import { pageCopy } from '@/lib/pageCopy'
 import type { Locale } from '@/lib/pageCopy'
@@ -19,7 +18,6 @@ export function IdeaCard({ className = '', locale = 'en' }: { className?: string
 	const copy = pageCopy[locale]
 	const words = copy.ideaVerbs.split('|')
 	const reduceMotion = useReducedMotion()
-	const { analyticsEnabled } = useConsent()
 	const [index, setIndex] = useState(0)
 
 	useEffect(() => {
@@ -75,7 +73,7 @@ export function IdeaCard({ className = '', locale = 'en' }: { className?: string
 				<Link
 					href="/contact"
 					onClick={() =>
-						trackEvent('idea_card_consult_click', { page_section: 'home-services', locale }, analyticsEnabled)
+						trackEvent('idea_card_consult_click', { page_section: 'home-services', locale })
 					}
 					className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-(--text) text-(--bg) text-sm font-medium hover:opacity-80 transition-opacity group"
 				>

@@ -23,6 +23,9 @@ export type ContactSubmission = {
 		service: string
 		companySize: string
 		preference: string
+		tier?: string
+		model?: string
+		product?: string
 	}
 	/** e.g. IP address, user-agent — omit if privacy-sensitive */
 	meta?: {
@@ -40,6 +43,9 @@ type ContactFormPayload = {
 	companySize?: string
 	preference?: string
 	message: string
+	tier?: string
+	model?: string
+	product?: string
 }
 
 // ---------------------------------------------------------------------------
@@ -50,6 +56,16 @@ function sanitize(value: unknown): string {
 	if (typeof value !== 'string') return ''
 	// Strip leading/trailing whitespace and basic HTML
 	return value.trim().replace(/<[^>]*>/g, '').slice(0, 2000)
+}
+
+const TIERS = ['starter', 'essential', 'growth', 'custom']
+const MODELS = ['fixed', 'team', 'retainer']
+const PRODUCTS = ['serp', 'styx']
+
+/** Returns the value when it is in the allowlist, otherwise undefined. */
+function allowed(value: unknown, list: string[]): string | undefined {
+	const clean = sanitize(value).toLowerCase()
+	return list.includes(clean) ? clean : undefined
 }
 
 function isValidEmail(email: string): boolean {
@@ -80,6 +96,9 @@ async function sendDiscordWebhook(entry: ContactSubmission) {
 			{ name: 'Service', value: entry.segment.service || 'N/A', inline: true },
 			{ name: 'Company Size', value: entry.segment.companySize || 'N/A', inline: true },
 			{ name: 'Preference', value: entry.segment.preference || 'N/A', inline: true },
+			...(entry.segment.tier ? [{ name: 'Tier', value: entry.segment.tier, inline: true }] : []),
+			...(entry.segment.model ? [{ name: 'Model', value: entry.segment.model, inline: true }] : []),
+			...(entry.segment.product ? [{ name: 'Product', value: entry.segment.product, inline: true }] : []),
 			{ name: 'Location', value: `${entry.meta?.city || 'Unknown'}, ${entry.meta?.country || 'Unknown'}`, inline: true },
 			{ name: 'Message', value: entry.message || 'N/A' },
 		],
@@ -120,6 +139,9 @@ async function sendTelegramWebhook(entry: ContactSubmission) {
 			label: 'Company',
 			content: entry.segment.companySize || 'N/A',
 		},
+		...(entry.segment.tier ? [{ label: 'Tier', content: entry.segment.tier }] : []),
+		...(entry.segment.model ? [{ label: 'Model', content: entry.segment.model }] : []),
+		...(entry.segment.product ? [{ label: 'Product', content: entry.segment.product }] : []),
 		{
 			label: 'Location',
 			content: `${entry.meta?.city || 'Unknown'}, ${entry.meta?.country || 'Unknown'}`
@@ -164,6 +186,9 @@ export async function POST(req: NextRequest) {
 		companySize: sanitize(raw.companySize),
 		preference: sanitize(raw.preference),
 		message: sanitize(raw.message),
+		tier: allowed(raw.tier, TIERS),
+		model: allowed(raw.model, MODELS),
+		product: allowed(raw.product, PRODUCTS),
 	}
 
 	const validationError = validate(payload)
@@ -182,11 +207,14 @@ export async function POST(req: NextRequest) {
 			service: payload.service ?? '',
 			companySize: payload.companySize ?? '',
 			preference: payload.preference ?? '',
+			...(payload.tier && { tier: payload.tier }),
+			...(payload.model && { model: payload.model }),
+			...(payload.product && { product: payload.product }),
 		},
 		meta: {
 			userAgent: req.headers.get('user-agent') ?? '',
 			ipAddress: ip,
-			country: req.headers.get('x-vercel-ip-country') ?? '',
+			country: req.headers.get('cf-ipcountry') || req.headers.get('x-vercel-ip-country') || '',
 			city: req.headers.get('x-vercel-ip-city') ?? '',
 		},
 	}

@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import Link from 'next/link'
+import { TrackedLink } from '@/components/analytics/TrackedLink'
 import { ArrowRight, Mail, Sparkles } from 'lucide-react'
 import { ServicesSection } from '@/components/home/ServicesSection'
 import { SITE_URL } from '@/lib/seo/jsonld'
@@ -40,19 +40,23 @@ export default function IdHomePage() {
 						{copy.homeIntro}
 					</p>
 					<div className="mt-10 flex flex-wrap gap-4">
-						<Link
+						<TrackedLink
 							href="/contact"
+							label="Start a Project (id)"
+							section="hero-id"
 							className="inline-flex items-center gap-2 px-6 py-3 bg-(--text) text-(--bg) text-sm font-medium hover:opacity-80 transition-opacity group"
 						>
 							{copy.startProject}
 							<ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
-						</Link>
-						<Link
+						</TrackedLink>
+						<TrackedLink
 							href="/work"
+							label="View Work (id)"
+							section="hero-id"
 							className="inline-flex items-center gap-2 px-6 py-3 border border-(--border) text-(--text) text-sm font-medium hover:border-(--border-strong) hover:bg-(--bg-subtle) transition-colors"
 						>
 							{copy.viewWork}
-						</Link>
+						</TrackedLink>
 					</div>
 				</div>
 			</section>
@@ -64,20 +68,24 @@ export default function IdHomePage() {
 					<p className="text-2xl font-bold text-(--text) mb-4">{copy.consultHeading}</p>
 					<p className="text-(--text-muted) mb-8 max-w-md">{copy.consultBody}</p>
 					<div className="flex flex-wrap gap-4">
-						<Link
+						<TrackedLink
 							href="/contact"
+							label="Consult (id)"
+							section="consult-id"
 							className="inline-flex items-center gap-2 px-6 py-3 bg-(--text) text-(--bg) text-sm font-medium hover:opacity-80 transition-opacity group"
 						>
 							{copy.consultButton}
 							<ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
-						</Link>
-						<a
+						</TrackedLink>
+						<TrackedLink
 							href="mailto:sales@sabako.id"
+							label="sales@sabako.id (id)"
+							section="consult-id"
 							className="inline-flex items-center gap-2 px-6 py-3 border border-(--border) text-(--text) text-sm font-medium hover:bg-(--bg) transition-colors"
 						>
 							<Mail size={16} />
 							sales@sabako.id
-						</a>
+						</TrackedLink>
 					</div>
 				</div>
 			</section>

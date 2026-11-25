@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
+import { TrackedLink } from '@/components/analytics/TrackedLink'
 import { ArrowRight, MapPin, Clock, Shield, Users } from 'lucide-react'
 
 export const metadata: Metadata = {
@@ -261,13 +262,15 @@ export default function AboutPage() {
 					<p className="text-2xl font-bold text-(--text) max-w-sm">
 						Interested in working with us?
 					</p>
-					<Link
+					<TrackedLink
 						href="/contact"
+						label="Get in Touch"
+						section="about-cta"
 						className="inline-flex items-center gap-2 px-6 py-3 bg-(--text) text-(--bg) text-sm font-medium hover:opacity-80 transition-opacity group"
 					>
 						Get in Touch
 						<ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
-					</Link>
+					</TrackedLink>
 				</div>
 			</section>
 

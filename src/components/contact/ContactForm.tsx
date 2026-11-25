@@ -4,7 +4,6 @@ import { useState, useRef } from 'react'
 import { ArrowRight, CheckCircle, AlertCircle, Loader2 } from 'lucide-react'
 import { useJargon } from '@/lib/analytics/useJargon'
 import { trackEvent } from '@/lib/analytics/trackEvent'
-import { useConsent } from '@/lib/consent'
 import { useSearchParams } from 'next/navigation'
 import type { ServiceSummary } from '@/lib/services'
 
@@ -25,13 +24,14 @@ export default function ContactForm({ services }: { services: ServiceSummary[] }
 
 	const preferredService = searchParams.get('service') || ''
 	const preferredPackage = searchParams.get('tier') || ''
+	const preferredModel = searchParams.get('model') || ''
+	const preferredProduct = searchParams.get('product') || ''
 
 	const { onCtaClick } = useJargon({
 		set: JARGON_SET,
 		setId: 'contact-form-submit',
 		section: 'contact-page',
 	})
-	const { analyticsEnabled } = useConsent()
 
 	async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
 		e.preventDefault()
@@ -46,6 +46,9 @@ export default function ContactForm({ services }: { services: ServiceSummary[] }
 			companySize: data.get('companySize') as string,
 			preference: data.get('preference') as string,
 			message: data.get('message') as string,
+			tier: preferredPackage,
+			model: preferredModel,
+			product: preferredProduct,
 		}
 
 		try {
@@ -65,15 +68,12 @@ export default function ContactForm({ services }: { services: ServiceSummary[] }
 
 			// Track successful submission
 			onCtaClick()
-			trackEvent(
-				'contact_form_submit',
-				{
-					service: payload.service || 'unspecified',
-					tier: preferredPackage || 'unspecified',
-					timestamp: new Date().toISOString(),
-				},
-				analyticsEnabled,
-			)
+			trackEvent('contact_form_submit', {
+				service: payload.service || 'unspecified',
+				tier: preferredPackage || 'unspecified',
+				model: preferredModel || 'unspecified',
+				product: preferredProduct || 'unspecified',
+			})
 			setFormState('success')
 			formRef.current?.reset()
 		} catch {
