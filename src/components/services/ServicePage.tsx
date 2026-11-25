@@ -1,8 +1,12 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { ArrowRight, ArrowUpRight, CheckCircle } from 'lucide-react'
+import { ArrowRight, ArrowUpRight, CheckCircle, ChevronDown } from 'lucide-react'
 import { OtherServices } from '@/components/services/OtherServices'
 import { PricingCatalog } from '@/components/services/PricingCatalog'
+import { EngagementModels } from '@/components/services/EngagementModels'
+import { PhoneMockup } from '@/components/services/PhoneMockup'
+import { PlatformChooser } from '@/components/services/PlatformChooser'
+import { ClientLogoStrip } from '@/components/work/ClientLogoStrip'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { TrackedLink } from '@/components/analytics/TrackedLink'
 import { getWorks } from '@/lib/graphql/adapters/works'
@@ -63,6 +67,33 @@ export async function ServicePage({ service: baseService, locale }: { service: S
 	const sectionSuffix = locale === 'id' ? '-id' : ''
 	const workLinkHref = hasShowcase ? '#showcase' : showEngagementNote ? '#client-engagements' : '/work'
 
+	const heroCopy = (
+		<>
+			<div className="flex items-center gap-3 mb-6">
+				<div className="p-2 border border-(--border) text-(--brand)">
+					<Icon size={20} />
+				</div>
+				<p className="text-xs font-mono uppercase tracking-widest text-(--brand)">
+					{service.navLabel}
+				</p>
+			</div>
+			<h1 className="text-5xl font-bold text-(--text) max-w-2xl leading-tight">
+				{service.h1}
+			</h1>
+			<p className="mt-6 text-lg text-(--text-muted) max-w-xl leading-relaxed">
+				{service.intro}
+			</p>
+			<div className="mt-8 flex flex-wrap gap-4">
+				<TrackedLink href={`/contact?service=${service.contactValue}`} label={service.ctaLabel} section={`service-${service.slug}-hero${sectionSuffix}`} className="inline-flex items-center gap-2 px-6 py-3 bg-(--text) text-(--bg) text-sm font-medium hover:opacity-80 transition-opacity group">
+					{service.ctaLabel} <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
+				</TrackedLink>
+				<TrackedLink href={workLinkHref} label={service.workLinkLabel} section={`service-${service.slug}-hero${sectionSuffix}`} className="inline-flex items-center gap-2 px-6 py-3 border border-(--border) text-(--text) text-sm font-medium hover:bg-(--bg-subtle) transition-colors">
+					{service.workLinkLabel}
+				</TrackedLink>
+			</div>
+		</>
+	)
+
 	return (
 		<article lang={locale === 'id' ? 'id' : undefined}>
 			<JsonLd
@@ -78,68 +109,108 @@ export async function ServicePage({ service: baseService, locale }: { service: S
 			/>
 			<header className="border-b border-(--border) pt-32 pb-16">
 				<div className="mx-auto max-w-7xl px-6 lg:px-8">
-					<div className="flex items-center gap-3 mb-6">
-						<div className="p-2 border border-(--border) text-(--brand)">
-							<Icon size={20} />
+					{service.heroVisual === 'phones' ? (
+						<div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+							<div>{heroCopy}</div>
+							<PhoneMockup />
 						</div>
-						<p className="text-xs font-mono uppercase tracking-widest text-(--brand)">
-							{service.navLabel}
-						</p>
-					</div>
-					<h1 className="text-5xl font-bold text-(--text) max-w-2xl leading-tight">
-						{service.h1}
-					</h1>
-					<p className="mt-6 text-lg text-(--text-muted) max-w-xl leading-relaxed">
-						{service.intro}
-					</p>
-					<div className="mt-8 flex flex-wrap gap-4">
-						<TrackedLink href={`/contact?service=${service.contactValue}`} label={service.ctaLabel} section={`service-${service.slug}-hero${sectionSuffix}`} className="inline-flex items-center gap-2 px-6 py-3 bg-(--text) text-(--bg) text-sm font-medium hover:opacity-80 transition-opacity group">
-							{service.ctaLabel} <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
-						</TrackedLink>
-						<TrackedLink href={workLinkHref} label={service.workLinkLabel} section={`service-${service.slug}-hero${sectionSuffix}`} className="inline-flex items-center gap-2 px-6 py-3 border border-(--border) text-(--text) text-sm font-medium hover:bg-(--bg-subtle) transition-colors">
-							{service.workLinkLabel}
-						</TrackedLink>
-					</div>
+					) : (
+						heroCopy
+					)}
 				</div>
 			</header>
 
-			<div className="mx-auto max-w-7xl px-6 lg:px-8 py-20">
-				<div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
-					<section aria-labelledby="capabilities-heading">
-						<h2 id="capabilities-heading" className="text-2xl font-bold text-(--text) mb-8">{copy.whatWeDeliver}</h2>
-						<ul className="space-y-3" role="list">
-							{service.capabilities.map((cap) => (
-								<li key={cap} className="flex items-center gap-3 text-sm text-(--text-muted)">
-									<CheckCircle size={16} className="text-(--brand) shrink-0" />
-									{cap}
+			{service.showLogos && (
+				// -mt-px folds the strip's top border into the header's bottom border
+				<div className="-mt-px">
+					<ClientLogoStrip label={copy.logoStripLabel} />
+				</div>
+			)}
+
+			{service.outcomes ? (
+				<>
+					<section className="mx-auto max-w-7xl px-6 lg:px-8 py-20" aria-labelledby="outcomes-heading">
+						<p className="text-xs font-mono uppercase tracking-widest text-(--brand) mb-4">{copy.outcomesEyebrow}</p>
+						<h2 id="outcomes-heading" className="text-2xl lg:text-3xl font-bold text-(--text) mb-14">{copy.outcomesHeading}</h2>
+						<ul className="grid grid-cols-1 md:grid-cols-3 gap-px bg-(--border) border border-(--border)" role="list">
+							{service.outcomes.map((outcome) => (
+								<li key={outcome.title} className="bg-(--bg) p-8">
+									<h3 className="text-lg font-bold text-(--text) mb-3">{outcome.title}</h3>
+									<p className="text-sm text-(--text-muted) leading-relaxed">{outcome.description}</p>
 								</li>
 							))}
 						</ul>
 					</section>
 
-					<section aria-labelledby="approach-heading">
-						<h2 id="approach-heading" className="text-2xl font-bold text-(--text) mb-6">{copy.ourApproach}</h2>
-						<div className="space-y-4 text-sm text-(--text-muted) leading-relaxed">
-							{service.process.map((paragraph) => (
-								<p key={paragraph}>{paragraph}</p>
-							))}
-						</div>
-
-						{service.techStack.length > 0 && (
-							<div className="mt-10">
-								<h3 className="text-xs font-mono uppercase tracking-widest text-(--text-subtle) mb-4">{copy.techStack}</h3>
-								<div className="flex flex-wrap gap-2">
-									{service.techStack.map((tech) => (
-										<span key={tech} className="px-2.5 py-1 text-xs border border-(--border) text-(--text-muted) bg-(--bg-subtle) font-mono">
-											{tech}
-										</span>
+					{service.processSteps && (
+						<section className="border-t border-(--border) py-20" aria-labelledby="process-heading">
+							<div className="mx-auto max-w-7xl px-6 lg:px-8">
+								<p className="text-xs font-mono uppercase tracking-widest text-(--brand) mb-4">{copy.processEyebrow}</p>
+								<h2 id="process-heading" className="text-2xl lg:text-3xl font-bold text-(--text) mb-14">{copy.processHeading}</h2>
+								<ol className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-px bg-(--border) border border-(--border)">
+									{service.processSteps.map((step, index) => (
+										<li key={step.title} className="bg-(--bg) p-8">
+											<p className="text-xs font-mono text-(--brand) mb-4" aria-hidden="true">
+												{String(index + 1).padStart(2, '0')}
+											</p>
+											<h3 className="text-base font-bold text-(--text) mb-2">{step.title}</h3>
+											<p className="text-sm text-(--text-muted) leading-relaxed">{step.description}</p>
+										</li>
 									))}
-								</div>
+								</ol>
 							</div>
-						)}
-					</section>
+						</section>
+					)}
+
+					{service.platformChoice && (
+						<PlatformChooser
+							choice={service.platformChoice}
+							eyebrow={copy.platformEyebrow}
+							chooseWhenLabel={copy.chooseWhen}
+							tradeOffLabel={copy.tradeOff}
+							section={`service-${service.slug}-platform-chooser${sectionSuffix}`}
+						/>
+					)}
+				</>
+			) : (
+				<div className="mx-auto max-w-7xl px-6 lg:px-8 py-20">
+					<div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+						<section aria-labelledby="capabilities-heading">
+							<h2 id="capabilities-heading" className="text-2xl font-bold text-(--text) mb-8">{copy.whatWeDeliver}</h2>
+							<ul className="space-y-3" role="list">
+								{service.capabilities.map((cap) => (
+									<li key={cap} className="flex items-center gap-3 text-sm text-(--text-muted)">
+										<CheckCircle size={16} className="text-(--brand) shrink-0" />
+										{cap}
+									</li>
+								))}
+							</ul>
+						</section>
+
+						<section aria-labelledby="approach-heading">
+							<h2 id="approach-heading" className="text-2xl font-bold text-(--text) mb-6">{copy.ourApproach}</h2>
+							<div className="space-y-4 text-sm text-(--text-muted) leading-relaxed">
+								{service.process.map((paragraph) => (
+									<p key={paragraph}>{paragraph}</p>
+								))}
+							</div>
+
+							{service.techStack.length > 0 && (
+								<div className="mt-10">
+									<h3 className="text-xs font-mono uppercase tracking-widest text-(--text-subtle) mb-4">{copy.techStack}</h3>
+									<div className="flex flex-wrap gap-2">
+										{service.techStack.map((tech) => (
+											<span key={tech} className="px-2.5 py-1 text-xs border border-(--border) text-(--text-muted) bg-(--bg-subtle) font-mono">
+												{tech}
+											</span>
+										))}
+									</div>
+								</div>
+							)}
+						</section>
+					</div>
 				</div>
-			</div>
+			)}
 
 			{relatedWorks.length > 0 && (
 				<section className="border-t border-(--border) py-16" aria-labelledby="related-work-heading">
@@ -285,8 +356,51 @@ export async function ServicePage({ service: baseService, locale }: { service: S
 				</section>
 			)}
 
-			{/* Pricing tiers are English-only copy, so they are shown on English pages only */}
-			{service.showPricing && locale === 'en' && <PricingCatalog />}
+			{service.outcomes && (
+				<section className="border-t border-(--border) py-16" aria-labelledby="technical-heading">
+					<div className="mx-auto max-w-7xl px-6 lg:px-8">
+						<details className="group border border-(--border)">
+							<summary className="flex cursor-pointer list-none items-center justify-between gap-4 p-6 hover:bg-(--bg-subtle) transition-colors focus-visible:outline-solid focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-(--brand) [&::-webkit-details-marker]:hidden">
+								<span>
+									<h2 id="technical-heading" className="text-lg font-bold text-(--text)">{copy.technicalHeading}</h2>
+									<span className="mt-1 block text-xs font-mono text-(--text-subtle)">{copy.technicalSummary}</span>
+								</span>
+								<ChevronDown size={18} aria-hidden="true" className="shrink-0 text-(--text-subtle) transition-transform group-open:rotate-180" />
+							</summary>
+							<div className="grid grid-cols-1 lg:grid-cols-2 gap-12 border-t border-(--border) p-6 lg:p-8">
+								<div>
+									<h3 className="text-xs font-mono uppercase tracking-widest text-(--text-subtle) mb-4">{copy.whatWeDeliver}</h3>
+									<ul className="space-y-3" role="list">
+										{service.capabilities.map((cap) => (
+											<li key={cap} className="flex items-center gap-3 text-sm text-(--text-muted)">
+												<CheckCircle size={16} className="text-(--brand) shrink-0" />
+												{cap}
+											</li>
+										))}
+									</ul>
+								</div>
+								{service.techStack.length > 0 && (
+									<div>
+										<h3 className="text-xs font-mono uppercase tracking-widest text-(--text-subtle) mb-4">{copy.techStack}</h3>
+										<div className="flex flex-wrap gap-2">
+											{service.techStack.map((tech) => (
+												<span key={tech} className="px-2.5 py-1 text-xs border border-(--border) text-(--text-muted) bg-(--bg-subtle) font-mono">
+													{tech}
+												</span>
+											))}
+										</div>
+									</div>
+								)}
+							</div>
+						</details>
+					</div>
+				</section>
+			)}
+
+			{service.showEngagementModels && <EngagementModels serviceSlug={service.slug} locale={locale} />}
+
+			{/* EN: IDR tiers only for an Indonesian timezone and IP. ID: always, the visitor chose Indonesian. */}
+			{service.showPricing && (locale === 'en' ? <PricingCatalog gate="geo" locale="en" /> : <PricingCatalog gate="none" locale="id" />)}
 			<OtherServices current={service.slug} locale={locale} />
 		</article>
 	)
