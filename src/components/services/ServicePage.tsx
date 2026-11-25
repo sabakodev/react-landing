@@ -168,6 +168,7 @@ export async function ServicePage({ service: baseService, locale }: { service: S
 							eyebrow={copy.platformEyebrow}
 							chooseWhenLabel={copy.chooseWhen}
 							tradeOffLabel={copy.tradeOff}
+							contactHref={`/contact?service=${service.contactValue}`}
 							section={`service-${service.slug}-platform-chooser${sectionSuffix}`}
 						/>
 					)}
