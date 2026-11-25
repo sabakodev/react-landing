@@ -8,6 +8,7 @@ import type { Service, ServiceFaq } from '@/lib/services'
 import type { Locale } from '@/lib/pageCopy'
 import type { BlogPost } from '@/lib/graphql/adapters/posts'
 import type { Work } from '@/lib/graphql/adapters/works'
+import type { Product } from '@/lib/products'
 
 export const SITE_URL = 'https://sabako.id'
 export const ORG_ID = `${SITE_URL}/#org`
@@ -107,6 +108,19 @@ export function service(s: Service, locale: Locale = 'en'): JsonLdNode {
 		inLanguage: locale,
 		provider: orgRef,
 		areaServed,
+	}
+}
+
+/** No offers or ratings: products are available on request only. */
+export function softwareApplication(product: Product): JsonLdNode {
+	return {
+		'@type': 'SoftwareApplication',
+		'@id': `${SITE_URL}/products#${product.id}`,
+		name: product.name,
+		applicationCategory: 'DeveloperApplication',
+		description: product.tagline,
+		url: `${SITE_URL}/products`,
+		provider: orgRef,
 	}
 }
 

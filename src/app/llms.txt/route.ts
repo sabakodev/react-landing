@@ -2,6 +2,7 @@ import { getPosts } from '@/lib/graphql/adapters/posts'
 import { getWorks } from '@/lib/graphql/adapters/works'
 import type { Work } from '@/lib/graphql/adapters/works'
 import { SITE_DESCRIPTION, SITE_URL } from '@/lib/seo/jsonld'
+import { PRODUCT_STATUS_LABEL, products } from '@/lib/products'
 import { publishedServices, publishedServicesId, serviceHref } from '@/lib/services'
 
 export const revalidate = 3600
@@ -32,6 +33,13 @@ export async function GET() {
 		'## Services',
 		'',
 		...publishedServices().map((s) => `- [${s.name}](${SITE_URL}${serviceHref(s)}): ${oneLine(s.summary)}`),
+		'',
+		'## Products',
+		'',
+		...products.map((p) => {
+			const name = p.descriptor ? `${p.name} (${p.descriptor})` : p.name
+			return `- [${name}](${SITE_URL}/products#${p.id}): ${p.tagline} ${PRODUCT_STATUS_LABEL[p.status]}.`
+		}),
 	]
 
 	if (works.length) {

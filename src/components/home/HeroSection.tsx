@@ -80,7 +80,7 @@ export function HeroSection({ services }: { services: ServiceSummary[] }) {
 					style={{ animationDelay: '0.1s', opacity: 0 }}
 				>
 					<Sparkles size={12} className="text-(--brand)" />
-					IT Agency &amp; Consulting — Jakarta, Indonesia
+					Software engineering partner — Jakarta, serving Southeast Asia
 				</div>
 
 				{/* Headline */}
